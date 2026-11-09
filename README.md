@@ -131,13 +131,6 @@ and the conventions a pull request is checked against. Participation is under th
   [Security Advisories](https://github.com/totoshko88/RustConn/security/advisories/new)
   rather than an issue ([SECURITY.md](SECURITY.md)).
 
-## Support
-
-<p>
-  <a href="https://donatello.to/totoshko88"><img src="https://img.shields.io/badge/Donatello-Support-ff5e5b" alt="Donatello"></a>
-  <a href="https://send.monobank.ua/jar/2UgaGcQ3JC"><img src="https://img.shields.io/badge/Monobank-UAH-black" alt="Monobank"></a>
-</p>
-
 ## License
 
 GPL-3.0 — Made with ❤️
