@@ -1,21 +1,21 @@
 <p align="center">
   <img src="rustconn/assets/icons/hicolor/128x128/apps/io.github.totoshko88.RustConn.png" width="96" alt="RustConn">
 </p>
-<h1 align="center">RustConn</h1>
+<h1 align="center">RustConn-ru</h1>
 <p align="center">
   Modern connection manager — SSH, RDP, VNC, SPICE, and more
 </p>
 <p align="center">
-  <a href="https://flathub.org/apps/io.github.totoshko88.RustConn"><img src="https://img.shields.io/flathub/v/io.github.totoshko88.RustConn" alt="Flathub"></a>
-  <a href="https://snapcraft.io/rustconn"><img src="https://img.shields.io/snapcraft/v/rustconn/latest/stable" alt="Snap"></a>
-  <a href="https://aur.archlinux.org/packages/rustconn"><img src="https://img.shields.io/aur/version/rustconn" alt="AUR"></a>
-  <a href="https://build.opensuse.org/package/show/home:totoshko88:rustconn/rustconn"><img src="https://img.shields.io/badge/dynamic/xml?url=https%3a%2f%2fapi.opensuse.org%2fpublic%2fbuild%2fhome%3atotoshko88%3arustconn%2fopenSUSE_Tumbleweed%2fx86_64%2frustconn%3fview%3dbinaryversions&query=substring-before%28substring-after%28%2f%2fbinary%5bcontains%28%40name%2c%27x86_64.rpm%27%29%5d%2f%40name%2c%27rustconn-%27%29%2c%27-%27%29&label=OBS&color=green" alt="OBS"></a>
-  <a href="https://www.freshports.org/net/rustconn/"><img src="https://img.shields.io/badge/FreeBSD-ports-red" alt="FreeBSD"></a>
-  <a href="https://github.com/totoshko88/RustConn/actions/workflows/ci.yml"><img src="https://img.shields.io/github/actions/workflow/status/totoshko88/RustConn/ci.yml?label=CI" alt="CI"></a>
+  <a href="https://github.com/zbndev/RustConn-ru/actions/workflows/ci.yml"><img src="https://img.shields.io/github/actions/workflow/status/zbndev/RustConn-ru/ci.yml?label=CI" alt="CI"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-GPL--3.0-blue" alt="License"></a>
 </p>
 
 ---
+Russian-localized fork of [RustConn](https://github.com/totoshko88/RustConn).
+Upstream changes are reviewed and merged manually. All workflows require a manual
+start; release builds create a draft, never a public release.
+See [the update and release procedure](docs/CI_BUILD_FLOW.md).
+
 
 RustConn is a cross-platform connection orchestrator with a GTK4/libadwaita interface.
 It brings SSH, RDP, VNC, SPICE, MOSH, Telnet, Serial, Kubernetes, and Zero Trust connections under one roof — with embedded Rust clients where possible and seamless integration with external tools where needed.
@@ -34,7 +34,7 @@ Runs on Linux (GTK4/libadwaita), macOS, FreeBSD, and Windows via WSLg.
 | ![Split view](rustconn/assets/screenshots/split_view_dark.png) | ![Tab overview](rustconn/assets/screenshots/tab_overview_light.png) |
 | ![Settings](rustconn/assets/screenshots/settings_dark.png) | ![Embedded web browser](rustconn/assets/screenshots/web_light.png) |
 
-More screenshots on the [Flathub listing](https://flathub.org/apps/io.github.totoshko88.RustConn).
+More upstream screenshots are available on the [original Flathub listing](https://flathub.org/apps/io.github.totoshko88.RustConn).
 
 ## Features
 
@@ -55,7 +55,7 @@ More screenshots on the [Flathub listing](https://flathub.org/apps/io.github.tot
 | **Workflow** | Smart folders, SSH port forwarding, visual SSH tunnel builder, workspace profiles (save/restore open sessions, including split layout and divider ratio), settings backup/restore, .rdp file association |
 | **Cloud Sync** | Synchronize connections via shared cloud directory (Google Drive, Syncthing, Nextcloud, Dropbox); group sync with Master/Import access model; simple sync with UUID-based merge |
 | **CLI** | `rustconn-cli` — headless management: list/add/update/delete connections, import/export, snippets, groups, templates, clusters, WoL, shell completions; optional secret and client-launch commands behind features |
-| **Languages** | English, plus translations into Azerbaijani, Belarusian, Czech, Danish, German, Spanish, French, Italian, Georgian, Kazakh, Dutch, Polish, Portuguese, Slovak, Swedish, Ukrainian, Uzbek, Vietnamese and Simplified Chinese |
+| **Languages** | English, plus translations into Azerbaijani, Belarusian, Czech, Danish, German, Spanish, French, Italian, Georgian, Kazakh, Dutch, Polish, Portuguese, Russian, Slovak, Swedish, Ukrainian, Uzbek, Vietnamese and Simplified Chinese |
 
 ### Protocol support
 
@@ -74,41 +74,25 @@ More screenshots on the [Flathub listing](https://flathub.org/apps/io.github.tot
 
 ## Installation
 
-<p>
-  <a href="https://flathub.org/apps/io.github.totoshko88.RustConn">
-    <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="https://flathub.org/assets/badges/flathub-badge-i-en.svg">
-      <img height="56" alt="Download on Flathub" src="https://flathub.org/assets/badges/flathub-badge-en.svg">
-    </picture>
-  </a>
-  &nbsp;
-  <a href="https://snapcraft.io/rustconn">
-    <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="https://snapcraft.io/en/light/install.svg">
-      <img height="56" alt="Get it from the Snap Store" src="https://snapcraft.io/en/dark/install.svg">
-    </picture>
-  </a>
-</p>
 
 | Method | Command / Link |
 |--------|---------------|
-| **Flatpak** (recommended) | `flatpak install flathub io.github.totoshko88.RustConn` |
-| **Snap** | `sudo snap install rustconn` ([permissions](docs/SNAP.md)) |
-| **macOS (Homebrew)** | `brew tap totoshko88/rustconn && brew install rustconn` |
-| **Debian 13 / Ubuntu 24.04 / Ubuntu 26.04** | OBS apt repository ([setup](docs/INSTALL.md#debian--ubuntu-obs-repository)) |
-| **openSUSE** (Tumbleweed, Slowroll, Leap 16.0) | OBS zypper repository ([setup](docs/INSTALL.md#opensuse-obs)) |
-| **Fedora 43 / 44** | OBS dnf repository ([setup](docs/INSTALL.md#fedora-obs)) |
-| **Arch Linux** | `yay -S rustconn` ([AUR](https://aur.archlinux.org/packages/rustconn), community) |
-| **FreeBSD** | `pkg install rustconn` ([ports](https://www.freshports.org/net/rustconn/), community) |
-| **AppImage** | [GitHub Releases](https://github.com/totoshko88/RustConn/releases) |
-| **Windows (WSL2)** | Runs under WSLg ([guide](docs/WSL.md)) |
-| **From source** | Rust 1.95+, GTK4 4.14+ ([build guide](docs/BUILD.md)) |
-| **Nix (flake)** | `nix profile install github:totoshko88/RustConn` or add to your flake inputs |
+| **AppImage** | [Fork releases](https://github.com/zbndev/RustConn-ru/releases) |
+| **Debian/Ubuntu (.deb)** | [Fork releases](https://github.com/zbndev/RustConn-ru/releases) |
+| **Fedora (.rpm)** | [Fork releases](https://github.com/zbndev/RustConn-ru/releases) |
+| **Flatpak file (.flatpak)** | [Fork releases](https://github.com/zbndev/RustConn-ru/releases) |
+| **Arch Linux (AUR)** | `rustconn-ru` is planned as a separately maintained package |
+| **From source** | Rust 1.95+, GTK4 4.14+ ([build guide](docs/BUILD.md)); use this fork's source |
+
+Use the installation commands included in the fork's release notes. The original
+Flathub, Snap, OBS, Homebrew and `rustconn` AUR packages do not contain this fork's
+Russian translation. Installed binary names and the application ID remain
+unchanged; the fork is not intended for parallel installation alongside upstream.
 
 Files attached to a GitHub release carry a signed build-provenance attestation —
 verify a download with
-`gh attestation verify <file> --repo totoshko88/RustConn`
-([details](docs/INSTALL.md#verifying-a-file-downloaded-from-a-github-release)).
+`gh attestation verify <file> --repo zbndev/RustConn-ru`
+([details](docs/CI_BUILD_FLOW.md#артефакты)).
 
 Keyboard shortcuts are customizable in Settings → Keybindings; press `Ctrl+?`
 in the app for the complete, always-current list.
@@ -124,7 +108,7 @@ in the app for the complete, always-current list.
 | [Windows / WSL2](docs/WSL.md) | Running RustConn on Windows via WSLg |
 | [CLI Reference](docs/CLI_REFERENCE.md) | `rustconn-cli` commands and examples |
 | [Architecture](docs/ARCHITECTURE.md) | Crate structure and design decisions |
-| [CI & Build Flow](docs/CI_BUILD_FLOW.md) | CI pipelines, OBS packaging, Flathub release process |
+| [CI & Build Flow](docs/CI_BUILD_FLOW.md) | Manual upstream review, CI checks, four-format builds and draft releases |
 | [Zero Trust](docs/ZERO_TRUST.md) | Setup guides for each supported Zero Trust provider |
 | [Changelog](CHANGELOG.md) | Release history and notable changes |
 
@@ -156,4 +140,4 @@ and the conventions a pull request is checked against. Participation is under th
 
 ## License
 
-GPL-3.0 — Made with ❤️ in Ukraine 🇺🇦
+GPL-3.0 — Made with ❤️

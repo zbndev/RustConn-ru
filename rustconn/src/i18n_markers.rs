@@ -13,7 +13,7 @@
 //!   client-mode and performance-mode enums, and of `BackspaceSends` /
 //!   `DeleteSends`)
 //! - `rustconn-core/src/config/settings.rs` (`display_name()` of
-//!   `RendererPreference`)
+//!   `RendererPreference` and `SidebarFontSize`)
 
 #![allow(
     dead_code,
@@ -99,6 +99,12 @@ fn _never_called() {
     crate::i18n::i18n("Automatic");
     crate::i18n::i18n("Hardware (GPU)");
     crate::i18n::i18n("Software (Cairo)");
+
+    // === Sidebar font size labels from `display_name()` ===
+    // Settings ▸ Interface translates these labels from rustconn-core.
+    crate::i18n::i18n("Small");
+    crate::i18n::i18n("Medium");
+    crate::i18n::i18n("Large");
 
     // === Activity monitor mode labels from `display_name()` ===
     // Three widgets build their rows from `MonitorMode::all()` via

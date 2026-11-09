@@ -13,13 +13,6 @@ name: CodeQL
 # enabled") and each job fails even though its analysis completed.
 
 on:
-  push:
-    branches: [main, develop]
-  pull_request:
-    branches: [main]
-  schedule:
-    # Weekly, matching the cadence default setup ran on.
-    - cron: '17 3 * * 1'
   workflow_dispatch:
 
 # Least privilege: CodeQL needs to read the repo and write analysis results.

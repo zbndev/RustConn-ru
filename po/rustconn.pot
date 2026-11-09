@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rustconn 0.24.9\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-08 02:07+0100\n"
+"POT-Creation-Date: 2026-11-09 21:22+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
 #: rustconn/src/alert.rs:15 rustconn/src/alert.rs:54 rustconn/src/alert.rs:64
-#: rustconn/src/app.rs:2190 rustconn/src/script_runner.rs:774
+#: rustconn/src/app.rs:2199 rustconn/src/script_runner.rs:774
 #: rustconn/src/script_runner.rs:806 rustconn/src/toast.rs:283
 msgid "OK"
 msgstr ""
@@ -97,61 +97,61 @@ msgstr ""
 msgid "Initialization Error"
 msgstr ""
 
-#: rustconn/src/app.rs:864
+#: rustconn/src/app.rs:872
 msgid "KeePass password not loaded from keyring — re-enter it in Settings"
 msgstr ""
 
-#: rustconn/src/app.rs:869 rustconn/src/dialogs/shortcuts.rs:178
+#: rustconn/src/app.rs:877 rustconn/src/dialogs/shortcuts.rs:178
 #: rustconn/src/embedded_rdp/mod.rs:410 rustconn/src/split_view/bridge.rs:2030
 #: rustconn/src/window/ui.rs:99
 msgid "Settings"
 msgstr ""
 
-#: rustconn/src/app.rs:1719
+#: rustconn/src/app.rs:1727
 msgid ""
 "{} is selected, but the system keyring is not accessible. Run: sudo snap "
 "connect rustconn:password-manager-service — or open Settings, then Secrets, "
 "to choose another backend."
 msgstr ""
 
-#: rustconn/src/app.rs:1724
+#: rustconn/src/app.rs:1732
 msgid ""
 "{} is selected, but it cannot store passwords yet: {}. Open Settings, then "
 "Secrets."
 msgstr ""
 
-#: rustconn/src/app.rs:2035
+#: rustconn/src/app.rs:2043
 msgid ""
 "Modern connection manager for Linux with a GTK4/Wayland-native interface. "
 "Manage SSH, RDP, VNC, SPICE, Telnet, Serial, Kubernetes, and Zero Trust "
 "connections from a single application."
 msgstr ""
 
-#: rustconn/src/app.rs:2113
+#: rustconn/src/app.rs:2122
 msgid "User Guide"
 msgstr ""
 
-#: rustconn/src/app.rs:2117
+#: rustconn/src/app.rs:2126
 msgid "Installation"
 msgstr ""
 
-#: rustconn/src/app.rs:2121
+#: rustconn/src/app.rs:2130
 msgid "Releases"
 msgstr ""
 
-#: rustconn/src/app.rs:2125
+#: rustconn/src/app.rs:2134
 msgid "Changelog"
 msgstr ""
 
-#: rustconn/src/app.rs:2135
+#: rustconn/src/app.rs:2144
 msgid "Special Thanks"
 msgstr ""
 
-#: rustconn/src/app.rs:2150
+#: rustconn/src/app.rs:2159
 msgid "Made in Ukraine"
 msgstr ""
 
-#: rustconn/src/app.rs:2151
+#: rustconn/src/app.rs:2160
 msgid "All contributors and supporters"
 msgstr ""
 
@@ -3297,7 +3297,7 @@ msgstr ""
 #: rustconn/src/dialogs/connection/spice.rs:180 rustconn/src/dialogs/mod.rs:31
 #: rustconn/src/dialogs/settings/terminal_tab.rs:275
 #: rustconn/src/dialogs/settings/terminal_tab.rs:308
-#: rustconn/src/dialogs/template.rs:1262 rustconn/src/i18n_markers.rs:115
+#: rustconn/src/dialogs/template.rs:1262 rustconn/src/i18n_markers.rs:121
 msgid "Off"
 msgstr ""
 
@@ -7050,7 +7050,7 @@ msgid "Relative to config dir or absolute path"
 msgstr ""
 
 #: rustconn/src/dialogs/settings/logging_tab.rs:58
-#: rustconn/src/i18n_markers.rs:116
+#: rustconn/src/i18n_markers.rs:122
 msgid "Activity"
 msgstr ""
 
@@ -11354,11 +11354,23 @@ msgstr ""
 msgid "Software (Cairo)"
 msgstr ""
 
-#: rustconn/src/i18n_markers.rs:117
+#: rustconn/src/i18n_markers.rs:105
+msgid "Small"
+msgstr ""
+
+#: rustconn/src/i18n_markers.rs:106
+msgid "Medium"
+msgstr ""
+
+#: rustconn/src/i18n_markers.rs:107
+msgid "Large"
+msgstr ""
+
+#: rustconn/src/i18n_markers.rs:123
 msgid "Silence"
 msgstr ""
 
-#: rustconn/src/i18n_markers.rs:118
+#: rustconn/src/i18n_markers.rs:124
 msgid "Command finished"
 msgstr ""
 
@@ -14175,6 +14187,6 @@ msgstr ""
 msgid "RustConn"
 msgstr ""
 
-#: rustconn/assets/io.github.totoshko88.RustConn.desktop:15
+#: rustconn/assets/io.github.totoshko88.RustConn.desktop:16
 msgid "ssh;rdp;vnc;spice;mosh;telnet;zerotrust;connection;terminal;remote;kubernetes;k8s;serial;sftp;"
 msgstr ""

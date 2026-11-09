@@ -1,3 +1,7 @@
+> Upstream packaging reference only. RustConn-ru does not publish to OBS.
+> Its downloadable RPM and DEB files are built by the manual GitHub release
+> workflow; see [the fork release procedure](../../docs/CI_BUILD_FLOW.md).
+
 # RustConn OBS Packaging
 
 Build files for the [Open Build Service](https://build.opensuse.org/package/show/home:totoshko88:rustconn/rustconn).
@@ -82,8 +86,7 @@ selected, which is the check that would have caught both traps.
 
 ### Which `.dsc` is live
 
-`scripts/obs-publish.sh` rewrites `Version:` and `DEBTRANSFORM-TAR:` in
-**`debian.dsc`** only; nothing in the pipeline reads `rustconn.dsc`. It is kept
+The upstream OBS pipeline builds **`debian.dsc`**, not `rustconn.dsc`. The latter is kept
 because the OBS project has historically carried both forms and removing a source
 control file from a live project is not something to do blind, but treat
 `debian.dsc` as the authority. Their `Build-Depends` lines are held identical

@@ -28,10 +28,6 @@
 #                                       --default-toolchain 1.95 on purpose, so
 #                                       its build part sets RUSTUP_TOOLCHAIN=1.95
 #                                       to keep that deliberate choice
-#     - obs-update.yml               -> keeps `stable` deliberately: it publishes
-#                                       an arbitrary older tag, and the toolchain
-#                                       it resolves is vendored into the OBS
-#                                       build by scripts/obs-publish.sh
 #
 #   ignored (cargo is not a rustup proxy -- rust-toolchain.toml is a rustup
 #   feature, so a bare cargo never reads it)

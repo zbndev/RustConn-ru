@@ -1,9 +1,7 @@
 name: Check CLI component versions
 
 on:
-  schedule:
-    - cron: '0 6 * * 1' # Every Monday at 06:00 UTC
-  workflow_dispatch: # Allow manual trigger
+  workflow_dispatch:
 
 env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
@@ -27,13 +25,13 @@ jobs:
           EXIT_CODE=$?
           set -e
           echo "$OUTPUT"
-          echo "exit_code=$EXIT_CODE" >> $GITHUB_OUTPUT
+          echo "exit_code=$EXIT_CODE" >> "$GITHUB_OUTPUT"
           # Save output for issue body (multiline)
           {
             echo "report<<EOF"
             echo "$OUTPUT"
             echo "EOF"
-          } >> $GITHUB_OUTPUT
+          } >> "$GITHUB_OUTPUT"
 
       - name: Create or update issue if updates available
         if: steps.check.outputs.exit_code == '1'
@@ -48,7 +46,7 @@ jobs:
           {
             echo "## CLI Version Check Report"
             echo ""
-            echo "The weekly CLI version check found updates or unreachable endpoints."
+            echo "The manually requested CLI version check found updates or unreachable endpoints."
             echo ""
             echo '```'
             echo "$REPORT"

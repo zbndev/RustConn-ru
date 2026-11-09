@@ -1,9 +1,6 @@
 name: Release
 
 on:
-  push:
-    tags:
-      - 'v*'
   workflow_dispatch:
 
 env:
@@ -23,13 +20,47 @@ env:
 permissions:
   contents: read
 
+defaults:
+  run:
+    shell: bash
+
 jobs:
+  prepare:
+    name: Validate Reviewed Fork Tag
+    runs-on: ubuntu-24.04
+    outputs:
+      tag: ${{ steps.prepare.outputs.tag }}
+      sha: ${{ steps.prepare.outputs.sha }}
+      version: ${{ steps.prepare.outputs.version }}
+    steps:
+      - name: Checkout exact workflow source and all tags
+        uses: actions/checkout@v7
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Validate manual tag, source version and Russian catalogue
+        id: prepare
+        env:
+          SOURCE_REF: ${{ github.ref }}
+          SOURCE_SHA: ${{ github.sha }}
+        run: python3 scripts/manual-release.py prepare --ref "$SOURCE_REF" --sha "$SOURCE_SHA" >> "$GITHUB_OUTPUT"
+
   build-deb:
     name: Build Debian Package
+    needs: [prepare]
     runs-on: ubuntu-24.04
+    env:
+      RELEASE_VERSION: ${{ needs.prepare.outputs.version }}
+      RELEASE_REPOSITORY: ${{ github.repository }}
+      RELEASE_OWNER: ${{ github.repository_owner }}
     steps:
       - name: Checkout
         uses: actions/checkout@v7
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
 
       - name: Install Rust
         uses: dtolnay/rust-toolchain@6c977a6ca4077a0ceb28ffbe03f59d46e9ac8772 # master
@@ -62,12 +93,17 @@ jobs:
         with:
           tool: cargo-auditable@0.7.7
 
+      - name: Validate complete Russian catalogue
+        run: |
+          msgcmp po/ru.po po/rustconn.pot
+          bash scripts/check-po-complete.sh ru
+
       - name: Build release binary
-        run: cargo auditable build --release -p rustconn -p rustconn-cli --features full
+        run: cargo auditable build --release --locked -p rustconn -p rustconn-cli --features full
 
       - name: Create deb package structure
         run: |
-          VERSION=$(grep '^version' Cargo.toml | head -1 | sed 's/.*"\(.*\)"/\1/')
+          VERSION="$RELEASE_VERSION"
           PKG_DIR="rustconn_${VERSION}_amd64"
           
           mkdir -p "${PKG_DIR}/DEBIAN"
@@ -157,12 +193,12 @@ jobs:
           Architecture: amd64
           Depends: ${SHLIB_DEPS}, openssh-client
           Recommends: freerdp3-x11 | freerdp3-wayland, tigervnc-viewer, virt-viewer, picocom, libopenh264-8 | libopenh264-7
-          Maintainer: Anton Isaiev <totoshko88@gmail.com>
-          Homepage: https://github.com/totoshko88/RustConn
-          Description: Modern connection manager for Linux
+          Maintainer: ${RELEASE_OWNER} <${RELEASE_OWNER}@users.noreply.github.com>
+          Homepage: https://github.com/${RELEASE_REPOSITORY}
+          Description: Modern connection manager for Linux — Russian localization fork
            RustConn is a GTK4-based connection manager for SSH, RDP, VNC, and SPICE
            remote connections with support for embedded terminals, connection groups,
-           import/export, and secure credential storage.
+           import/export, and secure credential storage. Upstream: Anton Isaiev.
           EOF
           
           # Build deb
@@ -174,10 +210,12 @@ jobs:
         uses: actions/upload-artifact@v7
         with:
           name: debian-package
-          path: dist/*.deb
+          path: dist/rustconn_${{ env.RELEASE_VERSION }}_amd64.deb
+          if-no-files-found: error
 
   build-rpm:
     name: Build RPM Package
+    needs: [prepare]
     runs-on: ubuntu-24.04
     container:
       image: fedora:44
@@ -188,6 +226,9 @@ jobs:
     # --default-toolchain value in the "Install Rust" step below.
     env:
       RUSTUP_TOOLCHAIN: 1.95.0
+      RELEASE_VERSION: ${{ needs.prepare.outputs.version }}
+      RELEASE_REPOSITORY: ${{ github.repository }}
+      RELEASE_OWNER: ${{ github.repository_owner }}
     steps:
       - name: Install build tools
         run: |
@@ -215,12 +256,20 @@ jobs:
 
       - name: Checkout
         uses: actions/checkout@v7
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+
+      - name: Validate complete Russian catalogue
+        run: |
+          msgcmp po/ru.po po/rustconn.pot
+          bash scripts/check-po-complete.sh ru
 
       - name: Install Rust
         run: |
           set -e
           curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --default-toolchain 1.95.0 --profile minimal
-          source $HOME/.cargo/env
+          source "$HOME/.cargo/env"
           cargo --version
           # Assert rather than just echo. If the job-level RUSTUP_TOOLCHAIN ever
           # goes missing, rust-toolchain.toml silently wins and the shipped RPM
@@ -242,7 +291,7 @@ jobs:
 
       - name: Build release binary
         run: |
-          source $HOME/.cargo/env
+          source "$HOME/.cargo/env"
           # This container is Fedora 44, which carries GTK 4.20+ and libadwaita
           # 1.9 — but the build passed no version feature at all, so the RPM on
           # every GitHub release shipped the libadwaita 1.5 baseline and could
@@ -285,12 +334,13 @@ jobs:
                "| libadwaita $(pkg-config --modversion libadwaita-1 2>/dev/null)" \
                "| vte $(pkg-config --modversion vte-2.91-gtk4 2>/dev/null)" \
                "=> --features $FEATURES ==="
-          cargo auditable build --release -p rustconn -p rustconn-cli --features "$FEATURES"
+          cargo auditable build --release --locked -p rustconn -p rustconn-cli --features "$FEATURES"
 
       - name: Create RPM package
         run: |
-          source $HOME/.cargo/env
-          VERSION=$(grep '^version' Cargo.toml | head -1 | sed 's/.*"\(.*\)"/\1/')
+          source "$HOME/.cargo/env"
+          VERSION="$RELEASE_VERSION"
+          RPM_PATH="dist/rustconn-${RELEASE_VERSION}-1.x86_64.rpm"
           
           # Create staging directory
           mkdir -p staging/usr/bin
@@ -299,10 +349,14 @@ jobs:
           mkdir -p staging/usr/share/icons/hicolor/scalable/apps
           mkdir -p staging/usr/share/icons/hicolor/128x128/apps
           mkdir -p staging/usr/share/icons/hicolor/256x256/apps
+          mkdir -p staging/usr/share/doc/rustconn
+          mkdir -p dist
           
           # Copy binaries
           cp target/release/rustconn staging/usr/bin/
           cp target/release/rustconn-cli staging/usr/bin/
+          cp README.md LICENSE CHANGELOG.md staging/usr/share/doc/rustconn/
+          cp debian/copyright staging/usr/share/doc/rustconn/copyright
           
           # Copy desktop file and metadata
           cp rustconn/assets/io.github.totoshko88.RustConn.desktop staging/usr/share/applications/
@@ -329,11 +383,13 @@ jobs:
             -n rustconn \
             -v "${VERSION}" \
             --iteration 1 \
+            --architecture x86_64 \
+            --package "$RPM_PATH" \
             --license "GPL-3.0-or-later" \
             --vendor "Anton Isaiev" \
-            --maintainer "Anton Isaiev <totoshko88@gmail.com>" \
-            --url "https://github.com/totoshko88/RustConn" \
-            --description "Modern connection manager for Linux (SSH, RDP, VNC, SPICE)" \
+            --maintainer "${RELEASE_OWNER} <${RELEASE_OWNER}@users.noreply.github.com>" \
+            --url "https://github.com/${RELEASE_REPOSITORY}" \
+            --description "Modern connection manager for Linux (SSH, RDP, VNC, SPICE), Russian localization fork" \
             --rpm-autoreqprov \
             --depends "gtk4 >= 4.14" \
             --depends "libadwaita" \
@@ -341,10 +397,6 @@ jobs:
             --depends "openssh-clients" \
             -C staging \
             usr
-          
-          # Move to dist
-          mkdir -p dist
-          mv *.rpm dist/
           
           echo "=== Built RPM packages ==="
           ls -la dist/
@@ -360,8 +412,8 @@ jobs:
           # 4.14", the floor the v4_14 bindings assert but no referenced symbol
           # proves, and openssh-clients is a program rather than a library.
           echo "=== Requires ==="
-          rpm -qp --requires dist/*.rpm | sort
-          if ! rpm -qp --requires dist/*.rpm | grep -q 'libwebkitgtk'; then
+          rpm -qp --requires "$RPM_PATH" | sort
+          if ! rpm -qp --requires "$RPM_PATH" | grep -q 'libwebkitgtk'; then
             echo "::error::libwebkitgtk absent from RPM Requires — issue #313 would recur"
             exit 1
           fi
@@ -370,14 +422,21 @@ jobs:
         uses: actions/upload-artifact@v7
         with:
           name: rpm-package
-          path: dist/*.rpm
+          path: dist/rustconn-${{ env.RELEASE_VERSION }}-1.x86_64.rpm
+          if-no-files-found: error
 
   build-appimage:
     name: Build AppImage
+    needs: [prepare]
     runs-on: ubuntu-24.04
+    env:
+      RELEASE_VERSION: ${{ needs.prepare.outputs.version }}
     steps:
       - name: Checkout
         uses: actions/checkout@v7
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
 
       - name: Install Rust
         uses: dtolnay/rust-toolchain@6c977a6ca4077a0ceb28ffbe03f59d46e9ac8772 # master
@@ -404,8 +463,13 @@ jobs:
         with:
           tool: cargo-auditable@0.7.7
 
+      - name: Validate complete Russian catalogue
+        run: |
+          msgcmp po/ru.po po/rustconn.pot
+          bash scripts/check-po-complete.sh ru
+
       - name: Build release
-        run: cargo auditable build --release -p rustconn -p rustconn-cli --features full
+        run: cargo auditable build --release --locked -p rustconn -p rustconn-cli --features full
 
       - name: Download linuxdeploy
         run: |
@@ -460,54 +524,52 @@ jobs:
 
       - name: Build AppImage
         run: |
-          DEPLOY_GTK_VERSION=4 ./linuxdeploy-x86_64.AppImage \
+          mkdir -p dist
+          OUTPUT="$PWD/dist/RustConn-${RELEASE_VERSION}-x86_64.AppImage" \
+            DEPLOY_GTK_VERSION=4 ./linuxdeploy-x86_64.AppImage \
             --appdir AppDir \
             --plugin gtk \
             --output appimage
           
-          # Rename to include version
-          VERSION=$(grep '^version' Cargo.toml | head -1 | sed 's/.*"\(.*\)"/\1/')
-          mv RustConn*.AppImage "RustConn-${VERSION}-x86_64.AppImage"
+          # The output plugin receives the final path; never upload linuxdeploy itself.
+          test -f "dist/RustConn-${RELEASE_VERSION}-x86_64.AppImage"
 
       - name: Upload AppImage artifact
         uses: actions/upload-artifact@v7
         with:
           name: appimage
-          path: "*.AppImage"
-
-  build-snap:
-    name: Build & Publish Snap Package
-    # Post-release job (like update-obs / update-homebrew): snapcraft + LXD are
-    # slow and occasionally flaky, so we must NOT gate the GitHub release on it.
-    # The release is created first; the snap is then built, published to the
-    # store, and attached to the existing release. A snap failure no longer
-    # blocks the release.
-    #
-    # The build/verify/publish steps live in the reusable snap-build.yml, shared
-    # with the manual snap.yml so the two cannot drift. publish=true turns on the
-    # store upload + release attach that only the release flow needs; the v* tag
-    # guard stays inside the reusable workflow's publish step.
-    needs: [release]
-    if: startsWith(github.ref, 'refs/tags/')
-    permissions:
-      contents: write
-    uses: ./.github/workflows/snap-build.yml
-    with:
-      artifact-prefix: snap-package
-      publish: true
-      release-channel: candidate
-    secrets:
-      SNAP_STORE_TOKEN: ${{ secrets.SNAP_STORE_TOKEN }}
+          path: dist/RustConn-${{ env.RELEASE_VERSION }}-x86_64.AppImage
+          if-no-files-found: error
 
   build-flatpak:
     name: Build Flatpak
+    needs: [prepare]
     runs-on: ubuntu-26.04
+    env:
+      RELEASE_VERSION: ${{ needs.prepare.outputs.version }}
+      SOURCE_SHA: ${{ needs.prepare.outputs.sha }}
+      RELEASE_REPOSITORY: ${{ github.repository }}
     container:
       image: ghcr.io/flathub-infra/flatpak-github-actions:gnome-50
       options: --privileged
     steps:
       - name: Checkout
         uses: actions/checkout@v7
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+
+      - name: Validate complete Russian catalogue
+        run: |
+          msgcmp po/ru.po po/rustconn.pot
+          bash scripts/check-po-complete.sh ru
+
+      - name: Pin Flatpak to exact reviewed fork source
+        run: |
+          python3 scripts/manual-release.py pin-flatpak \
+            --manifest packaging/flatpak/io.github.totoshko88.RustConn.yml \
+            --sha "$SOURCE_SHA" \
+            --repository "$RELEASE_REPOSITORY"
 
       - name: Install flatpak-cargo-generator
         run: |
@@ -523,37 +585,49 @@ jobs:
           echo "${FBT_SHA256}  flatpak-cargo-generator.py" | sha256sum -c -
           chmod +x flatpak-cargo-generator.py
           python3 flatpak-cargo-generator.py Cargo.lock -o packaging/flatpak/cargo-sources.json
-          cp packaging/flatpak/cargo-sources.json packaging/flathub/cargo-sources.json
 
       - name: Build Flatpak
         uses: flatpak/flatpak-github-actions/flatpak-builder@v6
         with:
           manifest-path: packaging/flatpak/io.github.totoshko88.RustConn.yml
-          bundle: RustConn.flatpak
+          bundle: RustConn-${{ env.RELEASE_VERSION }}.flatpak
           cache-key: flatpak-builder-${{ github.sha }}
           build-bundle: true
+          upload-artifact: false
 
       - name: Upload Flatpak artifact
         uses: actions/upload-artifact@v7
         with:
           name: flatpak
-          path: RustConn.flatpak
+          path: RustConn-${{ env.RELEASE_VERSION }}.flatpak
+          if-no-files-found: error
 
   release:
-    name: Create Release
-    needs: [build-deb, build-rpm, build-appimage, build-flatpak]
+    name: Create Draft Release
+    needs: [prepare, build-deb, build-rpm, build-appimage, build-flatpak]
     runs-on: ubuntu-26.04
-    if: startsWith(github.ref, 'refs/tags/')
     permissions:
       contents: write
-      # Required by actions/attest-build-provenance: id-token to obtain the
-      # Sigstore OIDC token that proves which workflow ran, attestations to
-      # store the signed statement against the repository.
+      # Provenance permissions are confined to the final, non-building job.
       id-token: write
       attestations: write
+    env:
+      RELEASE_TAG: ${{ needs.prepare.outputs.tag }}
+      RELEASE_VERSION: ${{ needs.prepare.outputs.version }}
+      RELEASE_REPOSITORY: ${{ github.repository }}
+      SOURCE_REF: ${{ github.ref }}
+      SOURCE_SHA: ${{ github.sha }}
+      DEB_ASSET: rustconn_${{ needs.prepare.outputs.version }}_amd64.deb
+      RPM_ASSET: rustconn-${{ needs.prepare.outputs.version }}-1.x86_64.rpm
+      APPIMAGE_ASSET: RustConn-${{ needs.prepare.outputs.version }}-x86_64.AppImage
+      FLATPAK_ASSET: RustConn-${{ needs.prepare.outputs.version }}.flatpak
     steps:
-      - name: Checkout
+      - name: Checkout exact workflow source and all tags
         uses: actions/checkout@v7
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 0
+          persist-credentials: false
 
       - name: Download deb artifact
         uses: actions/download-artifact@v8
@@ -579,330 +653,59 @@ jobs:
           name: flatpak
           path: dist/
 
-      - name: Get version from tag
-        id: version
-        run: echo "VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_OUTPUT
-
-      - name: Rename Flatpak with version
-        run: mv dist/RustConn.flatpak "dist/RustConn-${{ steps.version.outputs.VERSION }}.flatpak"
-
-      # Signed SLSA build provenance for every file that ends up on the release.
-      # Placed after the Flatpak rename on purpose: the attestation binds to a
-      # file's digest AND name, so attesting before the rename would leave the
-      # published artifact unverifiable.
-      #
-      # Verify a download with:
-      #   gh attestation verify RustConn-<ver>.AppImage --repo totoshko88/RustConn
-      #
-      # Covers deb, rpm, AppImage and Flatpak. The snap is NOT covered here — it
-      # is built in a separate post-release job and the Snap Store does its own
-      # signing, so adding it would mean a second attestation step in that job.
-      - name: Attest build provenance
-        uses: actions/attest-build-provenance@4d101475d8b20a2381f78447822ac1eab6504dd8 # v4.2.2
-        with:
-          subject-path: 'dist/*'
-
-      - name: Extract changelog for version
-        id: changelog
-        run: |
-          VERSION=${{ steps.version.outputs.VERSION }}
-          # Extract changelog section for this version
-          # Start capturing after finding ## [VERSION], stop at next ## [
-          awk -v ver="${VERSION}" '
-            BEGIN { found=0 }
-            /^## \[/ {
-              if (found) exit
-              if (index($0, "[" ver "]") > 0) { found=1; next }
-            }
-            found && !/^$/ { print }
-            found && /^$/ { print }
-          ' CHANGELOG.md > version_changelog.md
-          
-          # Debug: show what was extracted
-          echo "=== Extracted changelog for ${VERSION} ==="
-          cat version_changelog.md
-          echo "=== End changelog ==="
-          
-          # If no changelog found, use default message
-          if [ ! -s version_changelog.md ]; then
-            echo "Release ${VERSION}" > version_changelog.md
-          fi
-
-      - name: Generate release notes
-        id: notes
-        run: |
-          VERSION=${{ steps.version.outputs.VERSION }}
-          cat << 'HEADER' > release_notes.md
-          ## What's Changed
-          
-          HEADER
-          
-          cat version_changelog.md >> release_notes.md
-          
-          cat << EOF >> release_notes.md
-          
-          ## Installation
-
-          ### Flatpak (Recommended)
-          \`\`\`bash
-          flatpak install flathub io.github.totoshko88.RustConn
-          \`\`\`
-
-          ### Snap
-          \`\`\`bash
-          sudo snap install rustconn
-          \`\`\`
-
-          ### Debian/Ubuntu (.deb from this release)
-          \`\`\`bash
-          sudo dpkg -i rustconn_${VERSION}_amd64.deb
-          sudo apt-get install -f  # Install dependencies if needed
-          \`\`\`
-
-          ### Fedora (.rpm from this release)
-          \`\`\`bash
-          sudo dnf install rustconn-${VERSION}-1.fc44.x86_64.rpm
-          \`\`\`
-
-          ### AppImage
-          \`\`\`bash
-          chmod +x RustConn-${VERSION}-x86_64.AppImage
-          ./RustConn-${VERSION}-x86_64.AppImage
-          \`\`\`
-
-          ### macOS (Homebrew)
-          \`\`\`bash
-          brew tap totoshko88/rustconn
-          brew install rustconn
-          open \$(brew --prefix)/opt/rustconn/RustConn.app
-          \`\`\`
-          All dependencies (GTK4, libadwaita, VTE, Adwaita icons) are installed automatically.
-          Requires macOS 13 (Ventura) or later.
-
-          ### OBS Repositories
-          Packages available at: https://build.opensuse.org/package/show/home:totoshko88:rustconn/rustconn
-
-          \`\`\`bash
-          # Debian 13 (Trixie)
-          echo 'deb http://download.opensuse.org/repositories/home:/totoshko88:/rustconn/Debian_13/ /' \\
-            | sudo tee /etc/apt/sources.list.d/rustconn.list
-          curl -fsSL https://download.opensuse.org/repositories/home:/totoshko88:/rustconn/Debian_13/Release.key \\
-            | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/rustconn.gpg > /dev/null
-          sudo apt update && sudo apt install rustconn
-
-          # Ubuntu 24.04 LTS (Noble)
-          echo 'deb http://download.opensuse.org/repositories/home:/totoshko88:/rustconn/xUbuntu_24.04/ /' \\
-            | sudo tee /etc/apt/sources.list.d/rustconn.list
-          curl -fsSL https://download.opensuse.org/repositories/home:/totoshko88:/rustconn/xUbuntu_24.04/Release.key \\
-            | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/rustconn.gpg > /dev/null
-          sudo apt update && sudo apt install rustconn
-
-          # Ubuntu 26.04 LTS (Resolute)
-          echo 'deb http://download.opensuse.org/repositories/home:/totoshko88:/rustconn/xUbuntu_26.04/ /' \\
-            | sudo tee /etc/apt/sources.list.d/rustconn.list
-          curl -fsSL https://download.opensuse.org/repositories/home:/totoshko88:/rustconn/xUbuntu_26.04/Release.key \\
-            | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/rustconn.gpg > /dev/null
-          sudo apt update && sudo apt install rustconn
-
-          # Fedora 44
-          sudo dnf config-manager addrepo --from-repofile=https://download.opensuse.org/repositories/home:/totoshko88:/rustconn/Fedora_44/home:totoshko88:rustconn.repo
-          sudo dnf install rustconn
-
-          # Fedora 43
-          sudo dnf config-manager addrepo --from-repofile=https://download.opensuse.org/repositories/home:/totoshko88:/rustconn/Fedora_43/home:totoshko88:rustconn.repo
-          sudo dnf install rustconn
-
-          # openSUSE Tumbleweed
-          sudo zypper ar https://download.opensuse.org/repositories/home:/totoshko88:/rustconn/openSUSE_Tumbleweed/ rustconn
-          sudo zypper ref && sudo zypper in rustconn
-
-          # openSUSE Leap 16.0
-          sudo zypper ar https://download.opensuse.org/repositories/home:/totoshko88:/rustconn/openSUSE_Leap_16.0/ rustconn
-          sudo zypper ref && sudo zypper in rustconn
-          \`\`\`
-
-          ### Arch Linux (AUR)
-          \`\`\`bash
-          yay -S rustconn
-          \`\`\`
-
-          ### FreeBSD (Ports)
-          \`\`\`bash
-          pkg install rustconn
-          \`\`\`
-
-          Full installation guide: https://github.com/totoshko88/RustConn/blob/main/docs/INSTALL.md
-
-          ## Verifying your download
-
-          Every binary on this release (deb, rpm, AppImage, Flatpak) is covered two ways.
-
-          Plain checksums — download \`SHA256SUMS\` alongside the asset, then:
-          \`\`\`bash
-          sha256sum -c SHA256SUMS
-          \`\`\`
-
-          Signed build provenance (SLSA, via Sigstore) — proves the file was built by this
-          workflow from this commit:
-          \`\`\`bash
-          gh attestation verify RustConn-${VERSION}-x86_64.AppImage --repo totoshko88/RustConn
-          \`\`\`
-          (The snap is signed by the Snap Store; the macOS build is delivered via the Homebrew tap.)
-          EOF
-
-      - name: List artifacts
-        run: ls -la dist/
-
-      # Plain-checksum manifest for offline / no-tooling verification. The signed
-      # attestation above (actions/attest-build-provenance) is the stronger trust
-      # signal — this is a convenience layer so a user can run
-      #   sha256sum -c SHA256SUMS
-      # against the downloaded files without `gh attestation verify` or Sigstore.
-      #
-      # Generated AFTER the attestation step on purpose: the files already carry
-      # their final published names here (the Flatpak rename happened), and the
-      # manifest excludes itself so the hash covers only the real artifacts, not
-      # a checksum file hashing a checksum file. Scope matches the attestation:
-      # deb, rpm, AppImage and Flatpak (the files in dist/). The snap is signed
-      # by the Snap Store and the macOS build ships via the Homebrew tap, so
-      # neither is a GitHub-Release asset and neither is covered here.
-      - name: Generate SHA256SUMS
+      - name: Generate SHA256SUMS for exactly four products
         working-directory: dist
         run: |
           set -euo pipefail
-          # Hash every file in dist/ except the manifest itself; store bare
-          # names (no dist/ prefix) so `sha256sum -c SHA256SUMS` works when run
-          # from the directory the user downloaded the assets into.
-          find . -maxdepth 1 -type f ! -name 'SHA256SUMS' -printf '%P\n' \
-            | sort \
-            | xargs -r sha256sum > SHA256SUMS
-          echo "=== SHA256SUMS ==="
-          cat SHA256SUMS
+          for asset in "$DEB_ASSET" "$RPM_ASSET" "$APPIMAGE_ASSET" "$FLATPAK_ASSET"; do
+            test -f "$asset"
+            test ! -L "$asset"
+          done
+          sha256sum -- "$DEB_ASSET" "$RPM_ASSET" "$APPIMAGE_ASSET" "$FLATPAK_ASSET" > SHA256SUMS
 
-      - name: Create Release
-        uses: softprops/action-gh-release@efb35369e0ad2afab669f228072c1b0d510eae64 # v3.0.3
+      # Attest final filenames, including the four-product checksum manifest.
+      - name: Attest build provenance
+        uses: actions/attest-build-provenance@4d101475d8b20a2381f78447822ac1eab6504dd8 # v4.2.2
         with:
-          files: dist/*
-          body_path: release_notes.md
+          subject-path: |
+            dist/${{ env.DEB_ASSET }}
+            dist/${{ env.RPM_ASSET }}
+            dist/${{ env.APPIMAGE_ASSET }}
+            dist/${{ env.FLATPAK_ASSET }}
+            dist/SHA256SUMS
+
+      - name: Read original upstream release notes as data
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-  update-obs:
-    name: Update OBS Package
-    needs: [release]
-    runs-on: ubuntu-26.04
-    if: startsWith(github.ref, 'refs/tags/')
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v7
-
-      - name: Install Rust
-        uses: dtolnay/rust-toolchain@6c977a6ca4077a0ceb28ffbe03f59d46e9ac8772 # master
-        with:
-          toolchain: ${{ env.RUST_TOOLCHAIN }}
-
-      - name: Install dependencies
+          GH_TOKEN: ${{ github.token }}
         run: |
-          sudo apt-get update
-          sudo apt-get install -y zstd osc
+          gh api --method GET "repos/totoshko88/RustConn/releases/tags/v${RELEASE_VERSION}" \
+            --jq '.body // ""' > upstream-release-body.md
 
-      - name: Get version from tag
-        id: version
-        run: echo "VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_OUTPUT
+      - name: Generate fork release notes
+        run: |
+          python3 scripts/manual-release.py notes \
+            --tag "$RELEASE_TAG" \
+            --repository "$RELEASE_REPOSITORY" \
+            --upstream-notes upstream-release-body.md \
+            --output release_notes.md
 
-      - name: Publish to OBS
+      - name: Revalidate remote tag and create draft without clobbering
         env:
-          OBS_USERNAME: ${{ secrets.OBS_USERNAME }}
-          OBS_PASSWORD: ${{ secrets.OBS_PASSWORD }}
-        run: ./scripts/obs-publish.sh "${{ steps.version.outputs.VERSION }}"
-
-  update-homebrew:
-    name: Update Homebrew Tap
-    needs: [release]
-    runs-on: ubuntu-26.04
-    if: startsWith(github.ref, 'refs/tags/')
-    steps:
-      - name: Checkout RustConn
-        uses: actions/checkout@v7
-
-      - name: Get version from tag
-        id: version
-        run: echo "VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_OUTPUT
-
-      - name: Download source tarball and compute SHA256
-        id: sha
+          GH_TOKEN: ${{ github.token }}
         run: |
-          VERSION=${{ steps.version.outputs.VERSION }}
-          URL="https://github.com/totoshko88/RustConn/archive/refs/tags/v${VERSION}.tar.gz"
-          # Retry: the tag tarball may not be replicated to all CDN nodes
-          # in the first seconds after the release is created
-          curl --retry 5 --retry-delay 10 --retry-all-errors -sL "$URL" -o source.tar.gz
-          tar -tzf source.tar.gz > /dev/null || { echo "::error::Downloaded tarball is corrupt"; exit 1; }
-          SHA256=$(sha256sum source.tar.gz | cut -d' ' -f1)
-          echo "SHA256=${SHA256}" >> $GITHUB_OUTPUT
-          echo "Source tarball SHA256: ${SHA256}"
-
-      - name: Checkout Homebrew tap
-        uses: actions/checkout@v7
-        with:
-          repository: totoshko88/homebrew-rustconn
-          token: ${{ secrets.HOMEBREW_TAP_TOKEN }}
-          path: homebrew-tap
-
-      - name: Update formula
-        run: |
-          VERSION=${{ steps.version.outputs.VERSION }}
-          SHA256=${{ steps.sha.outputs.SHA256 }}
-          FORMULA="homebrew-tap/Formula/rustconn.rb"
-
-          # Copy the canonical formula from the release source tree.
-          # This ensures feature flags, dependencies, and install logic stay in
-          # sync with the code — the CI only needs to patch version + sha256.
-          cp packaging/macos/rustconn.rb "$FORMULA"
-
-          # Replace the archive URL version (anchored to active `url` line)
-          sed -i 's|^\(  url "https://github.com/totoshko88/RustConn/archive/refs/tags/v\)[^"]*\(\.tar\.gz"\)|\1'"${VERSION}"'\2|' "$FORMULA"
-
-          # Replace sha256 (handles both PLACEHOLDER_SHA256 and any previous real hash)
-          sed -i 's|^\(  sha256 "\)[^"]*\(".*\)|\1'"${SHA256}"'\2|' "$FORMULA"
-
-          # ── Verification: fail unless exactly one active URL contains the
-          # release tag and exactly one active sha256 contains the computed hash.
-          # Escape the dots in the version so 0.19.11 cannot match 0X19Y11
-          VERSION_RE=${VERSION//./\\.}
-          URL_COUNT=$(grep -c "^  url.*v${VERSION_RE}\.tar\.gz" "$FORMULA" || true)
-          SHA_COUNT=$(grep -c "^  sha256 \"${SHA256}\"" "$FORMULA" || true)
-
-          if [[ "$URL_COUNT" -ne 1 ]]; then
-            echo "::error::Expected exactly 1 active URL with v${VERSION}, found ${URL_COUNT}"
-            head -15 "$FORMULA"
-            exit 1
-          fi
-          if [[ "$SHA_COUNT" -ne 1 ]]; then
-            echo "::error::Expected exactly 1 active sha256 with computed hash, found ${SHA_COUNT}"
-            head -15 "$FORMULA"
-            exit 1
-          fi
-
-          echo "=== Updated formula (first 10 lines) ==="
-          head -10 "$FORMULA"
-
-      - name: Commit and push
-        run: |
-          VERSION=${{ steps.version.outputs.VERSION }}
-          cd homebrew-tap
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add Formula/rustconn.rb
-          # Idempotent: a re-run for the same version produces identical content,
-          # so skip the commit/push when nothing changed (avoids a failed
-          # "nothing to commit" exit on retry).
-          if git diff --cached --quiet; then
-            echo "Formula already up to date for ${VERSION} — nothing to commit"
-          else
-            git commit -m "rustconn ${VERSION}
-
-          Automated update from RustConn release v${VERSION}
-          https://github.com/totoshko88/RustConn/releases/tag/v${VERSION}"
-            git push
-          fi
+          set -euo pipefail
+          # Refresh this tag only: a moved or deleted tag must stop the release.
+          git fetch --no-tags origin "+refs/tags/${RELEASE_TAG}:refs/tags/${RELEASE_TAG}"
+          python3 scripts/manual-release.py prepare --ref "$SOURCE_REF" --sha "$SOURCE_SHA" > /dev/null
+          # `create` fails for an existing release; never upload to or edit one.
+          gh release create "$RELEASE_TAG" \
+            "dist/$DEB_ASSET" \
+            "dist/$RPM_ASSET" \
+            "dist/$APPIMAGE_ASSET" \
+            "dist/$FLATPAK_ASSET" \
+            dist/SHA256SUMS \
+            --repo "$RELEASE_REPOSITORY" \
+            --verify-tag \
+            --draft \
+            --title "RustConn-ru $RELEASE_TAG" \
+            --notes-file release_notes.md

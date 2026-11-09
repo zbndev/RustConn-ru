@@ -353,8 +353,8 @@ modules:
       - if [ -f cargo/config ]; then mv cargo/config cargo/config.toml; fi
       # Features the GNOME 51 runtime backs. VTE comes from the bundled 0.84.1
       # module above; libadwaita and GTK come from the runtime.
-      - CC=/app/bin/cc-wrap cargo build --release -p rustconn --features 'adw-1-10,vte-0-84,gtk-4-24'
-      - CC=/app/bin/cc-wrap cargo build --release -p rustconn-cli --features full
+      - CC=/app/bin/cc-wrap cargo build --locked --release -p rustconn --features 'adw-1-10,vte-0-84,gtk-4-24'
+      - CC=/app/bin/cc-wrap cargo build --locked --release -p rustconn-cli --features full
       - install -Dm755 target/release/rustconn /app/bin/rustconn
       - install -Dm755 target/release/rustconn-cli /app/bin/rustconn-cli
       - install -Dm644 rustconn/assets/io.github.totoshko88.RustConn.desktop /app/share/applications/io.github.totoshko88.RustConn.desktop

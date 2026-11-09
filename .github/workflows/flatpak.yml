@@ -20,6 +20,23 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v7
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+
+      - name: Validate Russian catalogue
+        run: |
+          msgcmp po/ru.po po/rustconn.pot
+          ./scripts/check-po-complete.sh ru
+
+      - name: Pin source to reviewed fork commit
+        env:
+          SOURCE_SHA: ${{ github.sha }}
+          SOURCE_REPOSITORY: ${{ github.repository }}
+        run: |
+          python3 scripts/manual-release.py pin-flatpak \
+            --manifest packaging/flatpak/io.github.totoshko88.RustConn.yml \
+            --sha "$SOURCE_SHA" --repository "$SOURCE_REPOSITORY"
 
       - name: Install flatpak-cargo-generator
         run: |
@@ -44,6 +61,7 @@ jobs:
           bundle: RustConn.flatpak
           cache-key: flatpak-builder-${{ github.sha }}
           build-bundle: true
+          upload-artifact: false
         env:
           # Retry network downloads up to 3 times (e.g. transient GitLab 500)
           FLATPAK_BUILDER_N_TRIES: 3
@@ -53,3 +71,4 @@ jobs:
         with:
           name: flatpak
           path: RustConn.flatpak
+          if-no-files-found: error

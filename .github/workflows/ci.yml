@@ -1,12 +1,7 @@
 name: CI
 
 on:
-  push:
-    branches: [main, develop]
-  pull_request:
-    branches: [main]
-  # Allows the non-gating macOS formula build to be triggered on demand
-  # (see the macos-formula job) without waiting for a push to main.
+  # Run only after the selected revision has been reviewed.
   workflow_dispatch:
 
 # Least privilege: CI only needs to read the repo contents.
@@ -165,51 +160,6 @@ jobs:
       # declared in each Cargo.toml's [package.metadata.cargo-machete] ignored.
       - name: Unused dependencies
         run: cargo-machete
-
-      # The changelog is generated from commit subjects, and AGENTS.md mandates
-      # Conventional Commits (`type(scope): description`). Nothing enforced it,
-      # so `dlc update` reached main and would have to be hand-fixed at release
-      # time. This lints only the commits a PR *adds* (base..head), never the
-      # branch's whole history, so pre-existing non-conforming commits on main
-      # are not the PR's problem. It needs only git, so it lives in Hygiene with
-      # the other no-toolchain gates. Runs on pull_request events only; a push
-      # to main/develop has no PR range and the step self-skips.
-      - name: Conventional commit subjects (PR only)
-        if: github.event_name == 'pull_request'
-        env:
-          BASE_SHA: ${{ github.event.pull_request.base.sha }}
-          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
-        run: |
-          set -euo pipefail
-          # checkout@v7 is shallow (depth 1); the base commit is usually absent.
-          # Fetch just enough to resolve the base..head range without a full
-          # history download.
-          git fetch --no-tags --quiet origin "$BASE_SHA" "$HEAD_SHA" 2>/dev/null || \
-            git fetch --no-tags --quiet --deepen=100 origin || true
-          # Conventional-commit types from AGENTS.md, optional (scope) and a
-          # breaking-change `!`, then `: ` and a non-empty description.
-          types='feat|fix|docs|style|refactor|test|chore|perf|ci|build'
-          pattern="^(${types})(\([a-z0-9._-]+\))?!?: .+"
-          rc=0
-          # %H %P %s: hash, parent list, subject. A commit with >1 parent is a
-          # merge (git-generated subject) and is skipped. A bare X.Y.Z subject
-          # is a release commit produced by scripts/release.sh — also allowed.
-          while IFS=$'\t' read -r sha parents subject; do
-            case "$parents" in
-              *' '*) continue ;;  # merge commit — skip
-            esac
-            if printf '%s' "$subject" | grep -qE '^[0-9]+\.[0-9]+\.[0-9]+$'; then
-              continue  # release version commit — allowed
-            fi
-            if ! printf '%s' "$subject" | grep -qE "$pattern"; then
-              echo "::error::non-conventional commit subject ${sha:0:12}: ${subject}"
-              rc=1
-            fi
-          done < <(git log --no-merges --format='%H%x09%P%x09%s' "${BASE_SHA}..${HEAD_SHA}")
-          if [ "$rc" -ne 0 ]; then
-            echo "::error::commit subjects must follow Conventional Commits (${types}); see AGENTS.md"
-          fi
-          exit $rc
 
   i18n:
     name: i18n
@@ -612,159 +562,8 @@ jobs:
             -p rustconn-dock-sys \
             -p rustconn-lock-sys
 
-  macos-formula:
-    name: macOS Homebrew formula
-    runs-on: macos-latest
-    # Why this job exists.
-    #
-    # The Homebrew formula (packaging/macos/rustconn.rb) is the primary macOS
-    # artifact, yet nothing built it in CI: update-homebrew in release.yml runs on
-    # ubuntu, copies the file into the tap and patches url+sha256 — so a formula
-    # that no longer builds (a stale dependency, a broken feature ladder, a
-    # packaging step like the iconutil regression that shipped in 0.21.x) was only
-    # discovered by the first user to `brew install`, after the release. This job
-    # exercises the formula before that.
-    #
-    # The syntax and style checks gate — they are cheap and a red formula must not
-    # merge. The build-from-source step is non-gating (continue-on-error): it is a
-    # ~20-minute Homebrew build of gtk4/libadwaita/vte3/webkit and occasionally
-    # flaky, so it informs rather than blocks, exactly like update-obs and
-    # update-homebrew are kept off the release's critical path.
-    steps:
-      - uses: actions/checkout@v7
-
-      - name: Formula syntax (ruby -c)
-        run: ruby -c packaging/macos/rustconn.rb
-
-      # The committed .icns is what every build ships, because macOS 27's
-      # iconutil rejects valid iconsets (#323). make-iconset.sh deliberately only
-      # *warns* when the recorded SVG hash no longer matches — a stale icon is
-      # cosmetic and refusing to build over it would reintroduce the failure the
-      # prebuilt exists to avoid. This is where that warning becomes a gate: here
-      # a mismatch costs a red job, not a broken install.
-      - name: Prebuilt icon matches the SVG
-        run: |
-          ./scripts/make-iconset.sh --check \
-            rustconn/assets/icons/hicolor/scalable/apps/io.github.totoshko88.RustConn.svg
-
-      # `brew style` must be pointed at a path that *looks like* a tap, not at the
-      # file where it lives. Its first version ran
-      # `brew style packaging/macos/rustconn.rb` and was red on arrival with 13
-      # offences, seven of which were not defects at all:
-      #
-      #   * Homebrew's Library/.rubocop.yml switches cops off by path. Sorbet/
-      #     StrictSigil, Sorbet/TrueSigil, Style/Documentation and Style/Frozen
-      #     StringLiteralComment all carry `Exclude: **/{Formula,Casks}/**/*.rb`.
-      #     Outside such a path rubocop treats a formula as ordinary Ruby and
-      #     demands a type sigil, a magic comment and a class doc comment — none of
-      #     which any formula in homebrew-core has, `wget.rb` included.
-      #   * The three FormulaAudit/Checksum offences were about
-      #     `sha256 "PLACEHOLDER_SHA256"`, which is deliberate and required:
-      #     release.sh gates on it and release.yml rewrites it with the measured
-      #     hash of the release tarball — a tarball that does not exist until the
-      #     tag is pushed, so a real hash cannot live in-tree.
-      #
-      # So: copy the formula under a `Formula/` directory and substitute a
-      # syntactically valid dummy hash. What is left is the offences that are
-      # really about the formula. Two flags are load-bearing:
-      #
-      #   * `FormulaAuditStrict` is `brew style`'s own default exclusion — passing
-      #     `--except-cops` *replaces* that default rather than adding to it
-      #     (see `dev-cmd/style.rb`), so dropping it here would silently enable a
-      #     whole cop department.
-      #   * `FormulaAudit/Text` wants `cargo install *std_cargo_args`, which this
-      #     formula cannot use; the reason is documented at the `system "cargo"`
-      #     call. It is waived here rather than with a `rubocop:disable` comment
-      #     because Style/DisableCopsWithinSourceCodeDirective is *enabled* for
-      #     `Formula/` paths, so the directive would itself be an offence.
-      #   * `FormulaAudit/InstallSteps` demands `post_install_steps` instead of a
-      #     `post_install` method. Its declarative runner only knows a fixed set
-      #     of named actions and cannot express our lsregister / schema / icon
-      #     commands; defining a `post_install_steps` *method* instead shadows the
-      #     registrar and fires those commands during `brew info --json=v2`, which
-      #     is issue #386. So this formula keeps the (odeprecated) `post_install`
-      #     hook deliberately — see the comment at `def post_install` — and the
-      #     cop is waived here for the same directive reason as FormulaAudit/Text.
-      - name: Formula style (brew style)
-        run: |
-          set -euo pipefail
-          tap_dir="${RUNNER_TEMP}/formula-style/Formula"
-          mkdir -p "$tap_dir"
-          # Any 64-char lowercase hex satisfies the checksum cops. The formula's
-          # own digest is deterministic and obviously not a tarball hash, so a
-          # reader of this log cannot mistake it for the real one.
-          dummy_sha="$(shasum -a 256 packaging/macos/rustconn.rb | cut -d' ' -f1)"
-          sed "s|^\(  sha256 \"\)PLACEHOLDER_SHA256\(\".*\)|\1${dummy_sha}\2|" \
-              packaging/macos/rustconn.rb > "$tap_dir/rustconn.rb"
-          # Prove the substitution happened. Without this the step would silently
-          # keep testing the placeholder if release.sh's template shape ever moves.
-          if ! grep -qE '^  sha256 "[a-f0-9]{64}"$' "$tap_dir/rustconn.rb"; then
-            echo "::error::could not substitute PLACEHOLDER_SHA256 — has the template changed?"
-            exit 1
-          fi
-          brew style --except-cops=FormulaAuditStrict,FormulaAudit/Text,FormulaAudit/InstallSteps \
-                     "$tap_dir/rustconn.rb"
-
-      # Non-gating: a real build of the formula, so a packaging or dependency
-      # break shows up here rather than in a user's terminal. The formula builds
-      # with --no-default-features (web-embedded cannot build on macOS), so this
-      # is the same feature set users get. Runs only on push to main and manual
-      # dispatch, not on every PR, to keep runner minutes reasonable.
-      #
-      # What this does NOT check, so nobody reads more into a green tick than is
-      # there: `brew install` fetches the tarball named by the formula's `url` and
-      # `sha256`, which point at the last *published* release. So this validates
-      # the formula's packaging steps — dependencies, the feature ladder, msgfmt,
-      # the iconset, post_install — against released source, not against the code
-      # on this branch. A break introduced by a commit here surfaces on the next
-      # release's run, not this one. Catching it earlier would mean overriding
-      # `url` to the checkout, which changes what the formula under test is.
-      - name: Build from source (informational)
-        if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
-        continue-on-error: true
-        # Install through a real local tap with the real tarball hash. Two traps
-        # had to be cleared, both of which showed up as red annotations on this
-        # otherwise-green (continue-on-error) job and masked real ones:
-        #   1. Modern Homebrew removed `brew install ./file.rb` — it rejects any
-        #      formula not inside a registered tap ("requires formulae to be in a
-        #      tap"), and a tap is a git repo under Library/Taps, not just a dir
-        #      named Formula/. `brew tap-new` creates that repo.
-        #   2. The in-tree formula carries sha256 "PLACEHOLDER_SHA256" (release.yml
-        #      patches it only at release time). `--build-from-source` still
-        #      downloads the tarball named by `url` and verifies its hash, so a
-        #      placeholder or a dummy makes brew abort with "different checksum".
-        #      We compute the real hash of that tarball and substitute it, the
-        #      same thing release.yml's own `sha` step does. The url points at a
-        #      published tag; if that tag's tarball is not reachable (e.g. on a PR
-        #      before any release), skip rather than fail — this step is advisory.
-        run: |
-          set -uo pipefail
-          url="$(awk -F'"' '/^  url /{print $2; exit}' packaging/macos/rustconn.rb)"
-          if ! curl --retry 3 --retry-all-errors -fsSL "$url" -o source.tar.gz; then
-            echo "::notice::formula tarball not reachable ($url) — skipping informational build"
-            exit 0
-          fi
-          real_sha="$(shasum -a 256 source.tar.gz | cut -d' ' -f1)"
-          brew tap-new local/rustconn
-          tap_dir="$(brew --repository local/rustconn)/Formula"
-          mkdir -p "$tap_dir"
-          sed "s|^\(  sha256 \"\)PLACEHOLDER_SHA256\(\".*\)|\1${real_sha}\2|" \
-              packaging/macos/rustconn.rb > "$tap_dir/rustconn.rb"
-          brew install --build-from-source --verbose local/rustconn/rustconn
-
-  # Single success-gate. Branch protection should require THIS job alone instead
-  # of enumerating every job above: a new job added to the matrix is then covered
-  # automatically (it just needs adding to `needs` here), closing the hole where
-  # a job outside the protected list could go red without blocking a merge.
-  #
-  # `if: always()` so the gate runs even when an upstream job failed or was
-  # cancelled (without it, a failed need would skip this job and branch
-  # protection would see a skip, not a failure). The check fails on any need in
-  # `failure` or `cancelled`; `skipped` is allowed, because jobs legitimately
-  # skip on PRs (e.g. the push/dispatch-only macOS legs) and treating a skip as a
-  # failure would make every PR red. macos-formula's own build step is
-  # `continue-on-error`, so that job reports success regardless — its result is
-  # intentionally not a merge blocker.
+  # Require this single gate when reviewing an update branch.
+  # Run even when a dependency fails or is cancelled, and propagate that result.
 
   # Public-API drift check for the rustconn-core library (cargo-semver-checks).
   #
@@ -914,7 +713,6 @@ jobs:
       - cargo-deny
       - feature-powerset
       - macos-sys
-      - macos-formula
     steps:
       - name: Verify no upstream job failed
         shell: bash

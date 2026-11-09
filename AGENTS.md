@@ -4,7 +4,7 @@ Instructions for AI coding agents. RustConn is a GTK4/libadwaita connection
 manager for SSH, RDP, VNC, SPICE, Telnet, Serial, Kubernetes and Zero Trust
 brokers. Rust 2024 edition, MSRV 1.95, Wayland-first, Linux and macOS.
 
-Communication language with the maintainer: **Ukrainian**.
+Communication language with the maintainer: **Russian**.
 
 ## How to use this file
 

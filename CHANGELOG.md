@@ -5,6 +5,12 @@ All notable changes to RustConn will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Added
+- **Russian interface translation** — adds a complete Russian gettext catalogue, the Русский option in Settings → Interface → Language, and Russian desktop launcher metadata. Sidebar font-size labels are now included in translation extraction so they also appear in Russian. (`po/ru.po`, `po/LINGUAS`, `po/rustconn.pot`, `rustconn/src/i18n.rs`, `rustconn/src/i18n_markers.rs`, `rustconn/assets/io.github.totoshko88.RustConn.desktop`)
+- **Reviewed, manual fork releases** — adds tag-bound builds for DEB, RPM, AppImage and downloadable Flatpak files, with Russian catalogue checks, checksums, provenance and a draft-only GitHub Release. Artifact filenames and package versions retain upstream naming. Flatpak builds the exact fork commit instead of fetching the original source. All workflows are manual-only; Snap, OBS, Homebrew and Flathub publishing automation is removed. The update, review and publication procedure is documented in `docs/CI_BUILD_FLOW.md`.
+
 ## [0.24.9] - 2026-11-09
 
 ### Added

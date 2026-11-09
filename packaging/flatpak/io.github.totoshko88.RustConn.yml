@@ -363,8 +363,8 @@ modules:
       # module above; libadwaita and GTK come from the runtime. The `vte-0-84`
       # feature chain (0-78→0-80→0-82→0-84) is selected as the ladder's top rung;
       # the crate calls only 0.78 API, so the extra rungs are pure ceiling bumps.
-      - CC=/app/bin/cc-wrap cargo build --release -p rustconn --features 'adw-1-10,vte-0-84,gtk-4-24'
-      - CC=/app/bin/cc-wrap cargo build --release -p rustconn-cli --features full
+      - CC=/app/bin/cc-wrap cargo build --locked --release -p rustconn --features 'adw-1-10,vte-0-84,gtk-4-24'
+      - CC=/app/bin/cc-wrap cargo build --locked --release -p rustconn-cli --features full
       - install -Dm755 target/release/rustconn /app/bin/rustconn
       - install -Dm755 target/release/rustconn-cli /app/bin/rustconn-cli
       - install -Dm644 rustconn/assets/io.github.totoshko88.RustConn.desktop /app/share/applications/io.github.totoshko88.RustConn.desktop

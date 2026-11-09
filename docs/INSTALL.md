@@ -1,5 +1,18 @@
 # Installation Guide
 
+## RustConn-ru fork
+
+Download this fork's AppImage, DEB, RPM or Flatpak file from
+[zbndev/RustConn-ru releases](https://github.com/zbndev/RustConn-ru/releases)
+and follow the installation commands in that release's notes.
+For building and publishing the fork, see [CI & Build Flow](CI_BUILD_FLOW.md).
+
+**The Flathub, Snap, OBS, Homebrew and original `rustconn` AUR channels described
+below distribute upstream RustConn, not this Russian-localized fork.**
+The remaining channel-specific instructions are retained as upstream reference.
+The fork uses the same binary names, application ID and configuration paths as
+upstream, so these packages are not designed for side-by-side installation.
+
 ## System Requirements
 
 - **OS:** Linux (Wayland-first, X11 supported), macOS 13+ (Ventura),
@@ -283,7 +296,7 @@ ln -sf $(brew --prefix)/opt/rustconn/RustConn.app /Applications/RustConn.app
 | `rustconn-cli` | CLI tool for scripting and automation |
 | `rustconn-app` | Convenience launcher (opens .app bundle) |
 | `RustConn.app` | macOS application bundle with icon and environment setup |
-| Locales | Every catalogue in `po/LINGUAS` (az, be, cs, da, de, es, fr, it, ka, kk, nl, pl, pt, sk, sv, uk, uz, vi, zh_CN) |
+| Locales | Every catalogue in `po/LINGUAS` (az, be, cs, da, de, es, fr, it, ka, kk, nl, pl, pt, ru, sk, sv, uk, uz, vi, zh_CN) |
 
 ### Optional: Password Manager CLIs
 
