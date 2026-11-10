@@ -11,11 +11,10 @@
 </p>
 
 ---
-Russian-localized fork of [RustConn](https://github.com/totoshko88/RustConn).
-Upstream changes are reviewed and merged manually. All workflows require a manual
-start; release builds create a draft, never a public release.
-See [the update and release procedure](docs/CI_BUILD_FLOW.md).
 
+> [NOTE!]
+> Данный форк отличается от [RustConn](https://github.com/totoshko88/RustConn) только наличием русской локализации, которую автор апстрима по религиозным причинам отказывается добавлять.
+> Никаких функциональных изменений в код приложения не вносилось.
 
 RustConn is a cross-platform connection orchestrator with a GTK4/libadwaita interface.
 It brings SSH, RDP, VNC, SPICE, MOSH, Telnet, Serial, Kubernetes, and Zero Trust connections under one roof — with embedded Rust clients where possible and seamless integration with external tools where needed.
@@ -77,11 +76,11 @@ More upstream screenshots are available on the [original Flathub listing](https:
 
 | Method | Command / Link |
 |--------|---------------|
-| **AppImage** | [Fork releases](https://github.com/zbndev/RustConn-ru/releases) |
-| **Debian/Ubuntu (.deb)** | [Fork releases](https://github.com/zbndev/RustConn-ru/releases) |
-| **Fedora (.rpm)** | [Fork releases](https://github.com/zbndev/RustConn-ru/releases) |
-| **Flatpak file (.flatpak)** | [Fork releases](https://github.com/zbndev/RustConn-ru/releases) |
-| **Arch Linux (AUR)** | `rustconn-ru` is planned as a separately maintained package |
+| **AppImage** | [Releases](https://github.com/zbndev/RustConn-ru/releases) |
+| **Debian/Ubuntu (.deb)** | [Releases](https://github.com/zbndev/RustConn-ru/releases) |
+| **Fedora (.rpm)** | [Releases](https://github.com/zbndev/RustConn-ru/releases) |
+| **Flatpak file (.flatpak)** | [Releases](https://github.com/zbndev/RustConn-ru/releases) |
+| **Arch Linux (AUR)** | `yay -S rustconn-ru` |
 | **From source** | Rust 1.95+, GTK4 4.14+ ([build guide](docs/BUILD.md)); use this fork's source |
 
 Use the installation commands included in the fork's release notes. The original
