@@ -72,7 +72,7 @@ Then perform ALL of the following steps:
    - `packaging/obs/debian.changelog` (same Debian format, prepend)
    - `packaging/obs/rustconn.changes` (OBS format, prepend)
    - `packaging/obs/rustconn.spec` (update `Version:` field + add `%changelog` entry)
-   - `rustconn/assets/io.github.totoshko88.RustConn.metainfo.xml` (add `<release>` entry)
+   - `rustconn/assets/io.github.zbndev.RustConnRu.metainfo.xml` (add `<release>` entry)
 
 6. **Version strings** — already done in step 3 by `scripts/bump-version.sh`. This
    list used to live here in prose, sixteen bullets long, mirroring `PKG_FILES` in

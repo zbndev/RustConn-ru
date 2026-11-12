@@ -26,7 +26,7 @@ That covers, and you should not re-derive any of it by hand:
 
 ## Then do these, which the script cannot
 
-1. **Flatpak** — read `packaging/flatpak/io.github.totoshko88.RustConn.yml`:
+1. **Flatpak** — read `packaging/flatpak/io.github.zbndev.RustConnRu.yml`:
    - `runtime-version` of `org.gnome.Platform` / `org.gnome.Sdk` (currently '50')
      against the latest stable GNOME runtime on Flathub.
    - `org.freedesktop.Sdk.Extension.rust-stable` — usually tracks the freedesktop

@@ -225,7 +225,7 @@ impl ServerGraphicsCapabilities {
 
 ### 7. Flatpak OpenH264 Module
 
-Added to `packaging/flatpak/io.github.totoshko88.RustConn.yml`:
+Added to `packaging/flatpak/io.github.zbndev.RustConnRu.yml`:
 
 ```yaml
   - name: openh264
@@ -298,7 +298,7 @@ pub enum GfxError {
 | `rustconn-core/src/rdp_client/client/connection.rs` | Register `GraphicsPipelineClient` on DVC |
 | `rustconn-core/src/rdp_client/client/session.rs` | Drain GFX handler updates after `process()` |
 | `rustconn-core/src/rdp_client/graphics.rs` | Update `is_supported()` and `auto_select()` |
-| `packaging/flatpak/io.github.totoshko88.RustConn.yml` | Add `openh264` build module |
+| `packaging/flatpak/io.github.zbndev.RustConnRu.yml` | Add `openh264` build module |
 
 ## Alternatives Considered
 

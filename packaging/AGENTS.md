@@ -15,25 +15,23 @@ quiet way to undo it: v0.20.1 was cut by an agent and reached a published releas
 with five artifacts while carrying a red CI job. The
 `release-manual-only-guard` hook blocks all three routes; do not rely on it.
 
-## Flathub is maintainer-only
+## Flathub publication is maintainer-only
+
+This fork does not publish to Flathub. `packaging/flathub/` is a reference-only
+local template, not a Flathub submission. The maintainer explicitly permits
+mechanical fork branding, application-ID and path updates in this local copy.
 
 Flathub's [generative AI policy](https://docs.flathub.org/docs/for-app-authors/requirements)
-forbids AI-generated or AI-assisted content in Flathub manifests, and forbids AI
-tools from opening or automating Flathub pull requests or writing their commit
-messages, descriptions or replies. So an agent:
+still applies to actual Flathub contributions. An agent must not prepare,
+submit or automate a Flathub pull request, or write its commit message,
+description or replies. Local template edits do not make it eligible for
+submission to Flathub.
 
-- does not write anything under `packaging/flathub/`: not by hand, not through
-  `scripts/bump-version.sh --write` (it writes the Flathub manifest's version
-  line), and not through `scripts/sync-cargo-sources.sh` (it copies
-  `cargo-sources.json` there);
-- does not prepare, open or describe a Flathub pull request.
-
-`packaging/flatpak/*.yml` is the manifest an agent may edit. A change that needs
-the Flathub manifest stops there and is reported as a maintainer task, with what
-Flathub needs. During release preparation the Flathub version line and the Flathub
-copy of `cargo-sources.json` are listed as maintainer steps; read-only checks
-(`scripts/bump-version.sh X.Y.Z` without `--write`, `scripts/sync-cargo-sources.sh
---check`, `release.sh --dry-run`) are fine.
+Use `packaging/flatpak/*.yml` for this fork's downloadable Flatpak builds.
+Do not add Flathub publication workflows, tokens or automatic updates.
+`scripts/sync-cargo-sources.sh --check` remains the read-only dependency check;
+generating dependency sources for an actual Flathub submission is a maintainer
+task.
 
 ## `PKG_FILES` in `scripts/release.sh` is canonical
 
@@ -49,10 +47,10 @@ first.
 
 ## Pairs that drift
 
-- `packaging/flatpak/*.yml` and `packaging/flathub/*.yml` are separate manifests
-  with the same content requirements. An agent edits the local one, including the
-  bundled FreeRDP version *and* its `sha256`, and reports what the Flathub one
-  needs to match; the maintainer edits Flathub (see above).
+- `packaging/flatpak/*.yml` are the active fork manifests;
+  `packaging/flathub/*.yml` is reference-only. Keep local application IDs,
+  asset paths and bundled dependency versions consistent, without preparing
+  or publishing a Flathub submission.
 - `cargo-sources.json` exists twice for the same reason. The maintainer
   regenerates both — from `Cargo.lock`, then copied to Flathub — with one command
   so they cannot drift:

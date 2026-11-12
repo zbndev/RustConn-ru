@@ -13,9 +13,9 @@
 # The other three do not detect anything — they hardcode the feature list,
 # because the Flatpak SDK version is pinned and therefore known in advance:
 #
-#   * packaging/flatpak/io.github.totoshko88.RustConn.yml
-#   * packaging/flatpak/io.github.totoshko88.RustConn.local.yml
-#   * packaging/flathub/io.github.totoshko88.RustConn.yml
+#   * packaging/flatpak/io.github.zbndev.RustConnRu.yml
+#   * packaging/flatpak/io.github.zbndev.RustConnRu.local.yml
+#   * packaging/flathub/io.github.zbndev.RustConnRu.yml
 #
 # There is no shared implementation because the build systems share no language,
 # so the guard is this text check instead. When a new rung is added (e.g.
@@ -47,9 +47,9 @@ obs_readme="packaging/obs/README.md"
 
 # Manifests that hardcode the feature list rather than detecting a version.
 flatpak_manifests="
-packaging/flatpak/io.github.totoshko88.RustConn.yml
-packaging/flatpak/io.github.totoshko88.RustConn.local.yml
-packaging/flathub/io.github.totoshko88.RustConn.yml
+packaging/flatpak/io.github.zbndev.RustConnRu.yml
+packaging/flatpak/io.github.zbndev.RustConnRu.local.yml
+packaging/flathub/io.github.zbndev.RustConnRu.yml
 "
 
 for f in "$formula" "$rpm_workflow" "$debian_rules" "$obs_readme" $flatpak_manifests; do

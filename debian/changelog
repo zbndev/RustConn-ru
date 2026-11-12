@@ -5195,7 +5195,7 @@ rustconn (0.7.6-1) unstable; urgency=medium
   * Version bump to 0.7.6
   * Flatpak Components Manager - On-demand CLI download for Flatpak environment:
     - Menu → Flatpak Components... (visible only in Flatpak)
-    - Download and install CLIs to ~/.var/app/io.github.totoshko88.RustConn/cli/
+    - Download and install CLIs to ~/.var/app/io.github.zbndev.RustConnRu/cli/
     - Supports: AWS CLI, AWS SSM Plugin, Google Cloud CLI, Azure CLI, OCI CLI,
       Teleport, Tailscale, Cloudflare Tunnel, Boundary, Bitwarden CLI, 1Password CLI, TigerVNC
     - SHA256 checksum verification, progress indicators, cancel support

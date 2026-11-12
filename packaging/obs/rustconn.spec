@@ -132,7 +132,7 @@ Recommends:     kubectl
 Recommends:     libopenh264
 
 %description
-RustConn is a modern connection manager for Linux with a GTK4/Wayland-native
+RustConnRu is a modern connection manager for Linux with a GTK4/Wayland-native
 interface. Manage SSH, RDP, VNC, SPICE, MOSH, Telnet, Serial, Kubernetes, and
 Zero Trust connections from a single application. Terminals and RDP and VNC
 sessions open inside the window; SPICE sessions open in an external viewer
@@ -319,27 +319,27 @@ cargo build --release --offline -p rustconn-cli --features full
 %install
 install -Dm755 target/release/rustconn %{buildroot}%{_bindir}/rustconn
 install -Dm755 target/release/rustconn-cli %{buildroot}%{_bindir}/rustconn-cli
-install -Dm644 rustconn/assets/io.github.totoshko88.RustConn.desktop \
-    %{buildroot}%{_datadir}/applications/io.github.totoshko88.RustConn.desktop
-desktop-file-validate %{buildroot}%{_datadir}/applications/io.github.totoshko88.RustConn.desktop
-install -Dm644 rustconn/assets/io.github.totoshko88.RustConn-rdp.xml \
-    %{buildroot}%{_datadir}/mime/packages/io.github.totoshko88.RustConn-rdp.xml
-install -Dm644 rustconn/assets/io.github.totoshko88.RustConn-vv.xml \
-    %{buildroot}%{_datadir}/mime/packages/io.github.totoshko88.RustConn-vv.xml
-install -Dm644 rustconn/assets/io.github.totoshko88.RustConn.metainfo.xml \
-    %{buildroot}%{_datadir}/metainfo/io.github.totoshko88.RustConn.metainfo.xml
+install -Dm644 rustconn/assets/io.github.zbndev.RustConnRu.desktop \
+    %{buildroot}%{_datadir}/applications/io.github.zbndev.RustConnRu.desktop
+desktop-file-validate %{buildroot}%{_datadir}/applications/io.github.zbndev.RustConnRu.desktop
+install -Dm644 rustconn/assets/io.github.zbndev.RustConnRu-rdp.xml \
+    %{buildroot}%{_datadir}/mime/packages/io.github.zbndev.RustConnRu-rdp.xml
+install -Dm644 rustconn/assets/io.github.zbndev.RustConnRu-vv.xml \
+    %{buildroot}%{_datadir}/mime/packages/io.github.zbndev.RustConnRu-vv.xml
+install -Dm644 rustconn/assets/io.github.zbndev.RustConnRu.metainfo.xml \
+    %{buildroot}%{_datadir}/metainfo/io.github.zbndev.RustConnRu.metainfo.xml
 
 # Install icons
 for size in 128 256; do
-    if [ -f "rustconn/assets/icons/hicolor/${size}x${size}/apps/io.github.totoshko88.RustConn.png" ]; then
-        install -Dm644 "rustconn/assets/icons/hicolor/${size}x${size}/apps/io.github.totoshko88.RustConn.png" \
-            "%{buildroot}%{_datadir}/icons/hicolor/${size}x${size}/apps/io.github.totoshko88.RustConn.png"
+    if [ -f "rustconn/assets/icons/hicolor/${size}x${size}/apps/io.github.zbndev.RustConnRu.png" ]; then
+        install -Dm644 "rustconn/assets/icons/hicolor/${size}x${size}/apps/io.github.zbndev.RustConnRu.png" \
+            "%{buildroot}%{_datadir}/icons/hicolor/${size}x${size}/apps/io.github.zbndev.RustConnRu.png"
     fi
 done
 
-if [ -f "rustconn/assets/icons/hicolor/scalable/apps/io.github.totoshko88.RustConn.svg" ]; then
-    install -Dm644 "rustconn/assets/icons/hicolor/scalable/apps/io.github.totoshko88.RustConn.svg" \
-        "%{buildroot}%{_datadir}/icons/hicolor/scalable/apps/io.github.totoshko88.RustConn.svg"
+if [ -f "rustconn/assets/icons/hicolor/scalable/apps/io.github.zbndev.RustConnRu.svg" ]; then
+    install -Dm644 "rustconn/assets/icons/hicolor/scalable/apps/io.github.zbndev.RustConnRu.svg" \
+        "%{buildroot}%{_datadir}/icons/hicolor/scalable/apps/io.github.zbndev.RustConnRu.svg"
 fi
 
 # Locale files (compile .po to .mo). The .po basename *is* the locale directory
@@ -387,11 +387,11 @@ done
 %doc README.md CHANGELOG.md TRADEMARKS.md docs/
 %{_bindir}/rustconn
 %{_bindir}/rustconn-cli
-%{_datadir}/applications/io.github.totoshko88.RustConn.desktop
-%{_datadir}/mime/packages/io.github.totoshko88.RustConn-rdp.xml
-%{_datadir}/mime/packages/io.github.totoshko88.RustConn-vv.xml
-%{_datadir}/metainfo/io.github.totoshko88.RustConn.metainfo.xml
-%{_datadir}/icons/hicolor/*/apps/io.github.totoshko88.RustConn.*
+%{_datadir}/applications/io.github.zbndev.RustConnRu.desktop
+%{_datadir}/mime/packages/io.github.zbndev.RustConnRu-rdp.xml
+%{_datadir}/mime/packages/io.github.zbndev.RustConnRu-vv.xml
+%{_datadir}/metainfo/io.github.zbndev.RustConnRu.metainfo.xml
+%{_datadir}/icons/hicolor/*/apps/io.github.zbndev.RustConnRu.*
 
 %changelog
 * Thu Nov 12 2026 Anton Isaiev <totoshko88@gmail.com> - 0.24.11-0
@@ -3492,7 +3492,7 @@ done
 - Version bump to 0.7.6
 - Flatpak Components Manager - On-demand CLI download for Flatpak environment:
   - Menu → Flatpak Components... (visible only in Flatpak)
-  - Download and install CLIs to ~/.var/app/io.github.totoshko88.RustConn/cli/
+  - Download and install CLIs to ~/.var/app/io.github.zbndev.RustConnRu/cli/
   - Supports: AWS CLI, AWS SSM Plugin, Google Cloud CLI, Azure CLI, OCI CLI,
     Teleport, Tailscale, Cloudflare Tunnel, Boundary, Bitwarden CLI, 1Password CLI, TigerVNC
   - SHA256 checksum verification, progress indicators, cancel support

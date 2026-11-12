@@ -390,7 +390,7 @@ pub fn get_arch() -> &'static str {
 /// installed at runtime. Strict sandboxes do not expose host binaries, so the
 /// app downloads them here on demand.
 ///
-/// - Flatpak: `~/.var/app/io.github.totoshko88.RustConn/cli/`
+/// - Flatpak: `~/.var/app/io.github.zbndev.RustConnRu/cli/`
 /// - snap: `$SNAP_USER_DATA/cli/`
 ///
 /// Returns `None` outside a sandbox.

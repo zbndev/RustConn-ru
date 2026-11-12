@@ -1,5 +1,5 @@
 [Desktop Entry]
-Name=RustConn
+Name=RustConnRu
 Comment=Manage remote connections easily
 Comment[uk]=Зручне керування віддаленими підключеннями
 Comment[de]=Fernverbindungen einfach verwalten
@@ -8,11 +8,11 @@ Comment[es]=Gestionar conexiones remotas fácilmente
 Comment[cs]=Snadná správa vzdálených připojení
 Comment[ru]=Простое управление удалёнными подключениями
 Exec=rustconn %f
-Icon=io.github.totoshko88.RustConn
+Icon=io.github.zbndev.RustConnRu
 Terminal=false
 Type=Application
 Categories=Network;RemoteAccess;
 MimeType=application/x-rdp;application/x-virt-viewer;
 Keywords=ssh;rdp;vnc;spice;mosh;telnet;zerotrust;connection;terminal;remote;kubernetes;k8s;serial;sftp;
 Keywords[ru]=ssh;rdp;vnc;spice;mosh;telnet;zerotrust;подключение;терминал;удалённый;kubernetes;k8s;serial;sftp;
-StartupWMClass=io.github.totoshko88.RustConn
+StartupWMClass=io.github.zbndev.RustConnRu

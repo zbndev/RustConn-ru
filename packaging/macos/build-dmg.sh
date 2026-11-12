@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Package the canonical RustConn.app as a DMG and optionally notarize it.
+# Package the canonical RustConnRu.app as a DMG and optionally notarize it.
 #
 # Usage:
 #   ./packaging/macos/build-dmg.sh --adhoc
@@ -11,11 +11,11 @@ set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 PROJECT_DIR="$(cd "$SCRIPT_DIR/../.." && pwd)"
-APP_DIR="$PROJECT_DIR/dist/RustConn.app"
+APP_DIR="$PROJECT_DIR/dist/RustConnRu.app"
 DMG_DIR="$PROJECT_DIR/dist"
 VERSION="$(awk -F'"' '/^\[workspace\.package\]/{p=1} p&&/^version[[:space:]]*=/{print $2; exit}' "$PROJECT_DIR/Cargo.toml")"
 ARCH="$(uname -m)"
-DMG_PATH="$DMG_DIR/RustConn-${VERSION}-macOS-${ARCH}.dmg"
+DMG_PATH="$DMG_DIR/RustConnRu-${VERSION}-macOS-${ARCH}.dmg"
 STAGING_DIR="$DMG_DIR/dmg-staging"
 SKIP_BUILD=false
 SIGN_MODE="none"
@@ -128,7 +128,7 @@ ln -s /Applications "$STAGING_DIR/Applications"
 rm -f "$DMG_PATH"
 
 info "Creating compressed DMG"
-hdiutil create -volname "RustConn" -srcfolder "$STAGING_DIR" -ov -format UDZO "$DMG_PATH"
+hdiutil create -volname "RustConnRu" -srcfolder "$STAGING_DIR" -ov -format UDZO "$DMG_PATH"
 
 if [[ "$SIGN_MODE" == "developer" ]]; then
     codesign --force --timestamp --sign "$SIGN_IDENTITY" "$DMG_PATH"

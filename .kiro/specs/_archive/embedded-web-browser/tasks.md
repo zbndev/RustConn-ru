@@ -149,7 +149,7 @@ Embed a WebKitGTK 6.0 WebView inside RustConn tabs for Web protocol connections.
   - [x] 13.1 Bump workspace version to `0.19.0` and update changelog
     - Set `[workspace.package].version = "0.19.0"` in root `Cargo.toml`
     - Add `## [0.19.0] - YYYY-MM-DD` section to `CHANGELOG.md` with `### Added` subsection describing the embedded web browser feature
-    - Propagate version to `debian/changelog`, `packaging/obs/debian.changelog`, `packaging/obs/rustconn.changes`, `packaging/obs/rustconn.spec`, and `rustconn/assets/io.github.totoshko88.RustConn.metainfo.xml`
+    - Propagate version to `debian/changelog`, `packaging/obs/debian.changelog`, `packaging/obs/rustconn.changes`, `packaging/obs/rustconn.spec`, and `rustconn/assets/io.github.zbndev.RustConnRu.metainfo.xml`
     - _Requirements: 11.1, 11.2, 11.3_
 
 - [x] 14. Final checkpoint - Ensure all tests pass

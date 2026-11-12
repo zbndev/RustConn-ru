@@ -1698,7 +1698,7 @@ FreeRDP reads its shortcut configuration from `$XDG_CONFIG_HOME/freerdp/sdl-free
 
 | Install | Config file path |
 |---------|------------------|
-| Flatpak | `~/.var/app/io.github.totoshko88.RustConn/config/freerdp/sdl-freerdp.json` |
+| Flatpak | `~/.var/app/io.github.zbndev.RustConnRu/config/freerdp/sdl-freerdp.json` |
 | System / native | `~/.config/freerdp/sdl-freerdp.json` |
 
 Note: `/etc/FreeRDP/sdl-freerdp.json` is read from *inside* the sandbox filesystem for the Flatpak build, so a file placed in the host's `/etc/FreeRDP/` is **not** visible to it — use the per-user path above.
@@ -1725,8 +1725,8 @@ Recognised keys (with their defaults): `SDL_KeyModMask` (`KMOD_RSHIFT`), `SDL_Fu
 **Quick setup (Flatpak):**
 
 ```bash
-mkdir -p ~/.var/app/io.github.totoshko88.RustConn/config/freerdp
-cat > ~/.var/app/io.github.totoshko88.RustConn/config/freerdp/sdl-freerdp.json <<'EOF'
+mkdir -p ~/.var/app/io.github.zbndev.RustConnRu/config/freerdp
+cat > ~/.var/app/io.github.zbndev.RustConnRu/config/freerdp/sdl-freerdp.json <<'EOF'
 {
   "SDL_KeyModMask": ["KMOD_NONE"]
 }
@@ -1735,7 +1735,7 @@ EOF
 
 Create the `freerdp` directory first if it does not exist, make sure the JSON is valid (an invalid file is silently ignored), and reconnect — the file is read each time a FreeRDP process starts, so no RustConn restart is needed.
 
-**Verify it is being read:** start RustConn with `RUST_LOG=debug` (Flatpak: `flatpak run io.github.totoshko88.RustConn` from a terminal with `RUST_LOG=debug` set) and connect. The captured FreeRDP `stderr` is forwarded to the log; pressing the modifier + a hotkey logs a line such as `<KMOD_RSHIFT>+<...> pressed`. If hotkeys are disabled, no such line appears.
+**Verify it is being read:** start RustConn with `RUST_LOG=debug` (Flatpak: `flatpak run io.github.zbndev.RustConnRu` from a terminal with `RUST_LOG=debug` set) and connect. The captured FreeRDP `stderr` is forwarded to the log; pressing the modifier + a hotkey logs a line such as `<KMOD_RSHIFT>+<...> pressed`. If hotkeys are disabled, no such line appears.
 
 ### VNC
 
@@ -2024,7 +2024,7 @@ In Flatpak builds, RustConn runs inside a sandbox with its own SSH agent. When `
 
 **Flatpak: SSH Key Paths and Document Portal:**
 
-When you select an SSH key via the file chooser in Flatpak, the system creates a temporary document portal path (e.g., `/run/user/1000/doc/XXXXXXXX/key.pem`). These paths become stale after Flatpak rebuilds or reboots. RustConn automatically copies selected keys to a stable location (`~/.var/app/io.github.totoshko88.RustConn/.ssh/`) with correct permissions (0600). At connect time, stale portal paths are resolved via fallback lookup in this directory.
+When you select an SSH key via the file chooser in Flatpak, the system creates a temporary document portal path (e.g., `/run/user/1000/doc/XXXXXXXX/key.pem`). These paths become stale after Flatpak rebuilds or reboots. RustConn automatically copies selected keys to a stable location (`~/.var/app/io.github.zbndev.RustConnRu/.ssh/`) with correct permissions (0600). At connect time, stale portal paths are resolved via fallback lookup in this directory.
 
 Solutions for file manager SFTP (pick one):
 1. **Use mc mode** (recommended) — Settings → Terminal → SFTP via mc. Midnight Commander runs inside the Flatpak sandbox and inherits RustConn's SSH agent. Works without any extra setup. This is enabled by default in Flatpak builds.
@@ -2430,7 +2430,7 @@ Per-connection logging options (Connection dialog → Logs tab → Content Optio
 The **Log Directory** in Settings is the default destination. A relative value is
 resolved against the configuration directory, so the out-of-the-box location is
 `~/.config/rustconn/logs/`. In Flatpak that is
-`~/.var/app/io.github.totoshko88.RustConn/config/rustconn/logs/`.
+`~/.var/app/io.github.zbndev.RustConnRu/config/rustconn/logs/`.
 
 The per-connection **Log Path** is a template. A relative template lands in the
 same log directory; an absolute one is used as written. These variables are
@@ -2449,7 +2449,7 @@ An unknown `${variable}` is an error: the session starts, but no log is written
 and a toast reports why.
 
 In Flatpak, `${HOME}` and `~` resolve to the sandbox home
-(`~/.var/app/io.github.totoshko88.RustConn`), not your real home directory. The
+(`~/.var/app/io.github.zbndev.RustConnRu`), not your real home directory. The
 sandbox can only write outside it where a filesystem permission exists — of the
 usual locations that means `~/Downloads` (granted for SFTP transfers), which has
 to be given as an absolute path such as `/home/<user>/Downloads/rustconn/`.
@@ -3679,7 +3679,7 @@ Download and install additional CLI tools directly within the sandbox:
 
 **Features:** One-click Install/Remove/Update, progress indicators with cancel support, SHA256 checksum verification, automatic PATH configuration.
 
-**Installation Location:** `~/.var/app/io.github.totoshko88.RustConn/cli/` in the Flatpak, `$SNAP_USER_DATA/cli/` in the Snap
+**Installation Location:** `~/.var/app/io.github.zbndev.RustConnRu/cli/` in the Flatpak, `$SNAP_USER_DATA/cli/` in the Snap
 
 ### SSH Tunnel Manager
 
@@ -4085,7 +4085,7 @@ Files saved by Remote Desktop Connection (UTF-16 with a byte-order mark) and UTF
 
 **Desktop Integration:**
 ```bash
-xdg-mime default io.github.totoshko88.RustConn.desktop application/x-rdp
+xdg-mime default io.github.zbndev.RustConnRu.desktop application/x-rdp
 ```
 
 ### Virt-Viewer (.vv) File Association
@@ -4108,7 +4108,7 @@ Proxmox VE generates short-lived `.vv` files ("SPICE tickets") valid for 30–40
 
 **Desktop Integration:**
 ```bash
-xdg-mime default io.github.totoshko88.RustConn.desktop application/x-virt-viewer
+xdg-mime default io.github.zbndev.RustConnRu.desktop application/x-virt-viewer
 ```
 
 ### Migration Guide
@@ -4318,38 +4318,38 @@ Flatpak sandboxes restrict filesystem access by default. Cloud Sync requires rea
 **Grant access to a specific directory:**
 
 ```bash
-flatpak override --user --filesystem=/path/to/your/sync/folder io.github.totoshko88.RustConn
+flatpak override --user --filesystem=/path/to/your/sync/folder io.github.zbndev.RustConnRu
 ```
 
 **Common examples:**
 
 ```bash
 # Google Drive (via GNOME Online Accounts)
-flatpak override --user --filesystem=xdg-run/gvfs io.github.totoshko88.RustConn
+flatpak override --user --filesystem=xdg-run/gvfs io.github.zbndev.RustConnRu
 
 # Syncthing default folder
-flatpak override --user --filesystem=~/Sync io.github.totoshko88.RustConn
+flatpak override --user --filesystem=~/Sync io.github.zbndev.RustConnRu
 
 # Nextcloud
-flatpak override --user --filesystem=~/Nextcloud io.github.totoshko88.RustConn
+flatpak override --user --filesystem=~/Nextcloud io.github.zbndev.RustConnRu
 
 # Dropbox
-flatpak override --user --filesystem=~/Dropbox io.github.totoshko88.RustConn
+flatpak override --user --filesystem=~/Dropbox io.github.zbndev.RustConnRu
 
 # Custom path
-flatpak override --user --filesystem=/mnt/shared/rustconn-sync io.github.totoshko88.RustConn
+flatpak override --user --filesystem=/mnt/shared/rustconn-sync io.github.zbndev.RustConnRu
 ```
 
 **Verify access:**
 
 ```bash
-flatpak info --show-permissions io.github.totoshko88.RustConn | grep filesystem
+flatpak info --show-permissions io.github.zbndev.RustConnRu | grep filesystem
 ```
 
 **Revoke access:**
 
 ```bash
-flatpak override --user --nofilesystem=/path/to/folder io.github.totoshko88.RustConn
+flatpak override --user --nofilesystem=/path/to/folder io.github.zbndev.RustConnRu
 ```
 
 After granting access, restart RustConn and set the sync directory in Settings → Cloud Sync.
@@ -4779,7 +4779,7 @@ alias clear='printf "\033[H\033[2J\033[3J"'
 
 ### Flatpak Permissions
 
-1. **File access:** `flatpak override --user --filesystem=home io.github.totoshko88.RustConn`
+1. **File access:** `flatpak override --user --filesystem=home io.github.zbndev.RustConnRu`
 2. **SSH agent:** Forwarded via `--socket=ssh-auth`; alternative agent sockets need manual override
 3. **Serial devices:** `--device=all` permission
 4. **CLI tools:** Host binaries not visible — use Flatpak Components
@@ -4802,18 +4802,18 @@ The Flatpak build ships with minimal sandbox permissions. Some features require 
 **SSH Agent Sockets:**
 ```bash
 # KeePassXC
-flatpak override --user --filesystem=xdg-run/ssh-agent:ro io.github.totoshko88.RustConn
+flatpak override --user --filesystem=xdg-run/ssh-agent:ro io.github.zbndev.RustConnRu
 # Bitwarden
-flatpak override --user --filesystem=home/.var/app/com.bitwarden.desktop/data:ro io.github.totoshko88.RustConn
+flatpak override --user --filesystem=home/.var/app/com.bitwarden.desktop/data:ro io.github.zbndev.RustConnRu
 # GPG agent
-flatpak override --user --filesystem=xdg-run/gnupg:ro io.github.totoshko88.RustConn
+flatpak override --user --filesystem=xdg-run/gnupg:ro io.github.zbndev.RustConnRu
 # 1Password
-flatpak override --user --filesystem=home/.1password:ro io.github.totoshko88.RustConn
+flatpak override --user --filesystem=home/.1password:ro io.github.zbndev.RustConnRu
 ```
 
 **Hoop.dev:**
 ```bash
-flatpak override --user --filesystem=home/.hoop:ro io.github.totoshko88.RustConn
+flatpak override --user --filesystem=home/.hoop:ro io.github.zbndev.RustConnRu
 ```
 
 **Remmina Import (Flatpak ↔ Flatpak):**
@@ -4822,7 +4822,7 @@ When Remmina is also installed as a Flatpak, its connection files live inside it
 
 *Option A — Grant read access (recommended):*
 ```bash
-flatpak override --user --filesystem=home/.var/app/org.remmina.Remmina/data/remmina:ro io.github.totoshko88.RustConn
+flatpak override --user --filesystem=home/.var/app/org.remmina.Remmina/data/remmina:ro io.github.zbndev.RustConnRu
 ```
 
 *Option B — Flatseal (GUI):*
@@ -4838,13 +4838,13 @@ Restart RustConn after any of the above. The Remmina import should now detect co
 
 **RDP Shared Folders:**
 ```bash
-flatpak override --user --filesystem=home io.github.totoshko88.RustConn
+flatpak override --user --filesystem=home io.github.zbndev.RustConnRu
 ```
 
 **View/Reset Overrides:**
 ```bash
-flatpak override --user --show io.github.totoshko88.RustConn
-flatpak override --user --reset io.github.totoshko88.RustConn
+flatpak override --user --show io.github.zbndev.RustConnRu
+flatpak override --user --reset io.github.zbndev.RustConnRu
 ```
 
 ---

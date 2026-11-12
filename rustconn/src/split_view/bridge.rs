@@ -1997,9 +1997,9 @@ impl SplitViewBridge {
         // Use GTK themed icon — same as About dialog. GTK handles
         // HiDPI scaling automatically via librsvg, rendering the SVG
         // at the correct resolution for the display scale factor.
-        status_page.set_icon_name(Some("io.github.totoshko88.RustConn"));
+        status_page.set_icon_name(Some("io.github.zbndev.RustConnRu"));
 
-        status_page.set_title("RustConn");
+        status_page.set_title("RustConnRu");
         status_page.set_description(Some(&i18n("Manage remote connections easily")));
 
         // Create content box for additional elements

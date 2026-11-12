@@ -1,7 +1,7 @@
 <p align="center">
-  <img src="rustconn/assets/icons/hicolor/128x128/apps/io.github.totoshko88.RustConn.png" width="96" alt="RustConn">
+  <img src="rustconn/assets/icons/hicolor/128x128/apps/io.github.zbndev.RustConnRu.png" width="96" alt="RustConnRu">
 </p>
-<h1 align="center">RustConn-ru</h1>
+<h1 align="center">RustConnRu</h1>
 <p align="center">
   Modern connection manager — SSH, RDP, VNC, SPICE, and more
 </p>
@@ -16,7 +16,9 @@
 > Данный форк отличается от [RustConn](https://github.com/totoshko88/RustConn) только наличием русской локализации, которую автор апстрима по религиозным причинам отказывается добавлять.
 > Никаких функциональных изменений в код приложения не вносилось.
 
-RustConn is a cross-platform connection orchestrator with a GTK4/libadwaita interface.
+Russian localization and fork maintenance: zbndev
+
+RustConnRu is a connection manager with Russian localization, forked from RustConn, with a GTK4/libadwaita interface.
 It brings SSH, RDP, VNC, SPICE, MOSH, Telnet, Serial, Kubernetes, and Zero Trust connections under one roof — with embedded Rust clients where possible and seamless integration with external tools where needed.
 Runs on Linux (GTK4/libadwaita), macOS, FreeBSD, and Windows via WSLg.
 

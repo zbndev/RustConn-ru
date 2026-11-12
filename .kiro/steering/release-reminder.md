@@ -22,7 +22,7 @@ When the workspace version in `Cargo.toml` is being bumped:
    - `packaging/obs/debian.changelog` — same format
    - `packaging/obs/rustconn.changes` — OBS changes format
    - `packaging/obs/rustconn.spec` — add `%changelog` entry
-   - `rustconn/assets/io.github.totoshko88.RustConn.metainfo.xml` — add `<release>` entry
+   - `rustconn/assets/io.github.zbndev.RustConnRu.metainfo.xml` — add `<release>` entry
 3. **Dependency updates** — the full flow, including that you *report and ask
    before applying* rather than running `cargo update` outright, is step 2 of
    `release-version.md`. Do not preview-and-apply from here; follow that file, and

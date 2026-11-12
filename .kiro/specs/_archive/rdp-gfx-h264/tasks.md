@@ -78,7 +78,7 @@
 
 ## Task 7: Add OpenH264 module to Flatpak manifest
 
-- [x] Add `openh264` module to `packaging/flatpak/io.github.totoshko88.RustConn.yml` before the `rustconn` module
+- [x] Add `openh264` module to `packaging/flatpak/io.github.zbndev.RustConnRu.yml` before the `rustconn` module
 - [x] Use meson buildsystem with `-Dtests=disabled`
 - [x] Source: `https://github.com/cisco/openh264/archive/refs/tags/v2.6.0.tar.gz` (verify sha256)
 - [x] Add x-checker-data for anitya project-id 15752

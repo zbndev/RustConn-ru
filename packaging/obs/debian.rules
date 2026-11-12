@@ -106,20 +106,20 @@ override_dh_auto_build:
 override_dh_auto_install:
 	install -Dm755 target/release/rustconn debian/rustconn/usr/bin/rustconn
 	install -Dm755 target/release/rustconn-cli debian/rustconn/usr/bin/rustconn-cli
-	install -Dm644 rustconn/assets/io.github.totoshko88.RustConn.desktop \
-		debian/rustconn/usr/share/applications/io.github.totoshko88.RustConn.desktop
-	install -Dm644 rustconn/assets/io.github.totoshko88.RustConn.metainfo.xml \
-		debian/rustconn/usr/share/metainfo/io.github.totoshko88.RustConn.metainfo.xml
-	install -Dm644 rustconn/assets/icons/hicolor/scalable/apps/io.github.totoshko88.RustConn.svg \
-		debian/rustconn/usr/share/icons/hicolor/scalable/apps/io.github.totoshko88.RustConn.svg
-	install -Dm644 rustconn/assets/icons/hicolor/128x128/apps/io.github.totoshko88.RustConn.png \
-		debian/rustconn/usr/share/icons/hicolor/128x128/apps/io.github.totoshko88.RustConn.png
-	install -Dm644 rustconn/assets/icons/hicolor/256x256/apps/io.github.totoshko88.RustConn.png \
-		debian/rustconn/usr/share/icons/hicolor/256x256/apps/io.github.totoshko88.RustConn.png
-	install -Dm644 rustconn/assets/io.github.totoshko88.RustConn-rdp.xml \
-		debian/rustconn/usr/share/mime/packages/io.github.totoshko88.RustConn-rdp.xml
-	install -Dm644 rustconn/assets/io.github.totoshko88.RustConn-vv.xml \
-		debian/rustconn/usr/share/mime/packages/io.github.totoshko88.RustConn-vv.xml
+	install -Dm644 rustconn/assets/io.github.zbndev.RustConnRu.desktop \
+		debian/rustconn/usr/share/applications/io.github.zbndev.RustConnRu.desktop
+	install -Dm644 rustconn/assets/io.github.zbndev.RustConnRu.metainfo.xml \
+		debian/rustconn/usr/share/metainfo/io.github.zbndev.RustConnRu.metainfo.xml
+	install -Dm644 rustconn/assets/icons/hicolor/scalable/apps/io.github.zbndev.RustConnRu.svg \
+		debian/rustconn/usr/share/icons/hicolor/scalable/apps/io.github.zbndev.RustConnRu.svg
+	install -Dm644 rustconn/assets/icons/hicolor/128x128/apps/io.github.zbndev.RustConnRu.png \
+		debian/rustconn/usr/share/icons/hicolor/128x128/apps/io.github.zbndev.RustConnRu.png
+	install -Dm644 rustconn/assets/icons/hicolor/256x256/apps/io.github.zbndev.RustConnRu.png \
+		debian/rustconn/usr/share/icons/hicolor/256x256/apps/io.github.zbndev.RustConnRu.png
+	install -Dm644 rustconn/assets/io.github.zbndev.RustConnRu-rdp.xml \
+		debian/rustconn/usr/share/mime/packages/io.github.zbndev.RustConnRu-rdp.xml
+	install -Dm644 rustconn/assets/io.github.zbndev.RustConnRu-vv.xml \
+		debian/rustconn/usr/share/mime/packages/io.github.zbndev.RustConnRu-vv.xml
 	for po_file in po/*.po; do \
 		[ -f "$$po_file" ] || continue; \
 		lang=$$(basename "$$po_file" .po); \

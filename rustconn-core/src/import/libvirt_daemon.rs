@@ -18,7 +18,7 @@
 //! default. Users must grant filesystem access manually:
 //!
 //! ```bash
-//! flatpak override --user --filesystem=/run/libvirt io.github.totoshko88.RustConn
+//! flatpak override --user --filesystem=/run/libvirt io.github.zbndev.RustConnRu
 //! ```
 //!
 //! See the User Guide for details.

@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <component type="desktop-application">
-  <id>io.github.totoshko88.RustConn</id>
-  <name>RustConn</name>
+  <id>io.github.zbndev.RustConnRu</id>
+  <name>RustConnRu</name>
   <summary>Manage remote connections</summary>
   <metadata_license>CC0-1.0</metadata_license>
   <project_license>GPL-3.0-or-later</project_license>
   <developer id="io.github.totoshko88">
     <name>Anton Isaiev</name>
   </developer>
-  <update_contact>totoshko88@gmail.com</update_contact>
+  <update_contact>zbndev@users.noreply.github.com</update_contact>
   <description>
     <p>
-      RustConn is a modern connection manager for Linux. Manage SSH, RDP, VNC,
+      RustConnRu is a modern connection manager for Linux. Manage SSH, RDP, VNC,
       SPICE, MOSH, Telnet, Serial, Kubernetes, and Zero Trust connections from a
       single application. Terminals and RDP and VNC sessions open inside the
       window; SPICE sessions open in an external viewer (remote-viewer). Some
@@ -35,7 +35,7 @@
       <li>Session recording, text highlighting, Wake-on-LAN, and custom terminal themes</li>
     </ul>
   </description>
-  <launchable type="desktop-id">io.github.totoshko88.RustConn.desktop</launchable>
+  <launchable type="desktop-id">io.github.zbndev.RustConnRu.desktop</launchable>
   <provides>
     <binary>rustconn</binary>
     <binary>rustconn-cli</binary>
@@ -47,8 +47,8 @@
     <category>Network</category>
     <category>RemoteAccess</category>
   </categories>
-  <icon type="stock">io.github.totoshko88.RustConn</icon>
-  <icon type="remote" width="256" height="256">https://raw.githubusercontent.com/totoshko88/RustConn/main/rustconn/assets/icons/hicolor/256x256/apps/io.github.totoshko88.RustConn.png</icon>
+  <icon type="stock">io.github.zbndev.RustConnRu</icon>
+  <icon type="remote" width="256" height="256">https://raw.githubusercontent.com/zbndev/RustConn-ru/main/rustconn/assets/icons/hicolor/256x256/apps/io.github.zbndev.RustConnRu.png</icon>
   <branding>
     <color type="primary" scheme_preference="light">#dc8add</color>
     <color type="primary" scheme_preference="dark">#613583</color>
@@ -57,78 +57,77 @@
     <!-- Light theme -->
     <screenshot type="default">
       <caption>Welcome screen with quick actions</caption>
-      <image type="source" width="2000" height="1400">https://raw.githubusercontent.com/totoshko88/RustConn/main/rustconn/assets/screenshots/welcome_light.png</image>
+      <image type="source" width="2000" height="1400">https://raw.githubusercontent.com/zbndev/RustConn-ru/main/rustconn/assets/screenshots/welcome_light.png</image>
     </screenshot>
     <screenshot>
       <caption>Connection Wizard with 4-column protocol selection</caption>
-      <image type="source" width="2000" height="1400">https://raw.githubusercontent.com/totoshko88/RustConn/main/rustconn/assets/screenshots/connection_wizard_light.png</image>
+      <image type="source" width="2000" height="1400">https://raw.githubusercontent.com/zbndev/RustConn-ru/main/rustconn/assets/screenshots/connection_wizard_light.png</image>
     </screenshot>
     <screenshot>
       <caption>Connection Wizard creating a new custom command connection</caption>
-      <image type="source" width="2000" height="1400">https://raw.githubusercontent.com/totoshko88/RustConn/main/rustconn/assets/screenshots/wizard_new_custom_light.png</image>
+      <image type="source" width="2000" height="1400">https://raw.githubusercontent.com/zbndev/RustConn-ru/main/rustconn/assets/screenshots/wizard_new_custom_light.png</image>
     </screenshot>
     <screenshot>
       <caption>Tab Overview grid for navigating open sessions</caption>
-      <image type="source" width="2000" height="1400">https://raw.githubusercontent.com/totoshko88/RustConn/main/rustconn/assets/screenshots/tab_overview_light.png</image>
+      <image type="source" width="2000" height="1400">https://raw.githubusercontent.com/zbndev/RustConn-ru/main/rustconn/assets/screenshots/tab_overview_light.png</image>
     </screenshot>
     <screenshot>
       <caption>SFTP file browser via Midnight Commander</caption>
-      <image type="source" width="2000" height="1400">https://raw.githubusercontent.com/totoshko88/RustConn/main/rustconn/assets/screenshots/sftp_mc_light.png</image>
+      <image type="source" width="2000" height="1400">https://raw.githubusercontent.com/zbndev/RustConn-ru/main/rustconn/assets/screenshots/sftp_mc_light.png</image>
     </screenshot>
     <screenshot>
       <caption>Web connection with embedded browser</caption>
-      <image type="source" width="2000" height="1400">https://raw.githubusercontent.com/totoshko88/RustConn/main/rustconn/assets/screenshots/web_light.png</image>
+      <image type="source" width="2000" height="1400">https://raw.githubusercontent.com/zbndev/RustConn-ru/main/rustconn/assets/screenshots/web_light.png</image>
     </screenshot>
     <screenshot>
       <caption>Protocol filter bar</caption>
-      <image type="source" width="2000" height="1400">https://raw.githubusercontent.com/totoshko88/RustConn/main/rustconn/assets/screenshots/filters_light.png</image>
+      <image type="source" width="2000" height="1400">https://raw.githubusercontent.com/zbndev/RustConn-ru/main/rustconn/assets/screenshots/filters_light.png</image>
     </screenshot>
     <screenshot>
       <caption>Settings with terminal and credential options</caption>
-      <image type="source" width="2000" height="1400">https://raw.githubusercontent.com/totoshko88/RustConn/main/rustconn/assets/screenshots/settings_light.png</image>
+      <image type="source" width="2000" height="1400">https://raw.githubusercontent.com/zbndev/RustConn-ru/main/rustconn/assets/screenshots/settings_light.png</image>
     </screenshot>
     <!-- Dark theme -->
     <screenshot environment="gnome:dark">
       <caption>Welcome screen with quick actions</caption>
-      <image type="source" width="2000" height="1400">https://raw.githubusercontent.com/totoshko88/RustConn/main/rustconn/assets/screenshots/welcome_dark.png</image>
+      <image type="source" width="2000" height="1400">https://raw.githubusercontent.com/zbndev/RustConn-ru/main/rustconn/assets/screenshots/welcome_dark.png</image>
     </screenshot>
     <screenshot environment="gnome:dark">
       <caption>Connection Wizard with 4-column protocol selection</caption>
-      <image type="source" width="2000" height="1400">https://raw.githubusercontent.com/totoshko88/RustConn/main/rustconn/assets/screenshots/connection_wizard_dark.png</image>
+      <image type="source" width="2000" height="1400">https://raw.githubusercontent.com/zbndev/RustConn-ru/main/rustconn/assets/screenshots/connection_wizard_dark.png</image>
     </screenshot>
     <screenshot environment="gnome:dark">
       <caption>Tab Overview grid for navigating open sessions</caption>
-      <image type="source" width="2000" height="1400">https://raw.githubusercontent.com/totoshko88/RustConn/main/rustconn/assets/screenshots/tab_overview_dark.png</image>
+      <image type="source" width="2000" height="1400">https://raw.githubusercontent.com/zbndev/RustConn-ru/main/rustconn/assets/screenshots/tab_overview_dark.png</image>
     </screenshot>
     <screenshot environment="gnome:dark">
       <caption>Split terminal view with multiple SSH sessions</caption>
-      <image type="source" width="2000" height="1400">https://raw.githubusercontent.com/totoshko88/RustConn/main/rustconn/assets/screenshots/split_view_dark.png</image>
+      <image type="source" width="2000" height="1400">https://raw.githubusercontent.com/zbndev/RustConn-ru/main/rustconn/assets/screenshots/split_view_dark.png</image>
     </screenshot>
     <screenshot environment="gnome:dark">
       <caption>Embedded RDP session with toolbar</caption>
-      <image type="source" width="2000" height="1400">https://raw.githubusercontent.com/totoshko88/RustConn/main/rustconn/assets/screenshots/rdp_session_dark.png</image>
+      <image type="source" width="2000" height="1400">https://raw.githubusercontent.com/zbndev/RustConn-ru/main/rustconn/assets/screenshots/rdp_session_dark.png</image>
     </screenshot>
     <screenshot environment="gnome:dark">
       <caption>Web connection in dark theme</caption>
-      <image type="source" width="2000" height="1400">https://raw.githubusercontent.com/totoshko88/RustConn/main/rustconn/assets/screenshots/web_dark.png</image>
+      <image type="source" width="2000" height="1400">https://raw.githubusercontent.com/zbndev/RustConn-ru/main/rustconn/assets/screenshots/web_dark.png</image>
     </screenshot>
     <screenshot environment="gnome:dark">
       <caption>Protocol filter bar</caption>
-      <image type="source" width="2000" height="1400">https://raw.githubusercontent.com/totoshko88/RustConn/main/rustconn/assets/screenshots/filters_dark.png</image>
+      <image type="source" width="2000" height="1400">https://raw.githubusercontent.com/zbndev/RustConn-ru/main/rustconn/assets/screenshots/filters_dark.png</image>
     </screenshot>
     <screenshot environment="gnome:dark">
       <caption>Settings with terminal and credential options</caption>
-      <image type="source" width="2000" height="1400">https://raw.githubusercontent.com/totoshko88/RustConn/main/rustconn/assets/screenshots/settings_dark.png</image>
+      <image type="source" width="2000" height="1400">https://raw.githubusercontent.com/zbndev/RustConn-ru/main/rustconn/assets/screenshots/settings_dark.png</image>
     </screenshot>
   </screenshots>
-  <url type="homepage">https://github.com/totoshko88/RustConn</url>
-  <url type="bugtracker">https://github.com/totoshko88/RustConn/issues</url>
-  <url type="vcs-browser">https://github.com/totoshko88/RustConn</url>
-  <url type="help">https://github.com/totoshko88/RustConn/blob/main/docs/USER_GUIDE.md</url>
-  <url type="translate">https://github.com/totoshko88/RustConn/tree/main/po</url>
-  <url type="contribute">https://github.com/totoshko88/RustConn/blob/main/README.md</url>
-  <url type="donation">https://donatello.to/totoshko88</url>
-  <url type="contact">https://github.com/totoshko88/RustConn/issues</url>
+  <url type="homepage">https://github.com/zbndev/RustConn-ru</url>
+  <url type="bugtracker">https://github.com/zbndev/RustConn-ru/issues</url>
+  <url type="vcs-browser">https://github.com/zbndev/RustConn-ru</url>
+  <url type="help">https://github.com/zbndev/RustConn-ru/blob/main/docs/USER_GUIDE.md</url>
+  <url type="translate">https://github.com/zbndev/RustConn-ru/tree/main/po</url>
+  <url type="contribute">https://github.com/zbndev/RustConn-ru/blob/main/README.md</url>
+  <url type="contact">https://github.com/zbndev/RustConn-ru/issues</url>
   <content_rating type="oars-1.1"/>
   <requires>
     <display_length compare="ge">360</display_length>

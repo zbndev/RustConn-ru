@@ -1,16 +1,9 @@
 class Rustconn < Formula
-  desc "Remote connection manager - SSH, RDP, VNC, SPICE, Telnet, Serial, and more"
-  homepage "https://github.com/totoshko88/RustConn"
-  # This is the canonical formula; the release workflow copies it into the tap
-  # and rewrites the two lines below with the release tag and the measured
-  # checksum of that tarball. Keep them as a single active `url` and a single
-  # active `sha256` at this indentation — the sed patterns and the CI
-  # verification gate are anchored to `^  url` and `^  sha256` (issue #251).
-  # PLACEHOLDER_SHA256 is expected here in-tree; only the tap copy has a hash.
-  url "https://github.com/totoshko88/RustConn/archive/refs/tags/v0.24.11.tar.gz"
-  sha256 "PLACEHOLDER_SHA256"
-  license "GPL-3.0-or-later"
-  head "https://github.com/totoshko88/RustConn.git", branch: "main"
+  desc "RustConnRu — SSH, RDP, VNC, SPICE, Telnet, Serial, and more"
+  homepage "https://github.com/zbndev/RustConn-ru"
+  # This formula is intentionally HEAD-only: fork releases are prepared manually
+  # and are not a Homebrew publication channel.
+  head "https://github.com/zbndev/RustConn-ru.git", branch: "main"
 
   depends_on "gettext" => :build
   depends_on "librsvg" => :build
@@ -40,7 +33,7 @@ class Rustconn < Formula
     msrv = "1.95"
     rustc_version = Utils.safe_popen_read("rustc", "--version").split[1]
     if Gem::Version.new(rustc_version) < Gem::Version.new(msrv)
-      odie "RustConn needs Rust >= #{msrv}, but Homebrew's rust is #{rustc_version}. " \
+      odie "RustConnRu needs Rust >= #{msrv}, but Homebrew's rust is #{rustc_version}. " \
            "Run `brew upgrade rust` and try again."
     end
 
@@ -90,14 +83,14 @@ class Rustconn < Formula
          (cur_parts[0] > top_parts[0] ||
           (cur_parts[0] == top_parts[0] && cur_parts[1] > top_parts[1]))
         opoo "#{pc_name} #{installed} is newer than the highest known rung " \
-             "(#{highest}); RustConn may be missing features for it — add a rung " \
+             "(#{highest}); RustConnRu may be missing features for it — add a rung " \
              "to this formula and its OBS/RPM twins."
       end
     rescue ErrorDuringExecution
       # pkg-config could not report a version; skip the drift hint.
     end
 
-    ohai "RustConn feature set: #{features.join(",")}"
+    ohai "RustConnRu feature set: #{features.join(",")}"
 
     # Build both binaries in a single cargo invocation to avoid
     # duplicate dependency resolution and share compilation artifacts.
@@ -105,7 +98,7 @@ class Rustconn < Formula
     # `FormulaAudit/Text` asks for `"cargo", "install", *std_cargo_args` here and
     # this formula cannot comply. `std_cargo_args` expands to
     # `--locked --root <prefix> --path .`: the default feature set of one crate,
-    # installed straight into the keg. RustConn needs the opposite of all three —
+    # installed straight into the keg. RustConnRu needs the opposite of all three —
     # `--no-default-features` plus the feature list computed above from the
     # installed GNOME versions, two workspace members from one invocation, and the
     # binaries left in `target/release` because the steps below assemble them into
@@ -135,11 +128,11 @@ class Rustconn < Formula
 
     # Install icon
     mkdir_p "#{share}/icons/hicolor/scalable/apps"
-    cp "rustconn/assets/icons/hicolor/scalable/apps/io.github.totoshko88.RustConn.svg",
+    cp "rustconn/assets/icons/hicolor/scalable/apps/io.github.zbndev.RustConnRu.svg",
        "#{share}/icons/hicolor/scalable/apps/"
 
     # Create .app bundle for macOS
-    app_dir = prefix/"RustConn.app/Contents"
+    app_dir = prefix/"RustConnRu.app/Contents"
     mkdir_p "#{app_dir}/MacOS"
     mkdir_p "#{app_dir}/Resources/bin"
 
@@ -175,7 +168,7 @@ class Rustconn < Formula
     # producer uses, so the icon step cannot drift between the two.
     #
     # On this path the script does not render anything: it copies the committed
-    # packaging/macos/RustConn.icns, because macOS 27's iconutil rejects valid
+    # packaging/macos/RustConnRu.icns, because macOS 27's iconutil rejects valid
     # iconsets with "Invalid Iconset" and broke this build even with every member
     # PNG present and passing `sips` (#323). The rendering path is still there for
     # FORCE_ICONUTIL=1, which is a development action after an icon change; a CI
@@ -186,8 +179,8 @@ class Rustconn < Formula
     # and because a formula that quietly needs a tool it does not declare is worse
     # than one build dependency too many.
     system "bash", "scripts/make-iconset.sh",
-           "rustconn/assets/icons/hicolor/scalable/apps/io.github.totoshko88.RustConn.svg",
-           "#{app_dir}/Resources/RustConn.icns"
+           "rustconn/assets/icons/hicolor/scalable/apps/io.github.zbndev.RustConnRu.svg",
+           "#{app_dir}/Resources/RustConnRu.icns"
 
     # Optional manual-terminal launcher. Under Resources/bin, not MacOS/, so it is
     # not mistaken for the bundle executable and does not interfere with
@@ -216,13 +209,13 @@ class Rustconn < Formula
           <key>CFBundleExecutable</key>
           <string>rustconn</string>
           <key>CFBundleIconFile</key>
-          <string>RustConn</string>
+          <string>RustConnRu</string>
           <key>CFBundleIdentifier</key>
-          <string>io.github.totoshko88.RustConn</string>
+          <string>io.github.zbndev.RustConnRu</string>
           <key>CFBundleName</key>
-          <string>RustConn</string>
+          <string>RustConnRu</string>
           <key>CFBundleDisplayName</key>
-          <string>RustConn</string>
+          <string>RustConnRu</string>
           <key>CFBundlePackageType</key>
           <string>APPL</string>
           <key>CFBundleVersion</key>
@@ -234,9 +227,9 @@ class Rustconn < Formula
           <key>LSMinimumSystemVersion</key>
           <string>13.0</string>
           <key>NSDocumentsFolderUsageDescription</key>
-          <string>RustConn needs access to import SSH configs and connection files.</string>
+          <string>RustConnRu needs access to import SSH configs and connection files.</string>
           <key>NSAppleEventsUsageDescription</key>
-          <string>RustConn needs to open URLs in your default browser.</string>
+          <string>RustConnRu needs to open URLs in your default browser.</string>
       </dict>
       </plist>
     EOS
@@ -244,9 +237,9 @@ class Rustconn < Formula
     # Create a launch script in bin for convenience (no env vars needed)
     (bin/"rustconn-app").write <<~EOS
       #!/bin/bash
-      # Launch RustConn via its .app bundle for proper LaunchServices identity.
+      # Launch RustConnRu via its .app bundle for proper LaunchServices identity.
       # For Dock pinning: symlink to /Applications first, then pin from there.
-      open "#{prefix}/RustConn.app" "$@"
+      open "#{prefix}/RustConnRu.app" "$@"
     EOS
     chmod 0755, bin/"rustconn-app"
   end
@@ -286,9 +279,9 @@ class Rustconn < Formula
                  "LaunchServices.framework/Support/lsregister"
     if File.executable?(lsregister)
       begin
-        system lsregister, "-f", "#{prefix}/RustConn.app"
+        system lsregister, "-f", "#{prefix}/RustConnRu.app"
       rescue => e
-        opoo "Could not register RustConn.app with LaunchServices: #{e.message}"
+        opoo "Could not register RustConnRu.app with LaunchServices: #{e.message}"
       end
     end
     # Compile GSettings schemas and refresh the icon cache. Both operate on the
@@ -313,19 +306,20 @@ class Rustconn < Formula
 
   def caveats
     <<~EOS
-      RustConn has been installed with all dependencies.
+      RustConnRu has been installed with all dependencies.
+      This formula is HEAD-only; install it with `brew install --HEAD rustconn`.
 
       To launch the GUI:
-        open #{prefix}/RustConn.app
+        open #{prefix}/RustConnRu.app
         # or from terminal (tray icon works on all macOS versions this way):
         rustconn
 
       To pin to Dock with the correct icon:
-        ln -sf #{prefix}/RustConn.app /Applications/RustConn.app
+        ln -sf #{prefix}/RustConnRu.app /Applications/RustConnRu.app
         # Then open from /Applications and right-click the Dock icon →
         # Options → Keep in Dock.
 
-      Convenience launcher (calls `open RustConn.app`):
+      Convenience launcher (calls `open RustConnRu.app`):
         rustconn-app
 
       CLI tool:

@@ -1,6 +1,6 @@
 # Installation Guide
 
-## RustConn-ru fork
+## RustConnRu fork
 
 Download this fork's AppImage, DEB, RPM or Flatpak file from
 [zbndev/RustConn-ru releases](https://github.com/zbndev/RustConn-ru/releases)
@@ -9,9 +9,11 @@ For building and publishing the fork, see [CI & Build Flow](CI_BUILD_FLOW.md).
 
 **The Flathub, Snap, OBS, Homebrew and original `rustconn` AUR channels described
 below distribute upstream RustConn, not this Russian-localized fork.**
-The remaining channel-specific instructions are retained as upstream reference.
-The fork uses the same binary names, application ID and configuration paths as
-upstream, so these packages are not designed for side-by-side installation.
+The unsupported channel-specific instructions are retained as upstream reference.
+The fork has its own application ID, `io.github.zbndev.RustConnRu`. Its Flatpak
+uses a separate data directory and does not automatically import upstream data.
+Native packages still share upstream's binary names and configuration paths,
+so native packages are not designed for side-by-side installation.
 
 ## System Requirements
 
@@ -21,25 +23,20 @@ upstream, so these packages are not designed for side-by-side installation.
 - **libadwaita:** 1.5+
 - **Rust:** 1.95+ (for building from source)
 
-## Flatpak (Recommended)
+## Flatpak (Downloadable Fork Bundle)
 
-RustConn is available on [Flathub](https://flathub.org/apps/io.github.totoshko88.RustConn):
-
-<a href="https://flathub.org/apps/io.github.totoshko88.RustConn">
-  <img width="200" alt="Download on Flathub" src="https://flathub.org/api/badge?locale=en"/>
-</a>
+Download the `.flatpak` file from
+[this fork's releases](https://github.com/zbndev/RustConn-ru/releases).
+RustConnRu is not published to Flathub. For example, for version 0.24.11:
 
 ```bash
-# Install from Flathub
-flatpak install flathub io.github.totoshko88.RustConn
-
-# Run
-flatpak run io.github.totoshko88.RustConn
+flatpak install --user ./RustConnRu-0.24.11.flatpak
+flatpak run io.github.zbndev.RustConnRu
 ```
 
 ### Flatpak Permissions
 
-RustConn requests the following permissions for full functionality:
+RustConnRu requests the following permissions for full functionality:
 
 | Permission | Purpose |
 |------------|---------|
@@ -79,7 +76,7 @@ To have them removed on screen lock and suspend as well, grant the three names
 once, for your user, and restart RustConn:
 
 ```bash
-flatpak override --user --talk-name=org.freedesktop.ScreenSaver --talk-name=org.gnome.ScreenSaver --system-talk-name=org.freedesktop.login1 io.github.totoshko88.RustConn
+flatpak override --user --talk-name=org.freedesktop.ScreenSaver --talk-name=org.gnome.ScreenSaver --system-talk-name=org.freedesktop.login1 io.github.zbndev.RustConnRu
 ```
 
 | Permission | What RustConn uses it for |
@@ -91,20 +88,20 @@ flatpak override --user --talk-name=org.freedesktop.ScreenSaver --talk-name=org.
 You can grant only the screen-lock names or only login1. These names let
 RustConn call the services as well as listen to them; login1 still asks polkit
 before anything that changes the system. Check what is set with
-`flatpak override --user --show io.github.totoshko88.RustConn`.
+`flatpak override --user --show io.github.zbndev.RustConnRu`.
 
 To undo it, remove all your user overrides for RustConn (this also drops any
 other `flatpak override --user` you made for it, such as extra `--filesystem`
 access):
 
 ```bash
-flatpak override --user --reset io.github.totoshko88.RustConn
+flatpak override --user --reset io.github.zbndev.RustConnRu
 ```
 
 or deny only these three names:
 
 ```bash
-flatpak override --user --no-talk-name=org.freedesktop.ScreenSaver --no-talk-name=org.gnome.ScreenSaver --system-no-talk-name=org.freedesktop.login1 io.github.totoshko88.RustConn
+flatpak override --user --no-talk-name=org.freedesktop.ScreenSaver --no-talk-name=org.gnome.ScreenSaver --system-no-talk-name=org.freedesktop.login1 io.github.zbndev.RustConnRu
 ```
 
 Without the override nothing is logged above `info` and nothing else changes.
@@ -135,8 +132,8 @@ via `flatpak-spawn --host`. Install them on the host system if needed.
 CI builds a `.flatpak` bundle on every tagged release and on manual `workflow_dispatch` runs.
 The bundle is available in two places:
 
-- **GitHub Release** — file `RustConn-<version>.flatpak` attached to the release
-- **CI Artifacts** — file `RustConn.flatpak` in the Actions → Flatpak workflow run artifacts
+- **GitHub Release** — file `RustConnRu-<version>.flatpak` attached to the release
+- **CI Artifacts** — file `RustConnRu.flatpak` in the Actions → Flatpak workflow run artifacts
 
 #### Prerequisites
 
@@ -165,7 +162,7 @@ The sandbox grants read-only access to `~/.ssh` and read-write to `~/Downloads` 
 To expose additional directories:
 
 ```bash
-flatpak override --user --filesystem=/path/to/dir io.github.totoshko88.RustConn
+flatpak override --user --filesystem=/path/to/dir io.github.zbndev.RustConnRu
 ```
 
 ## Snap (Strict Confinement)
@@ -610,7 +607,7 @@ rustconn-cli --help
 
 **Flatpak:**
 ```bash
-flatpak uninstall io.github.totoshko88.RustConn
+flatpak uninstall io.github.zbndev.RustConnRu
 ```
 
 **Snap:**

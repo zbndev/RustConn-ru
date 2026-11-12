@@ -120,14 +120,14 @@ jobs:
           cp target/release/rustconn-cli "${PKG_DIR}/usr/bin/"
           
           # Desktop file and metadata
-          cp rustconn/assets/io.github.totoshko88.RustConn.desktop "${PKG_DIR}/usr/share/applications/"
-          cp rustconn/assets/io.github.totoshko88.RustConn.metainfo.xml "${PKG_DIR}/usr/share/metainfo/"
+          cp rustconn/assets/io.github.zbndev.RustConnRu.desktop "${PKG_DIR}/usr/share/applications/"
+          cp rustconn/assets/io.github.zbndev.RustConnRu.metainfo.xml "${PKG_DIR}/usr/share/metainfo/"
           
           # Icons
-          cp rustconn/assets/icons/hicolor/scalable/apps/io.github.totoshko88.RustConn.svg \
+          cp rustconn/assets/icons/hicolor/scalable/apps/io.github.zbndev.RustConnRu.svg \
              "${PKG_DIR}/usr/share/icons/hicolor/scalable/apps/" || true
           for size in 256 128; do
-            cp "rustconn/assets/icons/hicolor/${size}x${size}/apps/io.github.totoshko88.RustConn.png" \
+            cp "rustconn/assets/icons/hicolor/${size}x${size}/apps/io.github.zbndev.RustConnRu.png" \
                "${PKG_DIR}/usr/share/icons/hicolor/${size}x${size}/apps/" 2>/dev/null || true
           done
           
@@ -196,7 +196,7 @@ jobs:
           Maintainer: ${RELEASE_OWNER} <${RELEASE_OWNER}@users.noreply.github.com>
           Homepage: https://github.com/${RELEASE_REPOSITORY}
           Description: Modern connection manager for Linux — Russian localization fork
-           RustConn is a GTK4-based connection manager for SSH, RDP, VNC, and SPICE
+           RustConnRu is a GTK4-based connection manager for SSH, RDP, VNC, and SPICE
            remote connections with support for embedded terminals, connection groups,
            import/export, and secure credential storage. Upstream: Anton Isaiev.
           EOF
@@ -360,14 +360,14 @@ jobs:
           cp debian/copyright staging/usr/share/doc/rustconn/copyright
           
           # Copy desktop file and metadata
-          cp rustconn/assets/io.github.totoshko88.RustConn.desktop staging/usr/share/applications/
-          cp rustconn/assets/io.github.totoshko88.RustConn.metainfo.xml staging/usr/share/metainfo/
+          cp rustconn/assets/io.github.zbndev.RustConnRu.desktop staging/usr/share/applications/
+          cp rustconn/assets/io.github.zbndev.RustConnRu.metainfo.xml staging/usr/share/metainfo/
           
           # Copy icons
-          cp rustconn/assets/icons/hicolor/scalable/apps/io.github.totoshko88.RustConn.svg \
+          cp rustconn/assets/icons/hicolor/scalable/apps/io.github.zbndev.RustConnRu.svg \
              staging/usr/share/icons/hicolor/scalable/apps/ 2>/dev/null || true
           for size in 128 256; do
-            cp "rustconn/assets/icons/hicolor/${size}x${size}/apps/io.github.totoshko88.RustConn.png" \
+            cp "rustconn/assets/icons/hicolor/${size}x${size}/apps/io.github.zbndev.RustConnRu.png" \
                "staging/usr/share/icons/hicolor/${size}x${size}/apps/" 2>/dev/null || true
           done
           
@@ -496,24 +496,24 @@ jobs:
           
           cp target/release/rustconn AppDir/usr/bin/
           cp target/release/rustconn-cli AppDir/usr/bin/
-          cp rustconn/assets/io.github.totoshko88.RustConn.desktop AppDir/usr/share/applications/
-          cp rustconn/assets/io.github.totoshko88.RustConn.metainfo.xml AppDir/usr/share/metainfo/
+          cp rustconn/assets/io.github.zbndev.RustConnRu.desktop AppDir/usr/share/applications/
+          cp rustconn/assets/io.github.zbndev.RustConnRu.metainfo.xml AppDir/usr/share/metainfo/
           
           # Copy icons
-          cp rustconn/assets/icons/hicolor/scalable/apps/io.github.totoshko88.RustConn.svg \
+          cp rustconn/assets/icons/hicolor/scalable/apps/io.github.zbndev.RustConnRu.svg \
              AppDir/usr/share/icons/hicolor/scalable/apps/ || true
           for size in 256 128; do
-            cp "rustconn/assets/icons/hicolor/${size}x${size}/apps/io.github.totoshko88.RustConn.png" \
+            cp "rustconn/assets/icons/hicolor/${size}x${size}/apps/io.github.zbndev.RustConnRu.png" \
                "AppDir/usr/share/icons/hicolor/${size}x${size}/apps/"
           done
-
+          
           # appimagetool needs the Icon= PNG in the AppDir root to build .DirIcon.
           # Newer appimagetool continuous builds no longer copy it from
           # usr/share/icons themselves, so place it (and .DirIcon) explicitly —
           # otherwise the appimage output plugin fails with ".DirIcon is not valid".
-          cp rustconn/assets/icons/hicolor/256x256/apps/io.github.totoshko88.RustConn.png \
-             AppDir/io.github.totoshko88.RustConn.png
-          cp AppDir/io.github.totoshko88.RustConn.png AppDir/.DirIcon
+          cp rustconn/assets/icons/hicolor/256x256/apps/io.github.zbndev.RustConnRu.png \
+             AppDir/io.github.zbndev.RustConnRu.png
+          cp AppDir/io.github.zbndev.RustConnRu.png AppDir/.DirIcon
           
           # Locale files (compile .po to .mo)
           for po_file in po/*.po; do
@@ -526,20 +526,20 @@ jobs:
       - name: Build AppImage
         run: |
           mkdir -p dist
-          OUTPUT="$PWD/dist/RustConn-${RELEASE_VERSION}-x86_64.AppImage" \
+          OUTPUT="$PWD/dist/RustConnRu-${RELEASE_VERSION}-x86_64.AppImage" \
             DEPLOY_GTK_VERSION=4 ./linuxdeploy-x86_64.AppImage \
             --appdir AppDir \
             --plugin gtk \
             --output appimage
           
           # The output plugin receives the final path; never upload linuxdeploy itself.
-          test -f "dist/RustConn-${RELEASE_VERSION}-x86_64.AppImage"
+          test -f "dist/RustConnRu-${RELEASE_VERSION}-x86_64.AppImage"
 
       - name: Upload AppImage artifact
         uses: actions/upload-artifact@v7
         with:
           name: appimage
-          path: dist/RustConn-${{ env.RELEASE_VERSION }}-x86_64.AppImage
+          path: dist/RustConnRu-${{ env.RELEASE_VERSION }}-x86_64.AppImage
           if-no-files-found: error
 
   build-flatpak:
@@ -568,7 +568,7 @@ jobs:
       - name: Pin Flatpak to exact reviewed fork source
         run: |
           python3 scripts/manual-release.py pin-flatpak \
-            --manifest packaging/flatpak/io.github.totoshko88.RustConn.yml \
+            --manifest packaging/flatpak/io.github.zbndev.RustConnRu.yml \
             --sha "$SOURCE_SHA" \
             --repository "$RELEASE_REPOSITORY"
 
@@ -590,8 +590,8 @@ jobs:
       - name: Build Flatpak
         uses: flatpak/flatpak-github-actions/flatpak-builder@v6
         with:
-          manifest-path: packaging/flatpak/io.github.totoshko88.RustConn.yml
-          bundle: RustConn-${{ env.RELEASE_VERSION }}.flatpak
+          manifest-path: packaging/flatpak/io.github.zbndev.RustConnRu.yml
+          bundle: RustConnRu-${{ env.RELEASE_VERSION }}.flatpak
           cache-key: flatpak-builder-${{ github.sha }}
           build-bundle: true
           upload-artifact: false
@@ -600,7 +600,7 @@ jobs:
         uses: actions/upload-artifact@v7
         with:
           name: flatpak
-          path: RustConn-${{ env.RELEASE_VERSION }}.flatpak
+          path: RustConnRu-${{ env.RELEASE_VERSION }}.flatpak
           if-no-files-found: error
 
   release:
@@ -620,8 +620,8 @@ jobs:
       SOURCE_SHA: ${{ github.sha }}
       DEB_ASSET: rustconn_${{ needs.prepare.outputs.version }}_amd64.deb
       RPM_ASSET: rustconn-${{ needs.prepare.outputs.version }}-1.x86_64.rpm
-      APPIMAGE_ASSET: RustConn-${{ needs.prepare.outputs.version }}-x86_64.AppImage
-      FLATPAK_ASSET: RustConn-${{ needs.prepare.outputs.version }}.flatpak
+      APPIMAGE_ASSET: RustConnRu-${{ needs.prepare.outputs.version }}-x86_64.AppImage
+      FLATPAK_ASSET: RustConnRu-${{ needs.prepare.outputs.version }}.flatpak
     steps:
       - name: Checkout exact workflow source and all tags
         uses: actions/checkout@v7

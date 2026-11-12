@@ -1,4 +1,4 @@
-app-id: io.github.totoshko88.RustConn
+app-id: io.github.zbndev.RustConnRu
 runtime: org.gnome.Platform
 runtime-version: '51'
 sdk: org.gnome.Sdk
@@ -317,7 +317,7 @@ modules:
   # the RemoteFX path without saying so.
   #
   # All three Flatpak manifests need it, and until 0.21.6 only
-  # packaging/flatpak/io.github.totoshko88.RustConn.yml had it: Flathub shipped
+  # packaging/flatpak/io.github.zbndev.RustConnRu.yml had it: Flathub shipped
   # with no H.264 decoder at all, and a local build could not reproduce an H.264
   # bug from the build it exists to mirror. Bundled rather than taken from
   # org.freedesktop.Platform.openh264 because freedesktop dropped that extension
@@ -357,11 +357,11 @@ modules:
       - CC=/app/bin/cc-wrap cargo build --locked --release -p rustconn-cli --features full
       - install -Dm755 target/release/rustconn /app/bin/rustconn
       - install -Dm755 target/release/rustconn-cli /app/bin/rustconn-cli
-      - install -Dm644 rustconn/assets/io.github.totoshko88.RustConn.desktop /app/share/applications/io.github.totoshko88.RustConn.desktop
-      - install -Dm644 rustconn/assets/io.github.totoshko88.RustConn-rdp.xml /app/share/mime/packages/io.github.totoshko88.RustConn-rdp.xml
-      - install -Dm644 rustconn/assets/io.github.totoshko88.RustConn-vv.xml /app/share/mime/packages/io.github.totoshko88.RustConn-vv.xml
-      - install -Dm644 rustconn/assets/io.github.totoshko88.RustConn.metainfo.xml /app/share/metainfo/io.github.totoshko88.RustConn.metainfo.xml
-      - install -Dm644 rustconn/assets/icons/hicolor/scalable/apps/io.github.totoshko88.RustConn.svg /app/share/icons/hicolor/scalable/apps/io.github.totoshko88.RustConn.svg
+      - install -Dm644 rustconn/assets/io.github.zbndev.RustConnRu.desktop /app/share/applications/io.github.zbndev.RustConnRu.desktop
+      - install -Dm644 rustconn/assets/io.github.zbndev.RustConnRu-rdp.xml /app/share/mime/packages/io.github.zbndev.RustConnRu-rdp.xml
+      - install -Dm644 rustconn/assets/io.github.zbndev.RustConnRu-vv.xml /app/share/mime/packages/io.github.zbndev.RustConnRu-vv.xml
+      - install -Dm644 rustconn/assets/io.github.zbndev.RustConnRu.metainfo.xml /app/share/metainfo/io.github.zbndev.RustConnRu.metainfo.xml
+      - install -Dm644 rustconn/assets/icons/hicolor/scalable/apps/io.github.zbndev.RustConnRu.svg /app/share/icons/hicolor/scalable/apps/io.github.zbndev.RustConnRu.svg
       # Install locale files (compile .po to .mo).
       # Path NOT under /app/share/locale/ — flatpak-builder splits that into
       # per-language Locale extension subsets (issue #158). LOCALEDIR in
@@ -374,15 +374,7 @@ modules:
           msgfmt -o /app/share/rustconn/locale/$lang/LC_MESSAGES/rustconn.mo "$po_file"
         done
     sources:
-      - type: git
-        url: https://github.com/totoshko88/RustConn.git
-        # Tag only, deliberately without `commit:`. The release commit does not
-        # exist while this manifest is being prepared, so pinning it here is a
-        # chicken-and-egg problem and any placeholder would be a fake pin.
-        # The immutable commit is added once the tag exists — by hand or by the
-        # Flathub bot — in the Flathub repository, not here.
-        tag: v0.24.11
-        x-checker-data:
-          type: git
-          tag-pattern: ^v([\d.]+)$
+      # Reference-only local source; this fork is not submitted to Flathub.
+      - type: dir
+        path: ../..
       - cargo-sources.json

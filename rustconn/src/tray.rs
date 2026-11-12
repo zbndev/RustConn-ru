@@ -88,7 +88,7 @@ mod tray_impl {
     /// Embedded SVG icon data (tray-specific variant with cream halo for
     /// visibility on dark KDE/Plasma panels — see issue #157).
     const ICON_SVG: &[u8] = include_bytes!(
-        "../assets/icons/hicolor/scalable/apps/io.github.totoshko88.RustConn-tray.svg"
+        "../assets/icons/hicolor/scalable/apps/io.github.zbndev.RustConnRu-tray.svg"
     );
 
     /// Render SVG to ARGB32 pixmap for tray icon
@@ -139,7 +139,7 @@ mod tray_impl {
             self.icon_pixmap.clone()
         }
         fn title(&self) -> String {
-            "RustConn".to_string()
+            "RustConnRu".to_string()
         }
         fn tool_tip(&self) -> ksni::ToolTip {
             let state = match self.state.lock() {
@@ -158,12 +158,12 @@ mod tray_impl {
             ksni::ToolTip {
                 icon_name: String::new(),
                 icon_pixmap: Vec::new(),
-                title: "RustConn".to_string(),
+                title: "RustConnRu".to_string(),
                 description,
             }
         }
         fn id(&self) -> String {
-            "io.github.totoshko88.RustConn".to_string()
+            "io.github.zbndev.RustConnRu".to_string()
         }
         fn activate(&mut self, _x: i32, _y: i32) {
             let _ = self.sender.try_send(TrayMessage::ToggleWindow);
@@ -278,7 +278,7 @@ mod tray_impl {
             }
 
             items.push(MenuItem::Standard(StandardItem {
-                label: gettext("About RustConn"),
+                label: gettext("About RustConnRu"),
                 activate: Box::new(|tray: &mut Self| {
                     let _ = tray.sender.try_send(TrayMessage::About);
                 }),
@@ -438,7 +438,7 @@ mod tray_macos_impl {
     /// icon is registered as an NSImage template, so macOS tints it to match
     /// the menu bar (dark/light/inactive) like every native status item.
     const ICON_SVG: &[u8] = include_bytes!(
-        "../assets/icons/hicolor/scalable/apps/io.github.totoshko88.RustConn-tray-macos.svg"
+        "../assets/icons/hicolor/scalable/apps/io.github.zbndev.RustConnRu-tray-macos.svg"
     );
 
     /// Render SVG to RGBA pixmap for tray-icon crate
@@ -509,7 +509,7 @@ mod tray_macos_impl {
             // source — a full-colour icon would render as a solid blob.
             let tray_icon = match TrayIconBuilder::new()
                 .with_icon_templated(icon)
-                .with_tooltip("RustConn")
+                .with_tooltip("RustConnRu")
                 .with_menu(Box::new(menu))
                 .build()
             {
@@ -653,7 +653,7 @@ mod tray_macos_impl {
             let _ = menu.append(&PredefinedMenuItem::separator());
             let _ = menu.append(&MenuItem::with_id(
                 muda::MenuId(ID_ABOUT.into()),
-                &gettext("About RustConn"),
+                &gettext("About RustConnRu"),
                 true,
                 None,
             ));

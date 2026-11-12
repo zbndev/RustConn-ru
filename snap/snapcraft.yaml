@@ -1,10 +1,10 @@
 name: rustconn
 base: core26
 version: '0.24.11'
-title: RustConn
+title: RustConnRu
 summary: Manage remote connections easily
 description: |
-  RustConn is a modern connection manager for Linux with a GTK4/Wayland-native
+  RustConnRu is a modern connection manager for Linux with a GTK4/Wayland-native
   interface. Manage SSH, RDP, VNC, SPICE, MOSH, Telnet, Serial, Kubernetes, and
   Zero Trust connections from a single application. Terminals and RDP and VNC
   sessions open inside the window; SPICE sessions open in an external viewer
@@ -62,26 +62,24 @@ description: |
 
 grade: stable
 confinement: strict
-icon: rustconn/assets/icons/hicolor/256x256/apps/io.github.totoshko88.RustConn.png
+icon: rustconn/assets/icons/hicolor/256x256/apps/io.github.zbndev.RustConnRu.png
 license: GPL-3.0-or-later
 # Store-listing links. snapd copies these into the built snap.yaml `links:`
 # block and the Snap Store shows them on the listing (Website, Source code,
-# Report a bug, Donations). Each field is a list because the metadata spec lets
+# Report a bug, Contact). Each field is a list because the metadata spec lets
 # a field carry several links, and — crucially — an e-mail contact MUST be
 # `mailto:`-prefixed: a bare address is an invalid link entry and the store
 # drops the whole `links:` block on the "Update metadata on release" sync,
-# which is why the Donations / Source code / Report-a-bug links vanished after
-# a release (issue: links disappear on Snapcraft after release).
+# which is why the listing's links vanished after a release
+# (issue: links disappear on Snapcraft after release).
 website:
-  - https://github.com/totoshko88/RustConn
+  - https://github.com/zbndev/RustConn-ru
 source-code:
-  - https://github.com/totoshko88/RustConn
+  - https://github.com/zbndev/RustConn-ru
 issues:
-  - https://github.com/totoshko88/RustConn/issues
-donation:
-  - https://donatello.to/totoshko88
+  - https://github.com/zbndev/RustConn-ru/issues
 contact:
-  - https://github.com/totoshko88/RustConn/issues
+  - https://github.com/zbndev/RustConn-ru/issues
   - mailto:totoshko88@gmail.com
 
 platforms:
@@ -187,14 +185,14 @@ slots:
   dbus-rustconn:
     interface: dbus
     bus: session
-    name: io.github.totoshko88.RustConn
+    name: io.github.zbndev.RustConnRu
 
 apps:
   rustconn:
     command: usr/bin/rustconn
     extensions: [gnome]
-    desktop: usr/share/applications/io.github.totoshko88.RustConn.desktop
-    common-id: io.github.totoshko88.RustConn
+    desktop: usr/share/applications/io.github.zbndev.RustConnRu.desktop
+    common-id: io.github.zbndev.RustConnRu
     slots:
       - dbus-rustconn
     plugs:
@@ -432,8 +430,8 @@ parts:
       mkdir -p $CRAFT_PART_INSTALL/usr/share/applications
       mkdir -p $CRAFT_PART_INSTALL/usr/share/icons
       mkdir -p $CRAFT_PART_INSTALL/usr/share/metainfo
-      cp rustconn/assets/io.github.totoshko88.RustConn.desktop $CRAFT_PART_INSTALL/usr/share/applications/
-      cp rustconn/assets/io.github.totoshko88.RustConn.metainfo.xml $CRAFT_PART_INSTALL/usr/share/metainfo/
+      cp rustconn/assets/io.github.zbndev.RustConnRu.desktop $CRAFT_PART_INSTALL/usr/share/applications/
+      cp rustconn/assets/io.github.zbndev.RustConnRu.metainfo.xml $CRAFT_PART_INSTALL/usr/share/metainfo/
       cp -r rustconn/assets/icons/hicolor $CRAFT_PART_INSTALL/usr/share/icons/
       for po_file in po/*.po; do
         [ -f "$po_file" ] || continue

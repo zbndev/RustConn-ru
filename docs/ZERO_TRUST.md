@@ -64,7 +64,7 @@ Connects via `gcloud compute ssh --tunnel-through-iap`. Requires the Google Clou
 
 **Prerequisites:** `gcloud` CLI, authenticated (`gcloud auth login`), IAP-enabled firewall rule.
 
-**Flatpak:** The Flatpak sandbox mounts `~/.config/gcloud/` as read-only to share your host credentials. RustConn automatically redirects gcloud's writable config to `~/.var/app/io.github.totoshko88.RustConn/config/gcloud/` via the `CLOUDSDK_CONFIG` environment variable. On first use, credential files are bootstrapped from the host mount.
+**Flatpak:** The Flatpak sandbox mounts `~/.config/gcloud/` as read-only to share your host credentials. RustConn automatically redirects gcloud's writable config to `~/.var/app/io.github.zbndev.RustConnRu/config/gcloud/` via the `CLOUDSDK_CONFIG` environment variable. On first use, credential files are bootstrapped from the host mount.
 
 If you installed gcloud via Flatpak Components and haven't authenticated on the host, run inside a RustConn Local Shell:
 ```bash
@@ -86,7 +86,7 @@ Connects via `az network bastion ssh`. Requires the Azure CLI with bastion exten
 
 **Prerequisites:** `az` CLI, `az extension add --name bastion`, authenticated (`az login`).
 
-**Flatpak:** The Flatpak sandbox mounts `~/.azure/` as read-only to share your host credentials. RustConn automatically redirects Azure CLI's writable config to `~/.var/app/io.github.totoshko88.RustConn/config/azure/` via the `AZURE_CONFIG_DIR` environment variable. On first use, credential files (`azureProfile.json`, `msal_token_cache.json`, etc.) are bootstrapped from the host mount.
+**Flatpak:** The Flatpak sandbox mounts `~/.azure/` as read-only to share your host credentials. RustConn automatically redirects Azure CLI's writable config to `~/.var/app/io.github.zbndev.RustConnRu/config/azure/` via the `AZURE_CONFIG_DIR` environment variable. On first use, credential files (`azureProfile.json`, `msal_token_cache.json`, etc.) are bootstrapped from the host mount.
 
 ### Azure SSH (AAD)
 
@@ -115,7 +115,7 @@ Connects via Oracle Cloud Infrastructure Bastion service.
 
 **Prerequisites:** `oci` CLI, configured OCI credentials (`~/.oci/config`).
 
-**Flatpak:** The host `~/.oci/` directory is not mounted. RustConn redirects the OCI config file to `~/.var/app/io.github.totoshko88.RustConn/config/oci/config` via the `OCI_CLI_CONFIG_FILE` environment variable. You need to configure OCI CLI from a RustConn Local Shell after installing it via Flatpak Components.
+**Flatpak:** The host `~/.oci/` directory is not mounted. RustConn redirects the OCI config file to `~/.var/app/io.github.zbndev.RustConnRu/config/oci/config` via the `OCI_CLI_CONFIG_FILE` environment variable. You need to configure OCI CLI from a RustConn Local Shell after installing it via Flatpak Components.
 
 ### Cloudflare Access
 
@@ -140,7 +140,7 @@ Connects via Gravitational Teleport.
 
 **Prerequisites:** `tsh` CLI, authenticated (`tsh login`).
 
-**Flatpak:** The host `~/.tsh/` directory is not mounted. RustConn redirects Teleport's config directory to `~/.var/app/io.github.totoshko88.RustConn/config/tsh/` via the `TELEPORT_HOME` environment variable. Run `tsh login` from a RustConn Local Shell after installing Teleport via Flatpak Components.
+**Flatpak:** The host `~/.tsh/` directory is not mounted. RustConn redirects Teleport's config directory to `~/.var/app/io.github.zbndev.RustConnRu/config/tsh/` via the `TELEPORT_HOME` environment variable. Run `tsh login` from a RustConn Local Shell after installing Teleport via Flatpak Components.
 
 ### Tailscale SSH
 
@@ -217,7 +217,7 @@ rustconn-cli add --name "Staging DB" --host localhost --protocol zt \
 
 **Flatpak:** The host `~/.hoop/` directory is **not** mounted by default (the permission was rejected by Flathub lint). To share Hoop.dev authentication tokens and configuration with the sandbox, grant access manually after installation:
 ```bash
-flatpak override --user --filesystem=home/.hoop:ro io.github.totoshko88.RustConn
+flatpak override --user --filesystem=home/.hoop:ro io.github.zbndev.RustConnRu
 ```
 Alternatively, authenticate from a RustConn Local Shell, or pass credentials via the `HOOP_*` environment variables described above. Install `hoop` via Flatpak Components if not available on the host.
 

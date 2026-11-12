@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rustconn 0.24.11\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-12 21:29+0300\n"
+"POT-Creation-Date: 2026-11-12 22:54+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
 #: rustconn/src/alert.rs:15 rustconn/src/alert.rs:54 rustconn/src/alert.rs:64
-#: rustconn/src/app.rs:2252 rustconn/src/script_runner.rs:774
+#: rustconn/src/app.rs:2257 rustconn/src/script_runner.rs:774
 #: rustconn/src/script_runner.rs:806 rustconn/src/toast.rs:283
 msgid "OK"
 msgstr ""
@@ -99,67 +99,75 @@ msgstr ""
 msgid "Initialization Error"
 msgstr ""
 
-#: rustconn/src/app.rs:876
+#: rustconn/src/app.rs:875
 msgid "KeePass password not loaded from keyring — re-enter it in Settings"
 msgstr ""
 
-#: rustconn/src/app.rs:881 rustconn/src/dialogs/shortcuts.rs:204
+#: rustconn/src/app.rs:880 rustconn/src/dialogs/shortcuts.rs:204
 #: rustconn/src/embedded_rdp/mod.rs:410 rustconn/src/split_view/bridge.rs:2204
 #: rustconn/src/window/ui.rs:99
 msgid "Settings"
 msgstr ""
 
-#: rustconn/src/app.rs:1731
+#: rustconn/src/app.rs:1730
 msgid ""
 "{} is selected, but the system keyring is not accessible. Run: sudo snap "
 "connect rustconn:password-manager-service — or open Settings, then Secrets, "
 "to choose another backend."
 msgstr ""
 
-#: rustconn/src/app.rs:1736
+#: rustconn/src/app.rs:1735
 msgid ""
 "{} is selected, but it cannot store passwords yet: {}. Open Settings, then "
 "Secrets."
 msgstr ""
 
-#: rustconn/src/app.rs:2087 rustconn/src/window/edit_actions.rs:1726
+#: rustconn/src/app.rs:2086 rustconn/src/window/edit_actions.rs:1726
 #: rustconn/src/window/edit_actions.rs:1865
 #: rustconn/src/window/edit_actions.rs:1893
 msgid "Failed to open URL: {}"
 msgstr ""
 
-#: rustconn/src/app.rs:2096
+#: rustconn/src/app.rs:2095
 msgid ""
 "Modern connection manager for Linux with a GTK4/Wayland-native interface. "
 "Manage SSH, RDP, VNC, SPICE, Telnet, Serial, Kubernetes, and Zero Trust "
 "connections from a single application."
 msgstr ""
 
-#: rustconn/src/app.rs:2177
+#: rustconn/src/app.rs:2176
 msgid "User Guide"
 msgstr ""
 
-#: rustconn/src/app.rs:2179
+#: rustconn/src/app.rs:2178
 msgid "Installation"
 msgstr ""
 
-#: rustconn/src/app.rs:2183
+#: rustconn/src/app.rs:2182
 msgid "Releases"
 msgstr ""
 
-#: rustconn/src/app.rs:2187
+#: rustconn/src/app.rs:2186
 msgid "Changelog"
 msgstr ""
 
-#: rustconn/src/app.rs:2197
+#: rustconn/src/app.rs:2190
+msgid "Fork maintenance"
+msgstr ""
+
+#: rustconn/src/app.rs:2192
+msgid "Russian localization and fork maintenance: zbndev"
+msgstr ""
+
+#: rustconn/src/app.rs:2202
 msgid "Special Thanks"
 msgstr ""
 
-#: rustconn/src/app.rs:2212
+#: rustconn/src/app.rs:2217
 msgid "Made in Ukraine"
 msgstr ""
 
-#: rustconn/src/app.rs:2213
+#: rustconn/src/app.rs:2218
 msgid "All contributors and supporters"
 msgstr ""
 
@@ -195,7 +203,7 @@ msgid "Command macro “{}”: {}"
 msgstr ""
 
 #: rustconn/src/detached_window.rs:61
-msgid "{} — RustConn"
+msgid "{} — RustConnRu"
 msgstr ""
 
 #: rustconn/src/detached_window.rs:156
@@ -227,7 +235,7 @@ msgstr ""
 
 #: rustconn/src/detached_window.rs:478 rustconn/src/tray.rs:281
 #: rustconn/src/tray.rs:656 rustconn/src/window/ui.rs:346
-msgid "About RustConn"
+msgid "About RustConnRu"
 msgstr ""
 
 #: rustconn/src/detached_window.rs:485 rustconn/src/window/ui.rs:82
@@ -5299,7 +5307,7 @@ msgstr ""
 
 #: rustconn/src/dialogs/import/mod.rs:436
 msgid ""
-"Connection '{}' was an FTP session, imported as SFTP — RustConn has no FTP "
+"Connection '{}' was an FTP session, imported as SFTP — RustConnRu has no FTP "
 "client. Check the port (SFTP uses 22), the credentials and whether the "
 "server speaks SFTP before connecting."
 msgstr ""
@@ -12037,7 +12045,7 @@ msgid "Basic Information"
 msgstr ""
 
 #: rustconn/src/split_view/bridge.rs:2003
-#: rustconn/assets/io.github.totoshko88.RustConn.desktop:3
+#: rustconn/assets/io.github.zbndev.RustConnRu.desktop:3
 msgid "Manage remote connections easily"
 msgstr ""
 
@@ -12653,13 +12661,13 @@ msgstr ""
 msgid ""
 "Sync directory is not configured. In Flatpak, grant filesystem access first: "
 "flatpak override --user --filesystem=/path/to/sync "
-"io.github.totoshko88.RustConn"
+"io.github.zbndev.RustConnRu"
 msgstr ""
 
 #: rustconn/src/window/connection_actions.rs:200
 msgid ""
 "Sync directory is not accessible from Flatpak sandbox. Run: flatpak override "
-"--user --filesystem={} io.github.totoshko88.RustConn"
+"--user --filesystem={} io.github.zbndev.RustConnRu"
 msgstr ""
 
 #: rustconn/src/window/connection_actions.rs:204
@@ -13557,7 +13565,7 @@ msgstr ""
 
 #: rustconn/src/window/mod.rs:1215
 msgid ""
-"RustConn closed unexpectedly the last time it ran. A crash log was saved "
+"RustConnRu closed unexpectedly the last time it ran. A crash log was saved "
 "locally."
 msgstr ""
 
@@ -13624,7 +13632,7 @@ msgid "Connection “{}” created"
 msgstr ""
 
 #: rustconn/src/window/mod.rs:4226
-msgid "RustConn - {}"
+msgid "RustConnRu - {}"
 msgstr ""
 
 #: rustconn/src/window/mod.rs:4438
@@ -13655,7 +13663,7 @@ msgid ""
 msgstr ""
 
 #: rustconn/src/window/mod.rs:4709
-msgid "Close RustConn?"
+msgid "Close RustConnRu?"
 msgstr ""
 
 #: rustconn/src/window/mod.rs:4711
@@ -13670,8 +13678,8 @@ msgstr ""
 
 #: rustconn/src/window/mod.rs:4753
 msgid ""
-"These settings were saved by a newer RustConn ({}). A backup is kept before "
-"they are changed."
+"These settings were saved by a newer RustConnRu ({}). A backup is kept "
+"before they are changed."
 msgstr ""
 
 #: rustconn/src/window/mod.rs:4778
@@ -14717,10 +14725,10 @@ msgstr ""
 msgid "Failed to save workspace"
 msgstr ""
 
-#: rustconn/assets/io.github.totoshko88.RustConn.desktop:2
-msgid "RustConn"
+#: rustconn/assets/io.github.zbndev.RustConnRu.desktop:2
+msgid "RustConnRu"
 msgstr ""
 
-#: rustconn/assets/io.github.totoshko88.RustConn.desktop:16
+#: rustconn/assets/io.github.zbndev.RustConnRu.desktop:16
 msgid "ssh;rdp;vnc;spice;mosh;telnet;zerotrust;connection;terminal;remote;kubernetes;k8s;serial;sftp;"
 msgstr ""

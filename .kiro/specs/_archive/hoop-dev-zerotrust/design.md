@@ -190,9 +190,9 @@ DownloadableComponent {
 ```
 
 Файли:
-- `packaging/flatpak/io.github.totoshko88.RustConn.yml`
-- `packaging/flatpak/io.github.totoshko88.RustConn.local.yml`
-- `packaging/flathub/io.github.totoshko88.RustConn.yml`
+- `packaging/flatpak/io.github.zbndev.RustConnRu.yml`
+- `packaging/flatpak/io.github.zbndev.RustConnRu.local.yml`
+- `packaging/flathub/io.github.zbndev.RustConnRu.yml`
 
 ### 9. Інтернаціоналізація
 

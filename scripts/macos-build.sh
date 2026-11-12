@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Build RustConn for macOS and produce the canonical self-contained .app bundle.
+# Build RustConnRu for macOS and produce the canonical self-contained .app bundle.
 #
 # Usage:
 #   ./scripts/macos-build.sh                         # debug, unsigned bundle
@@ -14,11 +14,11 @@ SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 PROJECT_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
 cd "$PROJECT_DIR"
 
-APP_DIR="$PROJECT_DIR/dist/RustConn.app"
-BUNDLE_ID="io.github.totoshko88.RustConn"
+APP_DIR="$PROJECT_DIR/dist/RustConnRu.app"
+BUNDLE_ID="io.github.zbndev.RustConnRu"
 MACOS_FEATURES="tray-macos,system-keyring,vnc-embedded,rdp-embedded,gfx-h264,rdp-audio,rd-gateway,adw-1-10,gtk-4-24"
 ENTITLEMENTS="$PROJECT_DIR/packaging/macos/RustConn.entitlements"
-ICON_SVG="$PROJECT_DIR/rustconn/assets/icons/hicolor/scalable/apps/io.github.totoshko88.RustConn.svg"
+ICON_SVG="$PROJECT_DIR/rustconn/assets/icons/hicolor/scalable/apps/io.github.zbndev.RustConnRu.svg"
 VERSION="$(awk -F'"' '/^\[workspace\.package\]/{p=1} p&&/^version[[:space:]]*=/{print $2; exit}' Cargo.toml)"
 
 RELEASE=false
@@ -119,7 +119,7 @@ cp "$TARGET_DIR/rustconn-cli" "$APP_DIR/Contents/MacOS/rustconn-cli"
 # shared script so the icon step cannot drift between this producer and the
 # Homebrew formula, and so a broken render fails with a named file rather than
 # an opaque "Invalid Iconset" from iconutil.
-"$SCRIPT_DIR/make-iconset.sh" "$ICON_SVG" "$APP_DIR/Contents/Resources/RustConn.icns"
+"$SCRIPT_DIR/make-iconset.sh" "$ICON_SVG" "$APP_DIR/Contents/Resources/RustConnRu.icns"
 
 # Compile all translations; a broken catalog must fail packaging.
 for catalog in "$PROJECT_DIR"/po/*.po; do
@@ -166,19 +166,19 @@ cat > "$APP_DIR/Contents/Info.plist" <<PLIST
 <plist version="1.0">
 <dict>
     <key>CFBundleExecutable</key><string>rustconn</string>
-    <key>CFBundleIconFile</key><string>RustConn</string>
+    <key>CFBundleIconFile</key><string>RustConnRu</string>
     <key>CFBundleIdentifier</key><string>${BUNDLE_ID}</string>
-    <key>CFBundleName</key><string>RustConn</string>
-    <key>CFBundleDisplayName</key><string>RustConn</string>
+    <key>CFBundleName</key><string>RustConnRu</string>
+    <key>CFBundleDisplayName</key><string>RustConnRu</string>
     <key>CFBundlePackageType</key><string>APPL</string>
     <key>CFBundleVersion</key><string>${VERSION}</string>
     <key>CFBundleShortVersionString</key><string>${VERSION}</string>
     <key>LSMinimumSystemVersion</key><string>13.0</string>
     <key>NSHighResolutionCapable</key><true/>
     <key>NSDocumentsFolderUsageDescription</key>
-    <string>RustConn needs access to import SSH configurations and connection files.</string>
+    <string>RustConnRu needs access to import SSH configurations and connection files.</string>
     <key>NSAppleEventsUsageDescription</key>
-    <string>RustConn needs to open URLs in your default browser.</string>
+    <string>RustConnRu needs to open URLs in your default browser.</string>
 </dict>
 </plist>
 PLIST

@@ -13,7 +13,7 @@ For the main user guide, see [USER_GUIDE.md](USER_GUIDE.md).
 | Install Method | How to Run |
 |----------------|------------|
 | Native (deb/rpm/AUR) | `rustconn-cli` is installed alongside `rustconn` |
-| Flatpak | `flatpak run --command=rustconn-cli io.github.totoshko88.RustConn [command]` |
+| Flatpak | `flatpak run --command=rustconn-cli io.github.zbndev.RustConnRu [command]` |
 
 For Flatpak, create a shell alias to save typing (see [Flatpak Usage](#flatpak-usage) below).
 
@@ -1260,15 +1260,15 @@ rustconn-cli man-page > ~/.local/share/man/man1/rustconn-cli.1
 When running RustConn as a Flatpak, the CLI requires the full Flatpak invocation prefix:
 
 ```bash
-flatpak run --command=rustconn-cli io.github.totoshko88.RustConn list
-flatpak run --command=rustconn-cli io.github.totoshko88.RustConn add -n "Server" -H 10.0.0.1
+flatpak run --command=rustconn-cli io.github.zbndev.RustConnRu list
+flatpak run --command=rustconn-cli io.github.zbndev.RustConnRu add -n "Server" -H 10.0.0.1
 ```
 
 Create a shell alias to simplify this:
 
 ```bash
 # Add to ~/.bashrc, ~/.zshrc, or ~/.config/fish/config.fish
-alias rcli='flatpak run --command=rustconn-cli io.github.totoshko88.RustConn'
+alias rcli='flatpak run --command=rustconn-cli io.github.zbndev.RustConnRu'
 ```
 
 Then use it like the native binary:
@@ -1281,11 +1281,11 @@ rcli add -n "Server" -H 10.0.0.1
 For shell completions in Flatpak:
 
 ```bash
-flatpak run --command=rustconn-cli io.github.totoshko88.RustConn completions bash \
+flatpak run --command=rustconn-cli io.github.zbndev.RustConnRu completions bash \
     > ~/.local/share/bash-completion/completions/rcli
 ```
 
-> **Note:** The Flatpak config directory is `~/.var/app/io.github.totoshko88.RustConn/config/rustconn/` instead of `~/.config/rustconn/`.
+> **Note:** The Flatpak config directory is `~/.var/app/io.github.zbndev.RustConnRu/config/rustconn/` instead of `~/.config/rustconn/`.
 
 ---
 

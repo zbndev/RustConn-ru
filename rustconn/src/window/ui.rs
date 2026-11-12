@@ -48,7 +48,7 @@ pub fn create_header_bar() -> (
     title_box.set_halign(gtk4::Align::Center);
     title_box.set_valign(gtk4::Align::Center);
 
-    let title = adw::WindowTitle::new("RustConn", "");
+    let title = adw::WindowTitle::new("RustConnRu", "");
     title_box.append(&title);
 
     let busy_spinner = crate::spinner::new();
@@ -343,7 +343,7 @@ pub fn create_app_menu() -> gio::Menu {
     );
     app_section.append(Some(&i18n("Keyboard Shortcuts…")), Some("app.shortcuts"));
     app_section.append(Some(&i18n("Help")), Some("app.help"));
-    app_section.append(Some(&i18n("About RustConn")), Some("app.about"));
+    app_section.append(Some(&i18n("About RustConnRu")), Some("app.about"));
     app_section.append(Some(&i18n("Quit")), Some("app.quit"));
     menu.append_section(None, &app_section);
 

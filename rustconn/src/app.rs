@@ -332,8 +332,8 @@ fn focused_application_window(app: &adw::Application) -> Option<gtk4::Window> {
         .find(gtk4::prelude::GtkWindowExt::is_active)
 }
 
-/// Application ID for `RustConn`
-pub const APP_ID: &str = "io.github.totoshko88.RustConn";
+/// Application ID for `RustConnRu`
+pub const APP_ID: &str = "io.github.zbndev.RustConnRu";
 
 /// Shared tray manager type
 type SharedTrayManager = Rc<RefCell<Option<TrayManager>>>;
@@ -786,8 +786,7 @@ fn build_ui(app: &adw::Application, tray_manager: SharedTrayManager) {
                                 {
                                     tracing::info!(
                                         "Flatpak: grant filesystem access with: \
-                                         flatpak override --user --filesystem=/path/to/sync \
-                                         io.github.totoshko88.RustConn"
+                                         io.github.zbndev.RustConnRu"
                                     );
                                 }
                             }
@@ -2067,7 +2066,7 @@ fn is_multi_modifier(accel: &str) -> bool {
 
 /// The user guide: the Help action, the About dialog's link and the AppStream
 /// `help` URL in the metainfo all point here.
-const USER_GUIDE_URL: &str = "https://github.com/totoshko88/RustConn/blob/main/docs/USER_GUIDE.md";
+const USER_GUIDE_URL: &str = "https://github.com/zbndev/RustConn-ru/blob/main/docs/USER_GUIDE.md";
 
 /// Opens the user guide in the default browser.
 ///
@@ -2100,7 +2099,7 @@ Serial, Kubernetes, and Zero Trust connections from a single application.",
 
     // Build debug info for troubleshooting
     let debug_info = format!(
-        "RustConn {version}\n\
+        "RustConnRu {version}\n\
          GTK {gtk_major}.{gtk_minor}.{gtk_micro}\n\
          libadwaita {adw_major}.{adw_minor}.{adw_micro}\n\
          Rust {rust_version}\n\
@@ -2117,13 +2116,13 @@ Serial, Kubernetes, and Zero Trust connections from a single application.",
     );
 
     let about = adw::AboutDialog::builder()
-        .application_name("RustConn")
+        .application_name("RustConnRu")
         .developer_name("Anton Isaiev")
         .version(env!("CARGO_PKG_VERSION"))
         .comments(&description)
-        .website("https://github.com/totoshko88/RustConn")
-        .issue_url("https://github.com/totoshko88/rustconn/issues")
-        .support_url("https://donatello.to/totoshko88")
+        .website("https://github.com/zbndev/RustConn-ru")
+        .issue_url("https://github.com/zbndev/RustConn-ru/issues")
+        .support_url("https://github.com/zbndev/RustConn-ru/discussions")
         .license_type(gtk4::License::Gpl30)
         // Each row is one person and libadwaita (`parse_person`) makes exactly
         // one link clickable: either an `<email>` or an `http(s)://` URL,
@@ -2146,7 +2145,7 @@ Serial, Kubernetes, and Zero Trust connections from a single application.",
         // below are the Appropriate Legal Notices that NOTICE (GPL-3.0
         // section 7(b)) asks a modified version to keep.
         .copyright("© 2024-2026 Anton Isaiev, Ukraine")
-        .application_icon("io.github.totoshko88.RustConn")
+        .application_icon("io.github.zbndev.RustConnRu")
         // The translators section. Its heading ("Translated by") is one of
         // GTK's own strings, so libadwaita localises it automatically in every
         // language GTK ships — nothing is added to our catalogues and the
@@ -2177,20 +2176,22 @@ Serial, Kubernetes, and Zero Trust connections from a single application.",
     about.add_link(&gettext("User Guide"), USER_GUIDE_URL);
     about.add_link(
         &gettext("Installation"),
-        "https://github.com/totoshko88/RustConn/blob/main/docs/INSTALL.md",
+        "https://github.com/zbndev/RustConn-ru/blob/main/docs/INSTALL.md",
     );
     about.add_link(
         &gettext("Releases"),
-        "https://github.com/totoshko88/RustConn/releases",
+        "https://github.com/zbndev/RustConn-ru/releases",
     );
     about.add_link(
         &gettext("Changelog"),
-        "https://github.com/totoshko88/RustConn/blob/main/CHANGELOG.md",
+        "https://github.com/zbndev/RustConn-ru/blob/main/CHANGELOG.md",
     );
-
-    // Support/sponsorship links
-    about.add_link("Donatello", "https://donatello.to/totoshko88");
-    about.add_link("Monobank", "https://send.monobank.ua/jar/2UgaGcQ3JC");
+    about.add_acknowledgement_section(
+        Some(&crate::i18n::i18n("Fork maintenance")),
+        &[&crate::i18n::i18n(
+            "Russian localization and fork maintenance: zbndev",
+        )],
+    );
 
     // Acknowledgments
     about.add_acknowledgement_section(

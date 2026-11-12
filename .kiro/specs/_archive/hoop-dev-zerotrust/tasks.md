@@ -87,9 +87,9 @@
 ## Задача 7: Дозволи Flatpak-маніфестів
 
 - [x] 7.1 Додати `--filesystem=home/.hoop:ro` до Flatpak-маніфестів
-  - `packaging/flatpak/io.github.totoshko88.RustConn.yml`
-  - `packaging/flatpak/io.github.totoshko88.RustConn.local.yml`
-  - `packaging/flathub/io.github.totoshko88.RustConn.yml`
+  - `packaging/flatpak/io.github.zbndev.RustConnRu.yml`
+  - `packaging/flatpak/io.github.zbndev.RustConnRu.local.yml`
+  - `packaging/flathub/io.github.zbndev.RustConnRu.yml`
   - Додати коментар: `# Hoop.dev CLI config and access tokens`
   - Позиція: після рядка `--filesystem=home/.kube:ro`
   - _Вимоги: 9.1, 9.2, 9.3, 9.4_

@@ -35,7 +35,7 @@ jobs:
           SOURCE_REPOSITORY: ${{ github.repository }}
         run: |
           python3 scripts/manual-release.py pin-flatpak \
-            --manifest packaging/flatpak/io.github.totoshko88.RustConn.yml \
+            --manifest packaging/flatpak/io.github.zbndev.RustConnRu.yml \
             --sha "$SOURCE_SHA" --repository "$SOURCE_REPOSITORY"
 
       - name: Install flatpak-cargo-generator
@@ -57,8 +57,8 @@ jobs:
       - name: Build Flatpak
         uses: flatpak/flatpak-github-actions/flatpak-builder@v6
         with:
-          manifest-path: packaging/flatpak/io.github.totoshko88.RustConn.yml
-          bundle: RustConn.flatpak
+          manifest-path: packaging/flatpak/io.github.zbndev.RustConnRu.yml
+          bundle: RustConnRu.flatpak
           cache-key: flatpak-builder-${{ github.sha }}
           build-bundle: true
           upload-artifact: false
@@ -70,5 +70,5 @@ jobs:
         uses: actions/upload-artifact@v7
         with:
           name: flatpak
-          path: RustConn.flatpak
+          path: RustConnRu.flatpak
           if-no-files-found: error

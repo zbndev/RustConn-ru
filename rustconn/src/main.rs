@@ -173,7 +173,7 @@ fn parse_cli_args() -> Option<rustconn_core::config::StartupAction> {
                 std::process::exit(0);
             }
             "--version" | "-V" => {
-                println!("RustConn {}", env!("CARGO_PKG_VERSION"));
+                println!("RustConnRu {}", env!("CARGO_PKG_VERSION"));
                 std::process::exit(0);
             }
             _ => {
@@ -316,7 +316,7 @@ pub fn macos_bundle_resources_dir() -> Option<std::path::PathBuf> {
 /// icon must not depend on whether a tray was compiled in.
 #[cfg(target_os = "macos")]
 const DOCK_ICON_PNG: &[u8] =
-    include_bytes!("../assets/icons/hicolor/256x256/apps/io.github.totoshko88.RustConn.png");
+    include_bytes!("../assets/icons/hicolor/256x256/apps/io.github.zbndev.RustConnRu.png");
 
 /// Grey Dock tiles for the macOS 26 "Clear" and "Tinted" icon styles, which turn
 /// every other app's icon monochrome. Rendered from the tray glyph.

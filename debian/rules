@@ -29,34 +29,34 @@ override_dh_auto_install:
 	install -Dm755 target/release/rustconn debian/rustconn/usr/bin/rustconn
 	install -Dm755 target/release/rustconn-cli debian/rustconn/usr/bin/rustconn-cli
 	# Desktop file
-	install -Dm644 rustconn/assets/io.github.totoshko88.RustConn.desktop \
-		debian/rustconn/usr/share/applications/io.github.totoshko88.RustConn.desktop
+	install -Dm644 rustconn/assets/io.github.zbndev.RustConnRu.desktop \
+		debian/rustconn/usr/share/applications/io.github.zbndev.RustConnRu.desktop
 	# MIME type for .rdp files
-	install -Dm644 rustconn/assets/io.github.totoshko88.RustConn-rdp.xml \
-		debian/rustconn/usr/share/mime/packages/io.github.totoshko88.RustConn-rdp.xml
+	install -Dm644 rustconn/assets/io.github.zbndev.RustConnRu-rdp.xml \
+		debian/rustconn/usr/share/mime/packages/io.github.zbndev.RustConnRu-rdp.xml
 	# MIME type for .vv files (virt-viewer)
-	install -Dm644 rustconn/assets/io.github.totoshko88.RustConn-vv.xml \
-		debian/rustconn/usr/share/mime/packages/io.github.totoshko88.RustConn-vv.xml
+	install -Dm644 rustconn/assets/io.github.zbndev.RustConnRu-vv.xml \
+		debian/rustconn/usr/share/mime/packages/io.github.zbndev.RustConnRu-vv.xml
 	# Icons - hicolor theme (for desktop/launcher)
-	install -Dm644 rustconn/assets/icons/hicolor/scalable/apps/io.github.totoshko88.RustConn.svg \
-		debian/rustconn/usr/share/icons/hicolor/scalable/apps/io.github.totoshko88.RustConn.svg
-	install -Dm644 rustconn/assets/icons/hicolor/128x128/apps/io.github.totoshko88.RustConn.png \
-		debian/rustconn/usr/share/icons/hicolor/128x128/apps/io.github.totoshko88.RustConn.png
-	install -Dm644 rustconn/assets/icons/hicolor/256x256/apps/io.github.totoshko88.RustConn.png \
-		debian/rustconn/usr/share/icons/hicolor/256x256/apps/io.github.totoshko88.RustConn.png
+	install -Dm644 rustconn/assets/icons/hicolor/scalable/apps/io.github.zbndev.RustConnRu.svg \
+		debian/rustconn/usr/share/icons/hicolor/scalable/apps/io.github.zbndev.RustConnRu.svg
+	install -Dm644 rustconn/assets/icons/hicolor/128x128/apps/io.github.zbndev.RustConnRu.png \
+		debian/rustconn/usr/share/icons/hicolor/128x128/apps/io.github.zbndev.RustConnRu.png
+	install -Dm644 rustconn/assets/icons/hicolor/256x256/apps/io.github.zbndev.RustConnRu.png \
+		debian/rustconn/usr/share/icons/hicolor/256x256/apps/io.github.zbndev.RustConnRu.png
 	# AppStream cached icons (for GNOME Software)
 	install -d debian/rustconn/usr/share/app-info/icons/hicolor/128x128/apps
-	install -Dm644 rustconn/assets/icons/hicolor/128x128/apps/io.github.totoshko88.RustConn.png \
-		debian/rustconn/usr/share/app-info/icons/hicolor/128x128/apps/io.github.totoshko88.RustConn.png
+	install -Dm644 rustconn/assets/icons/hicolor/128x128/apps/io.github.zbndev.RustConnRu.png \
+		debian/rustconn/usr/share/app-info/icons/hicolor/128x128/apps/io.github.zbndev.RustConnRu.png
 	# AppStream metainfo
-	install -Dm644 rustconn/assets/io.github.totoshko88.RustConn.metainfo.xml \
-		debian/rustconn/usr/share/metainfo/io.github.totoshko88.RustConn.metainfo.xml
+	install -Dm644 rustconn/assets/io.github.zbndev.RustConnRu.metainfo.xml \
+		debian/rustconn/usr/share/metainfo/io.github.zbndev.RustConnRu.metainfo.xml
 	# Screenshots in app-info for GNOME Software
-	install -d debian/rustconn/usr/share/app-info/screenshots/io.github.totoshko88.RustConn
+	install -d debian/rustconn/usr/share/app-info/screenshots/io.github.zbndev.RustConnRu
 	for screenshot in rustconn/assets/screenshots/*.png; do \
 		[ -f "$$screenshot" ] || continue; \
 		install -Dm644 "$$screenshot" \
-			"debian/rustconn/usr/share/app-info/screenshots/io.github.totoshko88.RustConn/$$(basename $$screenshot)"; \
+			"debian/rustconn/usr/share/app-info/screenshots/io.github.zbndev.RustConnRu/$$(basename $$screenshot)"; \
 	done
 	# Locale files (compile .po to .mo)
 	for po_file in po/*.po; do \

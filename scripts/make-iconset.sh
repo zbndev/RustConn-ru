@@ -1,17 +1,17 @@
 #!/usr/bin/env bash
-# Render the RustConn application icon into a macOS .icns, resiliently.
+# Render the RustConnRu application icon into a macOS .icns, resiliently.
 #
 # Usage:
 #   ./scripts/make-iconset.sh <icon.svg> <output.icns>
 #
 # This script prefers the prebuilt .icns shipped in the source tree at
-# packaging/macos/RustConn.icns, and only renders one when it has to. macOS 27's
-# `iconutil` rejects valid iconsets with "Invalid Iconset", which broke Homebrew
-# builds even though every member PNG was present, correctly sized and accepted
+# packaging/macos/RustConnRu.icns, because macOS 27's iconutil rejects valid
+# iconsets with "Invalid Iconset", which broke Homebrew builds even though every
+# member PNG was present, correctly sized and accepted
 # by `sips`. Shipping the .icns keeps `iconutil` off the build path. (Issue #323)
 #
 # Freshness is tracked by the SVG's content hash in
-# packaging/macos/RustConn.icns.svghash, never by modification time. Git records
+# packaging/macos/RustConnRu.icns.svghash, never by modification time. Git records
 # no mtimes: on a fresh `git clone` every file is stamped at checkout, in an order
 # nobody controls, so an `-nt` test decides "the SVG is newer" at random and sends
 # an arbitrary subset of builds down the path this script exists to avoid. A
@@ -33,7 +33,7 @@ set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 PROJECT_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
-PREBUILT_ICNS="$PROJECT_DIR/packaging/macos/RustConn.icns"
+PREBUILT_ICNS="$PROJECT_DIR/packaging/macos/RustConnRu.icns"
 PREBUILT_HASH="$PREBUILT_ICNS.svghash"
 
 die() { printf '%s: %s\n' "$(basename "$0")" "$*" >&2; exit 1; }
@@ -122,7 +122,7 @@ CANONICAL=(
 
 WORK_DIR="$(mktemp -d)"
 trap 'rm -rf "$WORK_DIR"' EXIT
-ICONSET="$WORK_DIR/RustConn.iconset"
+ICONSET="$WORK_DIR/RustConnRu.iconset"
 mkdir -p "$ICONSET"
 
 # Verify a PNG exists, is non-empty, and is exactly the expected square size.

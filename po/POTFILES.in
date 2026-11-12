@@ -2,8 +2,8 @@
 # This file is used by xgettext to extract strings for translation
 
 # Desktop file and metainfo
-rustconn/assets/io.github.totoshko88.RustConn.desktop
-rustconn/assets/io.github.totoshko88.RustConn.metainfo.xml
+rustconn/assets/io.github.zbndev.RustConnRu.desktop
+rustconn/assets/io.github.zbndev.RustConnRu.metainfo.xml
 
 # GUI application source files
 rustconn/src/i18n.rs

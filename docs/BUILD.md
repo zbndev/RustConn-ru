@@ -375,20 +375,20 @@ python3 packaging/flatpak/flatpak-cargo-generator.py \
 ```bash
 flatpak-builder --user --install --force-clean \
     build-dir \
-    packaging/flatpak/io.github.totoshko88.RustConn.local.yml
+    packaging/flatpak/io.github.zbndev.RustConnRu.local.yml
 ```
 
 ### Run
 
 ```bash
-flatpak run io.github.totoshko88.RustConn
+flatpak run io.github.zbndev.RustConnRu
 ```
 
 ### Run with Logging
 
 ```bash
-flatpak run --env=RUST_LOG=debug io.github.totoshko88.RustConn
-flatpak run --env=RUST_LOG=trace io.github.totoshko88.RustConn
+flatpak run --env=RUST_LOG=debug io.github.zbndev.RustConnRu
+flatpak run --env=RUST_LOG=trace io.github.zbndev.RustConnRu
 ```
 
 ---

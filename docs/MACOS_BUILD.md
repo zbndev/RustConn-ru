@@ -40,7 +40,7 @@ Linux-only `tray`, `wayland-native`, and `web-embedded` are intentionally exclud
 
 ## Canonical Application Build
 
-`scripts/macos-build.sh` is the only supported producer of `dist/RustConn.app`. The DMG script and local CI consume this bundle rather than recreating it independently.
+`scripts/macos-build.sh` is the only supported producer of `dist/RustConnRu.app`. The DMG script and local CI consume this bundle rather than recreating it independently.
 
 ```bash
 # Debug, unsigned, no launch
@@ -73,7 +73,7 @@ For release binaries, add `--release` to both commands. Manual Cargo builds are 
 The canonical producer writes:
 
 ```text
-dist/RustConn.app/Contents/
+dist/RustConnRu.app/Contents/
 ├── Frameworks/                 # relocated non-system dylibs
 ├── MacOS/
 │   ├── rustconn                # CFBundleExecutable
@@ -94,7 +94,7 @@ The producer recursively discovers non-system Mach-O dependencies, copies them i
 Runtime data is resolved relative to the bundle. No Homebrew runtime installation is required by the resulting `.app`; Homebrew is only required on the build machine. LaunchServices executes `Contents/MacOS/rustconn`. The wrapper lives under `Contents/Resources/bin` so it does not interfere with nested-code signing and is only for manual terminal launches:
 
 ```bash
-dist/RustConn.app/Contents/Resources/bin/rustconn-wrapper
+dist/RustConnRu.app/Contents/Resources/bin/rustconn-wrapper
 ```
 
 ## Signing
@@ -103,7 +103,7 @@ dist/RustConn.app/Contents/Resources/bin/rustconn-wrapper
 
 ```bash
 ./scripts/macos-build.sh --release --clean --no-launch --adhoc
-codesign --verify --deep --strict --verbose=2 dist/RustConn.app
+codesign --verify --deep --strict --verbose=2 dist/RustConnRu.app
 ```
 
 Ad-hoc signing is intentionally opt-in and does not establish Gatekeeper trust. `spctl` rejection of an ad-hoc artifact is expected.
@@ -128,14 +128,14 @@ Alternatively, set `MACOS_SIGN_IDENTITY`. The producer signs inside-out in this 
 Verify the result:
 
 ```bash
-codesign --verify --deep --strict --verbose=4 dist/RustConn.app
-codesign -d --entitlements :- --verbose=4 dist/RustConn.app
-spctl --assess --type execute --verbose=4 dist/RustConn.app
+codesign --verify --deep --strict --verbose=4 dist/RustConnRu.app
+codesign -d --entitlements :- --verbose=4 dist/RustConnRu.app
+spctl --assess --type execute --verbose=4 dist/RustConnRu.app
 ```
 
 ## DMG and Notarization
 
-The DMG packager consumes the canonical bundle and writes `dist/RustConn-<version>-macOS-$(uname -m).dmg`, where `<version>` is the workspace version from `Cargo.toml`.
+The DMG packager consumes the canonical bundle and writes `dist/RustConnRu-<version>-macOS-$(uname -m).dmg`, where `<version>` is the workspace version from `Cargo.toml`.
 
 ```bash
 # Build and ad-hoc sign a local artifact
@@ -179,10 +179,10 @@ Then build, sign, submit, staple, and validate in one command:
 Inspect a finished DMG:
 
 ```bash
-hdiutil attach dist/RustConn-<version>-macOS-$(uname -m).dmg
-codesign --verify --deep --strict --verbose=4 /Volumes/RustConn/RustConn.app
-spctl --assess --type execute --verbose=4 /Volumes/RustConn/RustConn.app
-hdiutil detach /Volumes/RustConn
+hdiutil attach dist/RustConnRu-<version>-macOS-$(uname -m).dmg
+codesign --verify --deep --strict --verbose=4 /Volumes/RustConnRu/RustConnRu.app
+spctl --assess --type execute --verbose=4 /Volumes/RustConnRu/RustConnRu.app
+hdiutil detach /Volumes/RustConnRu
 ```
 
 ## Local-Only CI and Audit
@@ -241,7 +241,7 @@ Drop `adw-1-8` if the installed libadwaita is older than 1.8 (`brew info libadwa
 For realistic runtime and Dock behavior, use the bundle:
 
 ```bash
-open dist/RustConn.app
+open dist/RustConnRu.app
 ```
 
 ## Homebrew Formula
@@ -260,11 +260,11 @@ ruby -c packaging/macos/rustconn.rb
 brew install --build-from-source ./packaging/macos/rustconn.rb
 ```
 
-The formula builds its own `.app` under `#{prefix}/RustConn.app`, and it must obey the same rule as the canonical producer: `CFBundleExecutable` names a real binary inside `Contents/MacOS`, never a wrapper that `exec`s one from the keg's `bin`. Re-exec destroys the bundle identity — generic Dock tile, wrong name, and no LaunchServices scene for `NSStatusItem`. Because that copy is not reached by `scripts/macos-build.sh`, verify the formula's bundle separately after changing it:
+The formula builds its own `.app` under `#{prefix}/RustConnRu.app`, and it must obey the same rule as the canonical producer: `CFBundleExecutable` names a real binary inside `Contents/MacOS`, never a wrapper that `exec`s one from the keg's `bin`. Re-exec destroys the bundle identity — generic Dock tile, wrong name, and no LaunchServices scene for `NSStatusItem`. Because that copy is not reached by `scripts/macos-build.sh`, verify the formula's bundle separately after changing it:
 
 ```bash
-plutil -p "$(brew --prefix)/opt/rustconn/RustConn.app/Contents/Info.plist" | grep CFBundleExecutable
-file "$(brew --prefix)/opt/rustconn/RustConn.app/Contents/MacOS/rustconn"   # must be Mach-O, not a script
+plutil -p "$(brew --prefix)/opt/rustconn/RustConnRu.app/Contents/Info.plist" | grep CFBundleExecutable
+file "$(brew --prefix)/opt/rustconn/RustConnRu.app/Contents/MacOS/rustconn"   # must be Mach-O, not a script
 ```
 
 ## Troubleshooting
@@ -285,13 +285,13 @@ Use `tray-macos`, not Linux `tray`. The macOS path creates a native `NSStatusIte
 
 Expected for any launch with no bundle behind it, and not something the window icon can fix: macOS reads the Dock icon from the launched bundle's `Info.plist`, and `gtk_window_set_icon_name` is an X11/Wayland concept the GDK macOS backend ignores.
 
-RustConn compensates by setting the tile image at runtime through `rustconn-dock-sys`, so a shell launch of `rustconn` shows the right icon from 0.20.4 onwards. Only the tile: the name under it, the Cmd-Tab entry and the application menu still come from the bundle, so use `open dist/RustConn.app` when those matter. Confirm the runtime path took effect with:
+RustConn compensates by setting the tile image at runtime through `rustconn-dock-sys`, so a shell launch of `rustconn` shows the right icon from 0.20.4 onwards. Only the tile: the name under it, the Cmd-Tab entry and the application menu still come from the bundle, so use `open dist/RustConnRu.app` when those matter. Confirm the runtime path took effect with:
 
 ```bash
 RUST_LOG=debug rustconn 2>&1 | grep -i 'dock tile'
 ```
 
-`Set the Dock tile icon programmatically` means it applied; `Dock icon left to the bundle's CFBundleIconFile` means RustConn detected a real bundle and deliberately did nothing, which is correct inside `dist/RustConn.app`. A stale tile for a bundle you just rebuilt is LaunchServices caching rather than a packaging fault — `touch dist/RustConn.app` and relaunch.
+`Set the Dock tile icon programmatically` means it applied; `Dock icon left to the bundle's CFBundleIconFile` means RustConn detected a real bundle and deliberately did nothing, which is correct inside `dist/RustConnRu.app`. A stale tile for a bundle you just rebuilt is LaunchServices caching rather than a packaging fault — `touch dist/RustConnRu.app` and relaunch.
 
 ### Missing Icons or Schemas During Development
 

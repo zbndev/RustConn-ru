@@ -135,8 +135,8 @@ Hoop.dev — це zero-trust шлюз доступу до баз даних та
 #### Критерії прийняття
 
 1. THE Flatpak_Manifest SHALL include `--filesystem=home/.hoop:ro` to allow read-only access to the Hoop.dev configuration directory
-2. THE Flatpak_Manifest changes SHALL be applied to both `packaging/flatpak/io.github.totoshko88.RustConn.yml` and `packaging/flatpak/io.github.totoshko88.RustConn.local.yml`
-3. THE Flatpak_Manifest changes SHALL be applied to `packaging/flathub/io.github.totoshko88.RustConn.yml`
+2. THE Flatpak_Manifest changes SHALL be applied to both `packaging/flatpak/io.github.zbndev.RustConnRu.yml` and `packaging/flatpak/io.github.zbndev.RustConnRu.local.yml`
+3. THE Flatpak_Manifest changes SHALL be applied to `packaging/flathub/io.github.zbndev.RustConnRu.yml`
 4. THE Flatpak_Manifest SHALL include a comment explaining the purpose of the `home/.hoop:ro` permission (Hoop.dev CLI config and access tokens)
 
 ### Вимога 10: Серіалізація та імпорт/експорт

@@ -53,7 +53,7 @@ fi
 
 if ! $SKIP_BUNDLE; then
     "$SCRIPT_DIR/macos-build.sh" --release --clean --no-launch --adhoc
-    APP_DIR="$PROJECT_DIR/dist/RustConn.app"
+    APP_DIR="$PROJECT_DIR/dist/RustConnRu.app"
 
     "$APP_DIR/Contents/MacOS/rustconn-cli" --version
     "$APP_DIR/Contents/MacOS/rustconn-cli" --help >/dev/null

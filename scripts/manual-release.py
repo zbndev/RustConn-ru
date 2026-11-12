@@ -164,16 +164,18 @@ def notes(arguments: argparse.Namespace) -> None:
     upstream_body = arguments.upstream_notes.read_bytes()
     deb = f"rustconn_{version}_amd64.deb"
     rpm = f"rustconn-{version}-1.x86_64.rpm"
-    appimage = f"RustConn-{version}-x86_64.AppImage"
-    flatpak = f"RustConn-{version}.flatpak"
-    header = f"""# RustConn-ru {arguments.tag}
+    appimage = f"RustConnRu-{version}-x86_64.AppImage"
+    flatpak = f"RustConnRu-{version}.flatpak"
+    header = f"""# RustConnRu {arguments.tag}
 
 Это релиз русскоязычного форка [{repository}](https://github.com/{repository}),
 а не официальный релиз upstream. Основа: [RustConn v{version}](https://github.com/totoshko88/RustConn/releases/tag/v{version}).
 
-Имя установленной программы и пакета остаётся `rustconn`, идентификатор Flatpak —
-`io.github.totoshko88.RustConn`. Форк не предназначен для параллельной установки
-с upstream-пакетом с тем же именем или идентификатором.
+Отображаемое имя приложения — RustConnRu. Нативные пакеты и исполняемые файлы
+сохраняют имена `rustconn` и `rustconn-cli`, поэтому нативные пакеты форка и
+upstream не предназначены для параллельной установки. Flatpak использует свой
+идентификатор `io.github.zbndev.RustConnRu` и отдельный каталог данных;
+данные прежнего Flatpak автоматически не переносятся.
 
 ## Загрузка и проверка
 
@@ -221,7 +223,7 @@ chmod +x {appimage}
 
 ```sh
 flatpak install --user ./{flatpak}
-flatpak run io.github.totoshko88.RustConn
+flatpak run io.github.zbndev.RustConnRu
 ```
 
 Публикация пакета AUR `rustconn-ru` **не предполагается и не гарантируется**.
@@ -233,7 +235,7 @@ flatpak run io.github.totoshko88.RustConn
 > **Внимание: инструкции upstream — не инструкции форка.** Текст ниже сохранён
 > без изменений как данные из исходного релиза. Его ссылки, имена пакетов,
 > репозитории и команды установки относятся к upstream RustConn, а не к
-> RustConn-ru. Для этого форка используйте инструкции и файлы выше.
+> RustConnRu. Для этого форка используйте инструкции и файлы выше.
 
 ---
 

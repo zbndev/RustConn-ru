@@ -433,7 +433,7 @@ impl ImportDialog {
                 &[&count.to_string()],
             ),
             ImportWarning::FtpImportedAsSftp { connection_name } => i18n_f(
-                "Connection '{}' was an FTP session, imported as SFTP — RustConn has no FTP client. Check the port (SFTP uses 22), the credentials and whether the server speaks SFTP before connecting.",
+                "Connection '{}' was an FTP session, imported as SFTP — RustConnRu has no FTP client. Check the port (SFTP uses 22), the credentials and whether the server speaks SFTP before connecting.",
                 &[connection_name],
             ),
         }

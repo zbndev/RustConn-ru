@@ -145,12 +145,6 @@ rules_for() {
     "packaging/obs/AppImageBuilder.yml")
         printf 's/^([[:space:]]+)version: %s$/\\1version: %s/\n' "$SV" "$NEW"
         ;;
-    "packaging/flatpak/io.github.totoshko88.RustConn.yml" | \
-        "packaging/flathub/io.github.totoshko88.RustConn.yml")
-        # Only the git tag of the app module. Bundled sources (FreeRDP, cJSON)
-        # have their own versions and must not move with the release.
-        printf 's/^([[:space:]]+)tag: v%s$/\\1tag: v%s/\n' "$SV" "$NEW"
-        ;;
     "snap/snapcraft.yaml")
         printf "s/^version: '%s'\$/version: '%s'/\n" "$SV" "$NEW"
         ;;
@@ -268,7 +262,7 @@ if [ "${#prose[@]}" -gt 0 ]; then
     printf '\nNeeds a hand-written entry, not a substitution:\n'
     for f in "${prose[@]}"; do printf '  %s\n' "$f"; done
     printf '  packaging/obs/rustconn.spec  (the %%changelog section)\n'
-    printf '  rustconn/assets/io.github.totoshko88.RustConn.metainfo.xml  (<release>)\n'
+    printf '  rustconn/assets/io.github.zbndev.RustConnRu.metainfo.xml  (<release>)\n'
     printf 'Write CHANGELOG.md first, then propagate its content into each format.\n'
 fi
 

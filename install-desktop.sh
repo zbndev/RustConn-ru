@@ -1,5 +1,5 @@
 #!/bin/bash
-# Install RustConn desktop entry, icon, and locale files
+# Install RustConnRu desktop entry, icon, and locale files
 
 set -e
 
@@ -24,18 +24,18 @@ fi
 # Install icon
 ICON_DIR="$PREFIX/share/icons/hicolor/scalable/apps"
 mkdir -p "$ICON_DIR"
-cp rustconn/assets/icons/hicolor/scalable/apps/io.github.totoshko88.RustConn.svg "$ICON_DIR/"
+cp rustconn/assets/icons/hicolor/scalable/apps/io.github.zbndev.RustConnRu.svg "$ICON_DIR/"
 
 # Install desktop file
 DESKTOP_DIR="$PREFIX/share/applications"
 mkdir -p "$DESKTOP_DIR"
-cp rustconn/assets/io.github.totoshko88.RustConn.desktop "$DESKTOP_DIR/"
+cp rustconn/assets/io.github.zbndev.RustConnRu.desktop "$DESKTOP_DIR/"
 
 # Install MIME type definition for .rdp files
 MIME_DIR="$PREFIX/share/mime/packages"
 mkdir -p "$MIME_DIR"
-cp rustconn/assets/io.github.totoshko88.RustConn-rdp.xml "$MIME_DIR/"
-cp rustconn/assets/io.github.totoshko88.RustConn-vv.xml "$MIME_DIR/"
+cp rustconn/assets/io.github.zbndev.RustConnRu-rdp.xml "$MIME_DIR/"
+cp rustconn/assets/io.github.zbndev.RustConnRu-vv.xml "$MIME_DIR/"
 
 # Install locale files (if compiled .mo files exist)
 if [ -d "po" ]; then

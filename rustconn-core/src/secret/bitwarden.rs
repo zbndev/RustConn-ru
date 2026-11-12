@@ -64,7 +64,7 @@ static BW_SESSION_STORE: RwLock<Option<SecretString>> = RwLock::new(None);
 ///
 /// In Flatpak sandboxes, `bw` is not on the default PATH. The UI layer
 /// detects the correct binary path (e.g.
-/// `~/.var/app/io.github.totoshko88.RustConn/cli/bitwarden/bw`) and
+/// `~/.var/app/io.github.zbndev.RustConnRu/cli/bitwarden/bw`) and
 /// stores it here so that all backend functions use the same resolved path.
 ///
 /// Falls back to `"bw"` when no custom path has been stored.

@@ -20,7 +20,7 @@ The easiest way to install `bw` inside the sandbox:
 4. Click **Install**
 5. Wait for download and verification to complete
 
-The CLI is installed to `~/.var/app/io.github.totoshko88.RustConn/cli/bitwarden/bw` (Flatpak) or `~/snap/rustconn/current/cli/bitwarden/bw` (Snap) and is automatically detected by RustConn.
+The CLI is installed to `~/.var/app/io.github.zbndev.RustConnRu/cli/bitwarden/bw` (Flatpak) or `~/snap/rustconn/current/cli/bitwarden/bw` (Snap) and is automatically detected by RustConn.
 
 > **Important:** Installing `bw` on the host system (e.g. via `npm install -g @bitwarden/cli`) does NOT make it available inside the sandbox. You must install it through the Components dialog or place the binary manually in the path above.
 
@@ -58,7 +58,7 @@ Read this before running any `bw` command in a terminal. Under Flatpak it is the
 Flatpak sets `XDG_CONFIG_HOME` to a per-application directory, so rule 2 applies to every `bw` RustConn runs itself:
 
 ```
-~/.var/app/io.github.totoshko88.RustConn/config/Bitwarden CLI/data.json
+~/.var/app/io.github.zbndev.RustConnRu/config/Bitwarden CLI/data.json
 ```
 
 A shell on your host has no `XDG_CONFIG_HOME`, so rule 3 applies there instead and `bw` reads a different file:
@@ -121,8 +121,8 @@ Enter Client ID and Client Secret when prompted.
 **Run it inside the sandbox.** Nothing to remember, nothing to keep in sync:
 
 ```bash
-flatpak run --command=sh io.github.totoshko88.RustConn -c \
-  '"$HOME/.var/app/io.github.totoshko88.RustConn/cli/bitwarden/bw" login'
+flatpak run --command=sh io.github.zbndev.RustConnRu -c \
+  '"$HOME/.var/app/io.github.zbndev.RustConnRu/cli/bitwarden/bw" login'
 ```
 
 Use your own terminal application for this, not a Local Shell tab in RustConn. Substitute `login --apikey`, or `config server https://…` followed by `login`, as needed — the same command works for all of them.
@@ -130,8 +130,8 @@ Use your own terminal application for this, not a Local Shell tab in RustConn. S
 **Or point `bw` at the sandbox state directory.** This form works anywhere, including a Local Shell tab:
 
 ```bash
-export BITWARDENCLI_APPDATA_DIR="$HOME/.var/app/io.github.totoshko88.RustConn/config/Bitwarden CLI"
-"$HOME/.var/app/io.github.totoshko88.RustConn/cli/bitwarden/bw" login
+export BITWARDENCLI_APPDATA_DIR="$HOME/.var/app/io.github.zbndev.RustConnRu/config/Bitwarden CLI"
+"$HOME/.var/app/io.github.zbndev.RustConnRu/cli/bitwarden/bw" login
 ```
 
 The `export` has to be repeated in every new shell, and forgetting it silently sends the login to the host copy again. Add it to your shell profile if you expect to do this more than once.
@@ -139,8 +139,8 @@ The `export` has to be repeated in every new shell, and forgetting it silently s
 Verify it landed correctly before going near Settings → Secrets:
 
 ```bash
-BITWARDENCLI_APPDATA_DIR="$HOME/.var/app/io.github.totoshko88.RustConn/config/Bitwarden CLI" \
-  "$HOME/.var/app/io.github.totoshko88.RustConn/cli/bitwarden/bw" status
+BITWARDENCLI_APPDATA_DIR="$HOME/.var/app/io.github.zbndev.RustConnRu/config/Bitwarden CLI" \
+  "$HOME/.var/app/io.github.zbndev.RustConnRu/cli/bitwarden/bw" status
 ```
 
 `"status":"locked"` with your email in the output means logged in and ready to unlock. `"status":"unauthenticated"` means the login went somewhere else.
@@ -166,7 +166,7 @@ bw unlock
 The key it prints belongs to that shell. RustConn reads `BW_SESSION` from its *own* environment, which is fixed when the application starts, so an `export BW_SESSION=…` in a Local Shell tab — or in any shell opened after RustConn — has no effect. The only way to hand over a key that way is to export it before launching, in the environment the application inherits:
 
 ```bash
-BW_SESSION="your-session-key-here" flatpak run io.github.totoshko88.RustConn
+BW_SESSION="your-session-key-here" flatpak run io.github.zbndev.RustConnRu
 ```
 
 That is worth knowing about, not worth doing routinely. A terminal `bw unlock` is still useful for one thing: confirming that the master password and the login state are good, before you go looking for a fault in RustConn.

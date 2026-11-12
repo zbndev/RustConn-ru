@@ -159,15 +159,15 @@
 - [ ] 10. Phase 9: Version Bump to 0.12.0 and Release Metadata
   - [~] 10.1 Bump version to `0.12.0` in `Cargo.toml` workspace `[workspace.package]` section
   - [~] 10.2 Update `CHANGELOG.md` — add `## [0.12.0]` section with Cloud Sync feature summary (Group Sync, Simple Sync, SSH Key Inheritance, Credential Resolution UX, accessible labels, cargo-deny, document badge)
-  - [~] 10.3 Update `rustconn/assets/io.github.totoshko88.RustConn.metainfo.xml` — add `<release version="0.12.0" date="YYYY-MM-DD">` entry with feature description
-  - [~] 10.4 Update Flathub manifest `packaging/flathub/io.github.totoshko88.RustConn.yml` — update git tag from `v0.11.7` to `v0.12.0`
+  - [~] 10.3 Update `rustconn/assets/io.github.zbndev.RustConnRu.metainfo.xml` — add `<release version="0.12.0" date="YYYY-MM-DD">` entry with feature description
+  - [~] 10.4 Update Flathub manifest `packaging/flathub/io.github.zbndev.RustConnRu.yml` — update git tag from `v0.11.7` to `v0.12.0`
   - [~] 10.5 Regenerate Flathub cargo sources: `packaging/flathub/cargo-sources.json` (via `flatpak-cargo-generator.py`)
   - [~] 10.6 Update OBS `packaging/obs/_service` — change `<param name="revision">` from `v0.11.7` to `v0.12.0`
   - [~] 10.7 Update OBS `packaging/obs/rustconn.changes` — add new changelog entry for 0.12.0
   - [~] 10.8 Update OBS `packaging/obs/debian.dsc` — change `Version:` from `0.11.7-1` to `0.12.0-1` and `DEBTRANSFORM-TAR` filename
   - [~] 10.9 Update OBS `packaging/obs/rustconn.dsc` — change `Version:` from `0.11.7-1` to `0.12.0-1` and source tarball filename
   - [~] 10.10 Update OBS `packaging/obs/AppImageBuilder.yml` — change `version:` from `0.11.7` to `0.12.0`
-  - [~] 10.11 Update local Flatpak manifest `packaging/flatpak/io.github.totoshko88.RustConn.yml` if it references a version tag
+  - [~] 10.11 Update local Flatpak manifest `packaging/flatpak/io.github.zbndev.RustConnRu.yml` if it references a version tag
   - [~] 10.12 Verify all version references are consistent: `grep -r "0\.11\.7" .` should return 0 results (excluding git history and vendor)
   - [~] 10.13 Run `po/update-pot.sh` to ensure translation template includes all new i18n strings
   - [~] 10.14 Create git tag `v0.12.0` and push

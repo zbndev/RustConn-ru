@@ -1,7 +1,6 @@
 {
   lib,
   rustPlatform,
-  fetchFromGitHub,
   pkg-config,
   cmake,
   clang,
@@ -19,19 +18,15 @@
   gdk-pixbuf,
   graphene,
   cairo,
-  nix-update-script,
 }:
 
 rustPlatform.buildRustPackage (finalAttrs: {
   pname = "rustconn";
-  version = "0.19.4";
+  version = "0.24.11";
 
-  src = fetchFromGitHub {
-    owner = "totoshko88";
-    repo = "RustConn";
-    tag = "v${finalAttrs.version}";
-    hash = "sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=";
-  };
+  # Reference-only recipe: build from this checkout instead of inventing a
+  # fork release tag or pulling upstream sources with fork-specific assets.
+  src = lib.cleanSource ../..;
 
   # Replace with the real hash obtained by running:
   #   nix-prefetch --option extra-experimental-features flakes \
@@ -82,14 +77,14 @@ rustPlatform.buildRustPackage (finalAttrs: {
     install -Dm755 target/release/rustconn     "$out/bin/rustconn"
     install -Dm755 target/release/rustconn-cli "$out/bin/rustconn-cli"
 
-    install -Dm644 rustconn/assets/io.github.totoshko88.RustConn.desktop \
-      "$out/share/applications/io.github.totoshko88.RustConn.desktop"
+    install -Dm644 rustconn/assets/io.github.zbndev.RustConnRu.desktop \
+      "$out/share/applications/io.github.zbndev.RustConnRu.desktop"
 
-    install -Dm644 rustconn/assets/icons/hicolor/scalable/apps/io.github.totoshko88.RustConn.svg \
-      "$out/share/icons/hicolor/scalable/apps/io.github.totoshko88.RustConn.svg"
+    install -Dm644 rustconn/assets/icons/hicolor/scalable/apps/io.github.zbndev.RustConnRu.svg \
+      "$out/share/icons/hicolor/scalable/apps/io.github.zbndev.RustConnRu.svg"
 
-    install -Dm644 rustconn/assets/io.github.totoshko88.RustConn.metainfo.xml \
-      "$out/share/metainfo/io.github.totoshko88.RustConn.metainfo.xml"
+    install -Dm644 rustconn/assets/io.github.zbndev.RustConnRu.metainfo.xml \
+      "$out/share/metainfo/io.github.zbndev.RustConnRu.metainfo.xml"
 
     # Compile and install gettext message catalogues
     for po_file in po/*.po; do
@@ -102,21 +97,18 @@ rustPlatform.buildRustPackage (finalAttrs: {
     runHook postInstall
   '';
 
-  passthru = {
-    updateScript = nix-update-script { };
-  };
 
   meta = {
     description = "GTK4/libadwaita connection manager for SSH, RDP, VNC, SPICE, Telnet, Serial, and Kubernetes";
     longDescription = ''
-      RustConn is a modern connection manager for Linux with a GTK4/Wayland-native
+      RustConnRu is a modern connection manager for Linux with a GTK4/Wayland-native
       interface. Manage SSH, RDP, VNC, SPICE, MOSH, Telnet, Serial, Kubernetes, and
       Zero Trust connections from a single application. Terminals and RDP and VNC
       sessions open inside the window; SPICE sessions open in an external viewer
       (remote-viewer). Some features use other command-line tools, such as a cloud
       provider's CLI for Zero Trust connections or a password manager's client.
     '';
-    homepage = "https://github.com/totoshko88/RustConn";
+    homepage = "https://github.com/zbndev/RustConn-ru";
     changelog = "https://github.com/totoshko88/RustConn/blob/v${finalAttrs.version}/CHANGELOG.md";
     license = lib.licenses.gpl3Plus;
     maintainers = with lib.maintainers; [ totoshko88 ];

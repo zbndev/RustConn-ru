@@ -1,4 +1,4 @@
-# Ручное обновление и выпуск RustConn-ru
+# Ручное обновление и выпуск RustConnRu
 
 В этом форке **все GitHub Actions workflows запускаются только вручную**.
 Push ветки или тега, pull request и расписание не запускают сборку или публикацию.
@@ -18,10 +18,10 @@ Push ветки или тега, pull request и расписание не за�
 номер `ru.N`; версию Rust workspace ради этого менять не нужно.
 Не перемещай уже выпущенные теги.
 
-Номер `ru.N` используется только в теге: имена файлов и версии устанавливаемых
-пакетов остаются как у upstream. Повторный выпуск той же исходной версии поэтому
-не считается новой версией пакета; для его установки может потребоваться явная
-переустановка.
+Номер `ru.N` используется только в теге; версии устанавливаемых пакетов остаются
+как у upstream. AppImage и Flatpak называются `RustConnRu-…`, а DEB/RPM сохраняют
+имя `rustconn`. Повторный выпуск той же исходной версии не считается новой
+версией пакета; для его установки может потребоваться явная переустановка.
 
 ```mermaid
 flowchart TD
@@ -62,11 +62,11 @@ git remote add upstream https://github.com/totoshko88/RustConn.git
 
 ## Ручное принятие обновления upstream
 
-Пример ниже использует `v0.24.10`; подставь действительно выпущенный тег.
+Пример ниже использует `v0.24.11`; подставь действительно выпущенный тег.
 Начинай с чистого рабочего дерева и своего проверенного `main`.
 
 ```bash
-UPSTREAM_TAG=v0.24.10
+UPSTREAM_TAG=v0.24.11
 git fetch --no-tags upstream "refs/tags/${UPSTREAM_TAG}:refs/tags/upstream/${UPSTREAM_TAG}"
 git switch main
 git switch -c "update/${UPSTREAM_TAG}"
@@ -132,16 +132,16 @@ gh workflow run ci.yml --repo zbndev/RustConn-ru --ref main
 
 ## Подготовка и запуск выпуска
 
-В примере — первый выпуск форка для исходной версии `0.24.9`. Убедись, что `main`
+В примере — первый выпуск форка для исходной версии `0.24.11`. Убедись, что `main`
 содержит все просмотренные изменения и русский перевод; команды ниже выполняет
 сопровождающий, не агент:
 
 ```bash
 git switch main
-git tag -a v0.24.9-ru.1 -m "RustConn-ru v0.24.9-ru.1"
+git tag -a v0.24.11-ru.1 -m "RustConnRu v0.24.11-ru.1"
 git push origin main
-git push origin refs/tags/v0.24.9-ru.1
-gh workflow run release.yml --repo zbndev/RustConn-ru --ref v0.24.9-ru.1
+git push origin refs/tags/v0.24.11-ru.1
+gh workflow run release.yml --repo zbndev/RustConn-ru --ref v0.24.11-ru.1
 ```
 
 Workflow необходимо запускать **от тега**, не от `main`. Запуск от ветки, чужой
@@ -157,19 +157,22 @@ Workflow необходимо запускать **от тега**, не от `m
 
 ### Артефакты
 
-Для `v0.24.9-ru.1` выпускаются:
+Для `v0.24.11-ru.1` выпускаются:
 
 | Формат | Файл | Сборочная среда |
 |--------|------|----------------|
-| DEB | `rustconn_0.24.9_amd64.deb` | Ubuntu 24.04, x86_64 |
-| RPM | `rustconn-0.24.9-1.x86_64.rpm` | Fedora 44, x86_64 |
-| AppImage | `RustConn-0.24.9-x86_64.AppImage` | Ubuntu 24.04, x86_64 |
-| Flatpak | `RustConn-0.24.9.flatpak` | GNOME runtime, x86_64 |
+| DEB | `rustconn_0.24.11_amd64.deb` | Ubuntu 24.04, x86_64 |
+| RPM | `rustconn-0.24.11-1.x86_64.rpm` | Fedora 44, x86_64 |
+| AppImage | `RustConnRu-0.24.11-x86_64.AppImage` | Ubuntu 24.04, x86_64 |
+| Flatpak | `RustConnRu-0.24.11.flatpak` | GNOME runtime, x86_64 |
 
 `SHA256SUMS` содержит хеши ровно этих четырёх файлов. Подписанная build-provenance
 аттестация относится к коммиту тега форка. Она подтверждает происхождение сборки,
-**не безопасность кода**. Сами пакеты сохраняют имя `rustconn`, имена исполняемых
-файлов, app-id и пути конфигурации upstream; параллельная установка не обещается.
+**не безопасность кода**. Нативные пакеты сохраняют имя `rustconn`, имена
+исполняемых файлов и прежние пути конфигурации; параллельная установка нативных
+пакетов не обещается. App-id форка — `io.github.zbndev.RustConnRu`, поэтому
+Flatpak хранит данные отдельно в `~/.var/app/io.github.zbndev.RustConnRu/`.
+Данные прежнего Flatpak автоматически не переносятся.
 AUR-пакет `rustconn-ru` сопровождается отдельно и этим workflow не публикуется.
 
 Flatpak-манифест перед сборкой получает URL собственного репозитория и точный

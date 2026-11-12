@@ -50,7 +50,7 @@ xgettext \
     --add-comments=Translators \
     --package-name="${DOMAIN}" \
     --package-version="${VERSION}" \
-    --msgid-bugs-address="https://github.com/totoshko88/RustConn/issues" \
+    --msgid-bugs-address="https://github.com/zbndev/RustConn-ru/issues" \
     --copyright-holder="Anton Isaiev" \
     --output="${POTFILE}" \
     $(find rustconn/src -name '*.rs' -type f | LC_ALL=C sort)
@@ -62,12 +62,12 @@ xgettext \
     --package-name="${DOMAIN}" \
     --package-version="${VERSION}" \
     --output="${POTFILE}" \
-    rustconn/assets/io.github.totoshko88.RustConn.desktop
+    rustconn/assets/io.github.zbndev.RustConnRu.desktop
 
 # Extract from metainfo XML (AppStream)
 if command -v itstool &> /dev/null; then
     itstool -i /usr/share/its/appdata.its -o "${POTFILE}" \
-        rustconn/assets/io.github.totoshko88.RustConn.metainfo.xml 2>/dev/null || true
+        rustconn/assets/io.github.zbndev.RustConnRu.metainfo.xml 2>/dev/null || true
 fi
 
 echo "Generated ${POTFILE}"

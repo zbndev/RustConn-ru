@@ -1,5 +1,5 @@
 {
-  description = "RustConn — GTK4/libadwaita connection manager for SSH, RDP, VNC, SPICE, and more";
+  description = "RustConnRu — GTK4/libadwaita connection manager for SSH, RDP, VNC, SPICE, and more";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
@@ -71,18 +71,18 @@
 
           postInstall = ''
             # Install desktop file and icon
-            install -Dm644 rustconn/assets/io.github.totoshko88.RustConn.desktop \
-              $out/share/applications/io.github.totoshko88.RustConn.desktop
-            install -Dm644 rustconn/assets/icons/hicolor/scalable/apps/io.github.totoshko88.RustConn.svg \
-              $out/share/icons/hicolor/scalable/apps/io.github.totoshko88.RustConn.svg
+            install -Dm644 rustconn/assets/io.github.zbndev.RustConnRu.desktop \
+              $out/share/applications/io.github.zbndev.RustConnRu.desktop
+            install -Dm644 rustconn/assets/icons/hicolor/scalable/apps/io.github.zbndev.RustConnRu.svg \
+              $out/share/icons/hicolor/scalable/apps/io.github.zbndev.RustConnRu.svg
             # Install metainfo
-            install -Dm644 rustconn/assets/io.github.totoshko88.RustConn.metainfo.xml \
-              $out/share/metainfo/io.github.totoshko88.RustConn.metainfo.xml
+            install -Dm644 rustconn/assets/io.github.zbndev.RustConnRu.metainfo.xml \
+              $out/share/metainfo/io.github.zbndev.RustConnRu.metainfo.xml
           '';
 
           meta = with pkgs.lib; {
             description = "GTK4/libadwaita connection manager for SSH, RDP, VNC, SPICE, Telnet, Serial, Kubernetes";
-            homepage = "https://github.com/totoshko88/RustConn";
+            homepage = "https://github.com/zbndev/RustConn-ru";
             license = licenses.gpl3Plus;
             maintainers = [ ];
             platforms = platforms.linux;

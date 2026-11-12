@@ -3069,7 +3069,7 @@ mod tunnel_password_tests {
     #[test]
     fn tunnel_hops_get_the_flatpak_known_hosts() {
         let known_hosts =
-            std::path::Path::new("/home/u/.var/app/io.github.totoshko88.RustConn/.ssh/known_hosts");
+            std::path::Path::new("/home/u/.var/app/io.github.zbndev.RustConnRu/.ssh/known_hosts");
         let hops = strs(&["bob@far.lan", "carol@farthest.lan:2222"]);
         let args = tunnel_hop_args(&TunnelHopsRequest {
             hops: &hops,

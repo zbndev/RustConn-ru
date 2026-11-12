@@ -58,7 +58,7 @@ pub struct DetachedWindowParams<'a> {
 /// A connection with no name falls back to its protocol, so the title never
 /// starts with a stray dash.
 fn detached_window_title(connection: &str, protocol: &str) -> String {
-    i18n_f("{} — RustConn", &[display_name(connection, protocol)])
+    i18n_f("{} — RustConnRu", &[display_name(connection, protocol)])
 }
 
 /// Picks what to call a session: its connection name, or its protocol when the
@@ -475,7 +475,7 @@ fn build_menu_button() -> MenuButton {
     let app_section = gio::Menu::new();
     app_section.append(Some(&i18n("Keyboard Shortcuts…")), Some("app.shortcuts"));
     app_section.append(Some(&i18n("Help")), Some("app.help"));
-    app_section.append(Some(&i18n("About RustConn")), Some("app.about"));
+    app_section.append(Some(&i18n("About RustConnRu")), Some("app.about"));
     let menu = gio::Menu::new();
     menu.append_section(None, &settings_section);
     menu.append_section(None, &app_section);
@@ -627,14 +627,14 @@ mod tests {
     fn window_title_names_the_connection_and_the_application() {
         assert_eq!(
             detached_window_title("prod-db", "SSH"),
-            "prod-db — RustConn"
+            "prod-db — RustConnRu"
         );
     }
 
     #[test]
     fn window_title_falls_back_to_the_protocol_without_a_connection_name() {
-        assert_eq!(detached_window_title("", "SSH"), "SSH — RustConn");
-        assert_eq!(detached_window_title("   ", "VNC"), "VNC — RustConn");
+        assert_eq!(detached_window_title("", "SSH"), "SSH — RustConnRu");
+        assert_eq!(detached_window_title("   ", "VNC"), "VNC — RustConnRu");
     }
 
     #[test]

@@ -1,72 +1,17 @@
-# Publishing RustConn to Flathub
+# RustConnRu Flatpak reference template
 
-## Automated Updates
+This directory is a local reference copy, not a Flathub submission. RustConnRu
+is not published to Flathub, and this fork has no Flathub publication workflow
+or token. Do not follow upstream's former automated-submission instructions.
 
-After the initial submission is accepted, updates are automated via GitHub Actions:
+The template is `io.github.zbndev.RustConnRu.yml`; its application module builds
+this local checkout. The executable and gettext domain remain `rustconn`.
 
-1. Create a new release/tag (e.g., `v0.5.0`)
-2. The `flathub-update.yml` workflow automatically:
-   - Generates new `cargo-sources.json`
-   - Updates the Flathub repo manifest
-   - Pushes changes to trigger a new build
+For supported downloadable Flatpak builds, use the manifests in
+[`../flatpak/`](../flatpak/) and the manual release process in
+[`../../docs/CI_BUILD_FLOW.md`](../../docs/CI_BUILD_FLOW.md). That workflow pins
+the source to the exact reviewed commit of this fork.
 
-### Required Setup
-
-1. Create a GitHub Personal Access Token with `repo` scope
-2. Add it as `FLATHUB_TOKEN` secret in repository settings
-
-## Manual Submission (First Time)
-
-### Prerequisites
-
-1. GitHub account
-2. Flathub account (sign in at https://flathub.org with GitHub)
-
-### Steps to Submit
-
-1. Fork https://github.com/flathub/flathub
-2. Create branch `io.github.totoshko88.RustConn`
-3. Add these files:
-   - `io.github.totoshko88.RustConn.yml` - Main manifest
-   - `flathub.json` - Linter exceptions
-   - `cargo-sources.json` - Cargo dependencies (from workflow artifact)
-4. Create PR to `flathub/flathub`
-
-### Generate cargo-sources.json locally
-
-```bash
-pip install aiohttp PyYAML tomlkit
-wget https://raw.githubusercontent.com/flatpak/flatpak-builder-tools/master/cargo/flatpak-cargo-generator.py
-python3 flatpak-cargo-generator.py Cargo.lock -o cargo-sources.json
-```
-
-## Testing Locally
-
-```bash
-# Install Flatpak and flathub repo
-flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
-
-# Install SDK
-flatpak install flathub org.gnome.Sdk//51 org.gnome.Platform//51
-flatpak install flathub org.freedesktop.Sdk.Extension.rust-stable//25.08
-
-# Build
-flatpak-builder --force-clean build-dir io.github.totoshko88.RustConn.yml
-
-# Test run
-# GTK_A11Y=none silences a harmless "Unable to acquire the address of the
-# accessibility bus" warning: flatpak-builder --run does not start the a11y
-# D-Bus that a real `flatpak run` has, so GTK cannot reach it. Drop the env var
-# for a normal `flatpak run` on the desktop, where the a11y bus is present.
-GTK_A11Y=none flatpak-builder --run build-dir io.github.totoshko88.RustConn.yml rustconn
-
-# Create bundle for testing
-flatpak-builder --repo=repo --force-clean build-dir io.github.totoshko88.RustConn.yml
-flatpak build-bundle repo RustConn.flatpak io.github.totoshko88.RustConn
-```
-
-## Links
-
-- Flathub submission guide: https://docs.flathub.org/docs/for-app-authors/submission
-- App requirements: https://docs.flathub.org/docs/for-app-authors/requirements
-- Flatpak Rust guide: https://docs.flatpak.org/en/latest/rust.html
+Flathub's [contribution requirements](https://docs.flathub.org/docs/for-app-authors/requirements),
+including its generative AI policy, apply to any actual submission. Updating
+this local reference copy is not preparation or authorization to submit it.

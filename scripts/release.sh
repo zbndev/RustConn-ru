@@ -122,7 +122,7 @@ sedi() {
 # release file, each in its native format. LC_ALL=C keeps month/day names
 # English regardless of the user's locale.
 # ──────────────────────────────────────────────────────────────────────────────
-METAINFO="rustconn/assets/io.github.totoshko88.RustConn.metainfo.xml"
+METAINFO="rustconn/assets/io.github.zbndev.RustConnRu.metainfo.xml"
 DATE_FILES=(CHANGELOG.md "$METAINFO" debian/changelog
             packaging/obs/debian.changelog packaging/obs/rustconn.changes
             packaging/obs/rustconn.spec)
@@ -375,8 +375,6 @@ PKG_FILES=(
     "packaging/obs/rustconn.changes"
     "packaging/obs/_service"
     "packaging/obs/AppImageBuilder.yml"
-    "packaging/flatpak/io.github.totoshko88.RustConn.yml"
-    "packaging/flathub/io.github.totoshko88.RustConn.yml"
     "snap/snapcraft.yaml"
     "flake.nix"
     "docs/USER_GUIDE.md"
@@ -387,7 +385,6 @@ PKG_FILES=(
     "rustconn/Cargo.toml"
     "rustconn-cli/Cargo.toml"
     "po/rustconn.pot"
-    "packaging/macos/rustconn.rb"
 )
 PKG_PATS=(
     "^rustconn \\($VERSION_RE-1\\)"
@@ -398,8 +395,6 @@ PKG_PATS=(
     " - $VERSION_RE(-[0-9]+)?$"
     "revision\">v$VERSION_RE<"
     "^[[:space:]]+version: $VERSION_RE$"
-    "tag: v$VERSION_RE$"
-    "tag: v$VERSION_RE$"
     "^version: '$VERSION_RE'$"
     "version = \"$VERSION_RE\""
     "\\*\\*Version $VERSION_RE\\*\\*"
@@ -410,7 +405,6 @@ PKG_PATS=(
     "version = \"$VERSION_RE\""
     "version = \"$VERSION_RE\""
     "^\"Project-Id-Version: rustconn $VERSION_RE"
-    "archive/refs/tags/v$VERSION_RE\\.tar\\.gz"
 )
 
 # The two arrays are indexed in parallel; a length mismatch would silently drop
@@ -586,12 +580,9 @@ VERSION_ONLY_FILES=(
     "packaging/obs/debian.dsc"
     "packaging/obs/_service"
     "packaging/obs/AppImageBuilder.yml"
-    "packaging/flatpak/io.github.totoshko88.RustConn.yml"
-    "packaging/flathub/io.github.totoshko88.RustConn.yml"
     "snap/snapcraft.yaml"
     "flake.nix"
     "po/rustconn.pot"
-    "packaging/macos/rustconn.rb"
 )
 
 PREV_VERSION=""
@@ -619,48 +610,18 @@ else
 fi
 
 # ──────────────────────────────────────────────────────────────────────────────
-# 5d. Homebrew formula template is CI-ready
-#
-# The release workflow copies packaging/macos/rustconn.rb into the Homebrew tap
-# and patches the archive URL version + sha256 via sed. If the template drifts
-# (e.g. back to a git+tag source), the sed silently fails and the tap stays
-# pinned to an old version (see issue #251). Verify the expected format here.
+# 5d. The Homebrew recipe is fork-local and HEAD-only, not a release channel.
+# It must never be copied into a stable tap or pinned to a fabricated fork tag.
 # ──────────────────────────────────────────────────────────────────────────────
 BREW_FORMULA="packaging/macos/rustconn.rb"
 if [[ -f "$BREW_FORMULA" ]]; then
-    BREW_FAILED=0
-
-    # Must have exactly one active archive URL line
-    if ! grep -qE '^  url "https://github.com/totoshko88/RustConn/archive/refs/tags/v[^"]+\.tar\.gz"' "$BREW_FORMULA"; then
-        warn "$BREW_FORMULA: missing active archive URL (expected '  url \"https://...archive/refs/tags/vX.Y.Z.tar.gz\"')"
-        ((BREW_FAILED += 1))
+    if ! grep -qE '^  head "https://github\.com/zbndev/RustConn-ru\.git", branch: "main"$' "$BREW_FORMULA"; then
+        fail "$BREW_FORMULA must build the fork's main branch with `brew install --HEAD`"
     fi
-
-    # Must have an active sha256 line: either the placeholder that CI replaces,
-    # or a real 64-char lowercase hash as emitted by sha256sum. Anything else
-    # (a truncated hash, a stray comment) would let CI's sed produce a formula
-    # Homebrew rejects at install time.
-    if ! grep -qE '^  sha256 "([a-f0-9]{64}|PLACEHOLDER_SHA256)"' "$BREW_FORMULA"; then
-        warn "$BREW_FORMULA: missing active sha256 line (expected PLACEHOLDER_SHA256 or a 64-char hash)"
-        ((BREW_FAILED += 1))
+    if grep -qE '^  (url|sha256) ' "$BREW_FORMULA"; then
+        fail "$BREW_FORMULA must remain HEAD-only; release assets are not a Homebrew channel"
     fi
-
-    # The archive URL must reference the current version
-    if ! grep -qE "^  url.*v$VERSION_RE\\.tar\\.gz" "$BREW_FORMULA"; then
-        warn "$BREW_FORMULA: archive URL does not reference v$VERSION"
-        ((BREW_FAILED += 1))
-    fi
-
-    # Must NOT have a git+tag source (the old broken format)
-    if grep -qE '^  url "https://github.com/totoshko88/RustConn\.git"' "$BREW_FORMULA"; then
-        warn "$BREW_FORMULA: still uses git+tag source — CI sed patterns will not work"
-        ((BREW_FAILED += 1))
-    fi
-
-    if (( BREW_FAILED > 0 )); then
-        fail "$BREW_FORMULA is not in the expected format for CI automation (see issue #251)"
-    fi
-    ok "$BREW_FORMULA template is CI-ready (archive URL v$VERSION + sha256)"
+    ok "$BREW_FORMULA is fork-local and HEAD-only"
 else
     skipped "Homebrew formula check" "$BREW_FORMULA not found"
 fi

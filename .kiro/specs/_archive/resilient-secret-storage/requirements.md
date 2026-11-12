@@ -328,7 +328,7 @@ removed `secret-tool` dependency, so that the bundles stay minimal and correct.
 #### Acceptance Criteria
 
 1. WHEN Part C is delivered, THE Flatpak manifest
-   `packaging/flathub/io.github.totoshko88.RustConn.yml` SHALL no longer bundle
+   `packaging/flathub/io.github.zbndev.RustConnRu.yml` SHALL no longer bundle
    `secret-tool`.
 2. WHEN Part C is delivered, THE Snap and Debian packaging definitions SHALL no
    longer declare the `secret-tool` dependency.

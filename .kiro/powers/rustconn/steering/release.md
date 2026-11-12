@@ -80,8 +80,8 @@ never require URL or version updates.
 
 ### Flatpak runtime & bundled libraries
 
-File: `packaging/flatpak/io.github.totoshko88.RustConn.yml`. The Flathub copy,
-`packaging/flathub/io.github.totoshko88.RustConn.yml`, needs the same changes, and
+File: `packaging/flatpak/io.github.zbndev.RustConnRu.yml`. The Flathub copy,
+`packaging/flathub/io.github.zbndev.RustConnRu.yml`, needs the same changes, and
 only the maintainer writes it (`packaging/AGENTS.md`, "Flathub is
 maintainer-only"): report what it needs, do not edit it.
 
@@ -253,15 +253,15 @@ MUST point at the new release tag (the `release.sh` gate checks
     version: X.Y.Z
 ```
 
-### 12. `packaging/flatpak/io.github.totoshko88.RustConn.yml`
+### 12. `packaging/flatpak/io.github.zbndev.RustConnRu.yml`
 ```yaml
         tag: vX.Y.Z
 ```
 
-### 13. `packaging/flatpak/io.github.totoshko88.RustConn.local.yml`
+### 13. `packaging/flatpak/io.github.zbndev.RustConnRu.local.yml`
 DO NOT modify — uses local path.
 
-### 14. `packaging/flathub/io.github.totoshko88.RustConn.yml` (maintainer step)
+### 14. `packaging/flathub/io.github.zbndev.RustConnRu.yml` (maintainer step)
 ```yaml
         tag: vX.Y.Z
 ```
@@ -269,7 +269,7 @@ An agent does not write this file (`packaging/AGENTS.md`, "Flathub is
 maintainer-only"). List it in the release report as a maintainer step, together
 with the Flathub copy of `cargo-sources.json`.
 
-### 15. `rustconn/assets/io.github.totoshko88.RustConn.metainfo.xml`
+### 15. `rustconn/assets/io.github.zbndev.RustConnRu.metainfo.xml`
 Add `<release>` at the TOP of `<releases>`:
 ```xml
     <release version="X.Y.Z" date="YYYY-MM-DD">

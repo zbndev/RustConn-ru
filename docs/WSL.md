@@ -100,18 +100,18 @@ sudo apt install ./rustconn_*_amd64.deb
 
 ### Option C — Flatpak (any distro)
 
-Flatpak works regardless of your WSL distribution (Ubuntu, Fedora, Arch…):
+Download the `.flatpak` bundle from [the fork's releases](https://github.com/zbndev/RustConn-ru/releases). RustConnRu is not published to Flathub:
 
 ```bash
 sudo apt install flatpak                # Ubuntu; on Fedora it's preinstalled
 flatpak remote-add --if-not-exists --user flathub https://flathub.org/repo/flathub.flatpakrepo
-flatpak install --user flathub io.github.totoshko88.RustConn
+flatpak install --user ./RustConnRu-0.24.11.flatpak
 ```
 
 Launch with:
 
 ```bash
-flatpak run io.github.totoshko88.RustConn
+flatpak run io.github.zbndev.RustConnRu
 ```
 
 > **Note:** Flatpak apps run sandboxed. RustConn's Flatpak manifest already
@@ -119,7 +119,7 @@ flatpak run io.github.totoshko88.RustConn
 > `~/.ssh` or serial devices, grant them explicitly:
 >
 > ```bash
-> flatpak override --user --filesystem=~/.ssh:ro io.github.totoshko88.RustConn
+> flatpak override --user --filesystem=~/.ssh:ro io.github.zbndev.RustConnRu
 > ```
 >
 > Portal integration (file chooser, secrets) requires

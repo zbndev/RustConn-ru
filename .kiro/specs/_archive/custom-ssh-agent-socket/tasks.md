@@ -45,10 +45,10 @@
 
 ## Task 7: Flatpak Manifest Changes
 
-- [x] 7.1 Add `--filesystem=xdg-run/gnupg:ro` to `packaging/flatpak/io.github.totoshko88.RustConn.yml` and `packaging/flatpak/io.github.totoshko88.RustConn.local.yml`
+- [x] 7.1 Add `--filesystem=xdg-run/gnupg:ro` to `packaging/flatpak/io.github.zbndev.RustConnRu.yml` and `packaging/flatpak/io.github.zbndev.RustConnRu.local.yml`
 - [x] 7.2 Add `--filesystem=home/.var/app/com.bitwarden.desktop/data/:ro` to the same flatpak manifests
 - [x] 7.3 Add `--filesystem=xdg-run/ssh-agent:ro` to the same flatpak manifests
-- [x] 7.4 Apply the same three filesystem additions to `packaging/flathub/io.github.totoshko88.RustConn.yml`
+- [x] 7.4 Apply the same three filesystem additions to `packaging/flathub/io.github.zbndev.RustConnRu.yml`
 
 ## Task 8: Property-Based Tests
 

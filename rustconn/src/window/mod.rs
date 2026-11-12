@@ -476,7 +476,7 @@ impl MainWindow {
         // Create the main window
         let window = adw::ApplicationWindow::builder()
             .application(app)
-            .title("RustConn")
+            .title("RustConnRu")
             .default_width(1200)
             .default_height(800)
             // Initial minimum-width floor; refined to the exact narrow-tier
@@ -489,7 +489,7 @@ impl MainWindow {
             // connect_map handler below (#204); the height floor is set to 294
             // here so the window can shrink to phone-portrait height.
             .height_request(294)
-            .icon_name("io.github.totoshko88.RustConn")
+            .icon_name("io.github.zbndev.RustConnRu")
             .build();
 
         // macOS: tag the window so platform-specific CSS rules (reduced
@@ -1212,7 +1212,7 @@ impl MainWindow {
         crash_banner.set_button_label(Some(&crate::i18n::i18n("Open Log")));
         if let Some(report) = rustconn_core::crash_report::take_pending_crash() {
             crash_banner.set_title(&crate::i18n::i18n(
-                "RustConn closed unexpectedly the last time it ran. A crash log was saved locally.",
+                "RustConnRu closed unexpectedly the last time it ran. A crash log was saved locally.",
             ));
             let log_path = report.path.clone();
             crash_banner.connect_button_clicked(move |banner| {
@@ -4202,7 +4202,7 @@ impl MainWindow {
     /// Updates the window title to reflect the active connection (issue #211).
     ///
     /// When `enabled` and a session tab is active, sets the title to
-    /// `"RustConn - <active tab>"`; otherwise resets it to `"RustConn"`. Driven
+    /// `"RustConnRu - <active tab>"`; otherwise resets it to `"RustConnRu"`. Driven
     /// by the `ui.window_title_shows_connection` setting so time-tracking tools
     /// can attribute usage per connection by reading the window title.
     pub(crate) fn update_window_title(
@@ -4223,8 +4223,8 @@ impl MainWindow {
             None
         };
         match name {
-            Some(name) => window.set_title(Some(&crate::i18n::i18n_f("RustConn - {}", &[&name]))),
-            None => window.set_title(Some("RustConn")),
+            Some(name) => window.set_title(Some(&crate::i18n::i18n_f("RustConnRu - {}", &[&name]))),
+            None => window.set_title(Some("RustConnRu")),
         }
     }
 
@@ -4706,7 +4706,7 @@ impl MainWindow {
     #[must_use]
     pub fn close_confirmation_dialog(open_sessions: usize) -> adw::AlertDialog {
         let dialog = adw::AlertDialog::new(
-            Some(&crate::i18n::i18n("Close RustConn?")),
+            Some(&crate::i18n::i18n("Close RustConnRu?")),
             Some(&crate::i18n::i18n_f(
                 "{} session tab(s) are open. Active connections will be disconnected.",
                 &[&open_sessions.to_string()],
@@ -4750,7 +4750,7 @@ impl MainWindow {
                 )
             }
             crate::state::ConfigFileNotice::WrittenByNewer(version) => crate::i18n::i18n_f(
-                "These settings were saved by a newer RustConn ({}). A backup is kept before they are changed.",
+                "These settings were saved by a newer RustConnRu ({}). A backup is kept before they are changed.",
                 &[&version],
             ),
         };

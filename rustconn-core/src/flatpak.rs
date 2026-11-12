@@ -5,7 +5,7 @@
 //! availability in the sandbox PATH.
 //!
 //! CLI tools are installed into the sandbox via Flatpak Components
-//! (`~/.var/app/io.github.totoshko88.RustConn/cli/`). Tools that cannot be
+//! (`~/.var/app/io.github.zbndev.RustConnRu/cli/`). Tools that cannot be
 //! bundled (notably the host's KeePassXC) are still reached via
 //! `flatpak-spawn --host`, which requires `--talk-name=org.freedesktop.Flatpak`.
 
@@ -18,7 +18,7 @@ static IS_FLATPAK: OnceLock<bool> = OnceLock::new();
 ///
 /// In Flatpak, `~/.ssh` is mounted read-only. SSH needs a writable location
 /// for `known_hosts`. This returns `$XDG_DATA_HOME/../.ssh/` which resolves
-/// to `~/.var/app/io.github.totoshko88.RustConn/.ssh/`.
+/// to `~/.var/app/io.github.zbndev.RustConnRu/.ssh/`.
 ///
 /// Returns `None` if not running in Flatpak or if the path cannot be determined.
 #[must_use]
@@ -76,7 +76,7 @@ pub fn is_flatpak() -> bool {
         // Secondary check: FLATPAK_ID must match our app ID to avoid false
         // positives when the env var leaks from another Flatpak process (#59)
         if let Ok(id) = std::env::var("FLATPAK_ID") {
-            if id == "io.github.totoshko88.RustConn" {
+            if id == "io.github.zbndev.RustConnRu" {
                 tracing::debug!("Detected Flatpak sandbox via FLATPAK_ID");
                 return true;
             }
@@ -598,12 +598,12 @@ mod tests {
         assert_eq!(
             host_runtime_candidate(
                 runtime,
-                "io.github.totoshko88.RustConn",
+                "io.github.zbndev.RustConnRu",
                 Path::new("/run/user/1000/rustconn-spice-abc.vv"),
             ),
             Some(
                 Path::new(
-                    "/run/user/1000/.flatpak/io.github.totoshko88.RustConn/xdg-run/\
+                    "/run/user/1000/.flatpak/io.github.zbndev.RustConnRu/xdg-run/\
                      rustconn-spice-abc.vv"
                 )
                 .to_path_buf()
@@ -661,9 +661,7 @@ mod tests {
     fn strip_sandbox_home_recovers_real_home() {
         use std::path::Path;
         assert_eq!(
-            strip_sandbox_home(Path::new(
-                "/home/user/.var/app/io.github.totoshko88.RustConn"
-            )),
+            strip_sandbox_home(Path::new("/home/user/.var/app/io.github.zbndev.RustConnRu")),
             Path::new("/home/user").to_path_buf()
         );
     }

@@ -191,13 +191,13 @@ impl MainWindow {
                                 && rustconn_core::flatpak::is_flatpak()
                             {
                                 crate::i18n::i18n(
-                                    "Sync directory is not configured. In Flatpak, grant filesystem access first: flatpak override --user --filesystem=/path/to/sync io.github.totoshko88.RustConn",
+                                    "Sync directory is not configured. In Flatpak, grant filesystem access first: flatpak override --user --filesystem=/path/to/sync io.github.zbndev.RustConnRu",
                                 )
                             } else if error_str.contains("not writable")
                                 && rustconn_core::flatpak::is_flatpak()
                             {
                                 crate::i18n::i18n_f(
-                                    "Sync directory is not accessible from Flatpak sandbox. Run: flatpak override --user --filesystem={} io.github.totoshko88.RustConn",
+                                    "Sync directory is not accessible from Flatpak sandbox. Run: flatpak override --user --filesystem={} io.github.zbndev.RustConnRu",
                                     &[&error_str],
                                 )
                             } else {
