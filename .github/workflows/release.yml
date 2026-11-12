@@ -132,7 +132,7 @@ jobs:
           done
           
           # Docs and copyright
-          cp README.md LICENSE CHANGELOG.md "${PKG_DIR}/usr/share/doc/rustconn/"
+          cp README.md LICENSE NOTICE TRADEMARKS.md CHANGELOG.md "${PKG_DIR}/usr/share/doc/rustconn/"
           cp debian/copyright "${PKG_DIR}/usr/share/doc/rustconn/copyright"
           
           # Locale files (compile .po to .mo)
@@ -349,13 +349,14 @@ jobs:
           mkdir -p staging/usr/share/icons/hicolor/scalable/apps
           mkdir -p staging/usr/share/icons/hicolor/128x128/apps
           mkdir -p staging/usr/share/icons/hicolor/256x256/apps
-          mkdir -p staging/usr/share/doc/rustconn
-          mkdir -p dist
+          mkdir -p staging/usr/share/licenses/rustconn staging/usr/share/doc/rustconn dist
+          # Preserve the upstream licence and attribution notices in the RPM.
+          cp LICENSE NOTICE staging/usr/share/licenses/rustconn/
+          cp README.md TRADEMARKS.md CHANGELOG.md staging/usr/share/doc/rustconn/
           
           # Copy binaries
           cp target/release/rustconn staging/usr/bin/
           cp target/release/rustconn-cli staging/usr/bin/
-          cp README.md LICENSE CHANGELOG.md staging/usr/share/doc/rustconn/
           cp debian/copyright staging/usr/share/doc/rustconn/copyright
           
           # Copy desktop file and metadata

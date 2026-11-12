@@ -6,17 +6,21 @@ body:
     attributes:
       value: |
         RustConn ships its translations from the `.po` catalogues in
-        [`po/`](https://github.com/totoshko88/RustConn/tree/main/po). Corrections
+        [`po/`](https://github.com/zbndev/RustConn-ru/tree/main/po). Corrections
         are always welcome, and a pull request against the `.po` file is even
         more welcome than an issue — see
-        [CONTRIBUTING.md](https://github.com/totoshko88/RustConn/blob/main/CONTRIBUTING.md#translations).
+        [CONTRIBUTING.md](https://github.com/zbndev/RustConn-ru/blob/main/CONTRIBUTING.md#translations).
+
+        This fork ships and maintains a Russian translation. Corrections and
+        additional languages are welcome; upstream's language-exclusion policy
+        does not apply here.
 
   - type: input
     id: language
     attributes:
       label: Language
       description: Name and locale code
-      placeholder: "Ukrainian (uk) / Georgian (ka)"
+      placeholder: "Russian (ru) / Georgian (ka)"
     validations:
       required: true
 

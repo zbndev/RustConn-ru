@@ -3,6 +3,10 @@
 - **`ls po/*.po` is the authoritative locale count.** Do not trust a number written
   in prose anywhere in this repo, including in the root `AGENTS.md`. That number has
   already been wrong once (16 vs 17, missing `ka`).
+- **Preserve the Russian catalogue in this fork.** `po/ru.po`, `ru` in
+  `po/LINGUAS`, and the Russian language selector are intentional fork features.
+  Do not apply upstream's language-exclusion policy here. After source changes,
+  update the Russian catalogue without dropping its existing translations.
 - After adding or changing an `i18n()` / `i18n_f()` string in Rust:
   `bash po/update-pot.sh`, then `msgmerge --update` the affected catalogues.
 - A source file containing `i18n()` must be listed in `POTFILES.in` or
