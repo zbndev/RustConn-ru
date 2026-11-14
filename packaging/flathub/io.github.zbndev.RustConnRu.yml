@@ -357,7 +357,8 @@ modules:
       - CC=/app/bin/cc-wrap cargo build --locked --release -p rustconn-cli --features full
       - install -Dm755 target/release/rustconn /app/bin/rustconn
       - install -Dm755 target/release/rustconn-cli /app/bin/rustconn-cli
-      - install -Dm644 rustconn/assets/io.github.zbndev.RustConnRu.desktop /app/share/applications/io.github.zbndev.RustConnRu.desktop
+      - install -d /app/share/applications
+      - msgfmt --desktop --template rustconn/assets/io.github.zbndev.RustConnRu.desktop -d po -o /app/share/applications/io.github.zbndev.RustConnRu.desktop
       - install -Dm644 rustconn/assets/io.github.zbndev.RustConnRu-rdp.xml /app/share/mime/packages/io.github.zbndev.RustConnRu-rdp.xml
       - install -Dm644 rustconn/assets/io.github.zbndev.RustConnRu-vv.xml /app/share/mime/packages/io.github.zbndev.RustConnRu-vv.xml
       - install -Dm644 rustconn/assets/io.github.zbndev.RustConnRu.metainfo.xml /app/share/metainfo/io.github.zbndev.RustConnRu.metainfo.xml

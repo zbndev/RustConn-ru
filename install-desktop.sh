@@ -3,6 +3,11 @@
 
 set -e
 
+if ! command -v msgfmt >/dev/null 2>&1; then
+    echo "Error: msgfmt not found. Install gettext first." >&2
+    exit 1
+fi
+
 # Determine install prefix
 PREFIX="${PREFIX:-$HOME/.local}"
 
@@ -29,7 +34,8 @@ cp rustconn/assets/icons/hicolor/scalable/apps/io.github.zbndev.RustConnRu.svg "
 # Install desktop file
 DESKTOP_DIR="$PREFIX/share/applications"
 mkdir -p "$DESKTOP_DIR"
-cp rustconn/assets/io.github.zbndev.RustConnRu.desktop "$DESKTOP_DIR/"
+msgfmt --desktop --template rustconn/assets/io.github.zbndev.RustConnRu.desktop \
+    -d po -o "$DESKTOP_DIR/io.github.zbndev.RustConnRu.desktop"
 
 # Install MIME type definition for .rdp files
 MIME_DIR="$PREFIX/share/mime/packages"
@@ -37,17 +43,15 @@ mkdir -p "$MIME_DIR"
 cp rustconn/assets/io.github.zbndev.RustConnRu-rdp.xml "$MIME_DIR/"
 cp rustconn/assets/io.github.zbndev.RustConnRu-vv.xml "$MIME_DIR/"
 
-# Install locale files (if compiled .mo files exist)
+# Compile and install locale files
 if [ -d "po" ]; then
     for po_file in po/*.po; do
         [ -f "$po_file" ] || continue
         lang=$(basename "$po_file" .po)
         LOCALE_DIR="$PREFIX/share/locale/$lang/LC_MESSAGES"
         mkdir -p "$LOCALE_DIR"
-        if command -v msgfmt &> /dev/null; then
-            msgfmt -o "$LOCALE_DIR/rustconn.mo" "$po_file"
-            echo "Installed locale: $lang"
-        fi
+        msgfmt -o "$LOCALE_DIR/rustconn.mo" "$po_file"
+        echo "Installed locale: $lang"
     done
 fi
 

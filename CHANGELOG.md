@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+- **AppImage desktop translations** — removed hard-coded localized keys from the desktop template so `msgfmt --desktop` generates each key once; fixes linuxdeploy aborting with `Key Comment[uk] found more than once`. The desktop installer and reference Flatpak template now generate translations from the catalogues too.
+
 ### Changed
 - **Upstream 0.25.0 synchronization** — integrates the new release while preserving the Russian locale, RustConnRu identity and icons, fork attribution, manual-only workflows and removal of donation links.
 - **Russian localization for upstream 0.24.11** — translated 118 new or changed interface messages and preserved Russian support in the fork's translation guidance.
