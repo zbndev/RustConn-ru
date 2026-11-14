@@ -120,7 +120,7 @@ jobs:
           cp target/release/rustconn-cli "${PKG_DIR}/usr/bin/"
           
           # Desktop file and metadata
-          cp rustconn/assets/io.github.zbndev.RustConnRu.desktop "${PKG_DIR}/usr/share/applications/"
+          msgfmt --desktop --template rustconn/assets/io.github.zbndev.RustConnRu.desktop -d po -o "${PKG_DIR}/usr/share/applications/io.github.zbndev.RustConnRu.desktop"
           cp rustconn/assets/io.github.zbndev.RustConnRu.metainfo.xml "${PKG_DIR}/usr/share/metainfo/"
           
           # Icons
@@ -360,7 +360,7 @@ jobs:
           cp debian/copyright staging/usr/share/doc/rustconn/copyright
           
           # Copy desktop file and metadata
-          cp rustconn/assets/io.github.zbndev.RustConnRu.desktop staging/usr/share/applications/
+          msgfmt --desktop --template rustconn/assets/io.github.zbndev.RustConnRu.desktop -d po -o staging/usr/share/applications/io.github.zbndev.RustConnRu.desktop
           cp rustconn/assets/io.github.zbndev.RustConnRu.metainfo.xml staging/usr/share/metainfo/
           
           # Copy icons
@@ -496,7 +496,7 @@ jobs:
           
           cp target/release/rustconn AppDir/usr/bin/
           cp target/release/rustconn-cli AppDir/usr/bin/
-          cp rustconn/assets/io.github.zbndev.RustConnRu.desktop AppDir/usr/share/applications/
+          msgfmt --desktop --template rustconn/assets/io.github.zbndev.RustConnRu.desktop -d po -o AppDir/usr/share/applications/io.github.zbndev.RustConnRu.desktop
           cp rustconn/assets/io.github.zbndev.RustConnRu.metainfo.xml AppDir/usr/share/metainfo/
           
           # Copy icons

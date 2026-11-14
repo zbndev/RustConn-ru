@@ -22,17 +22,16 @@
 
 rustPlatform.buildRustPackage (finalAttrs: {
   pname = "rustconn";
-  version = "0.24.11";
+  version = "0.25.0";
 
   # Reference-only recipe: build from this checkout instead of inventing a
   # fork release tag or pulling upstream sources with fork-specific assets.
   src = lib.cleanSource ../..;
 
-  # Replace with the real hash obtained by running:
-  #   nix-prefetch --option extra-experimental-features flakes \
-  #     '(import <nixpkgs> {}).rustconn.cargoDeps'
-  # or by setting lib.fakeHash here and reading the actual hash from the build error.
-  cargoHash = "sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=";
+  # cargoHash is the vendored-crates hash and is nixpkgs-specific. The source
+  # comes from this checkout, not an upstream release archive; refresh cargoHash
+  # for the target nixpkgs when packaging this version.
+  cargoHash = lib.fakeHash;
 
   nativeBuildInputs = [
     pkg-config
@@ -64,6 +63,10 @@ rustPlatform.buildRustPackage (finalAttrs: {
   # so we override buildPhase to run both explicitly.
   buildPhase = ''
     runHook preBuild
+    # nixpkgs' Rust hooks export AWS_LC_SYS_USE_SYSTEM=1, but no system
+    # AWS-LC is provided (only OpenSSL); build aws-lc-sys from source
+    # (cmake and clang are in nativeBuildInputs).
+    unset AWS_LC_SYS_USE_SYSTEM
     cargo build --release --frozen -p rustconn
     cargo build --release --frozen -p rustconn-cli --features full
     runHook postBuild
@@ -77,8 +80,10 @@ rustPlatform.buildRustPackage (finalAttrs: {
     install -Dm755 target/release/rustconn     "$out/bin/rustconn"
     install -Dm755 target/release/rustconn-cli "$out/bin/rustconn-cli"
 
-    install -Dm644 rustconn/assets/io.github.zbndev.RustConnRu.desktop \
-      "$out/share/applications/io.github.zbndev.RustConnRu.desktop"
+    # Translated desktop labels come from po/*.po.
+    install -d "$out/share/applications"
+    msgfmt --desktop --template rustconn/assets/io.github.zbndev.RustConnRu.desktop -d po \
+      -o "$out/share/applications/io.github.zbndev.RustConnRu.desktop"
 
     install -Dm644 rustconn/assets/icons/hicolor/scalable/apps/io.github.zbndev.RustConnRu.svg \
       "$out/share/icons/hicolor/scalable/apps/io.github.zbndev.RustConnRu.svg"

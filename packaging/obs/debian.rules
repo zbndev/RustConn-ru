@@ -106,8 +106,10 @@ override_dh_auto_build:
 override_dh_auto_install:
 	install -Dm755 target/release/rustconn debian/rustconn/usr/bin/rustconn
 	install -Dm755 target/release/rustconn-cli debian/rustconn/usr/bin/rustconn-cli
-	install -Dm644 rustconn/assets/io.github.zbndev.RustConnRu.desktop \
-		debian/rustconn/usr/share/applications/io.github.zbndev.RustConnRu.desktop
+	# Translated desktop labels come from po/*.po.
+	install -d debian/rustconn/usr/share/applications
+	msgfmt --desktop --template rustconn/assets/io.github.zbndev.RustConnRu.desktop -d po \
+		-o debian/rustconn/usr/share/applications/io.github.zbndev.RustConnRu.desktop
 	install -Dm644 rustconn/assets/io.github.zbndev.RustConnRu.metainfo.xml \
 		debian/rustconn/usr/share/metainfo/io.github.zbndev.RustConnRu.metainfo.xml
 	install -Dm644 rustconn/assets/icons/hicolor/scalable/apps/io.github.zbndev.RustConnRu.svg \
