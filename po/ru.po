@@ -2,10 +2,10 @@
 # This file is distributed under the same license as the rustconn package.
 msgid ""
 msgstr ""
-"Project-Id-Version: rustconn 0.25.0\n"
+"Project-Id-Version: rustconn 0.25.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-14 12:27+0300\n"
-"PO-Revision-Date: 2026-11-14 12:27+0300\n"
+"POT-Creation-Date: 2026-11-17 09:46+0300\n"
+"PO-Revision-Date: 2026-11-17 09:46+0300\n"
 "Last-Translator: RustConn-ru translation team\n"
 "Language-Team: Russian\n"
 "Language: ru\n"
@@ -22,7 +22,7 @@ msgid "OK"
 msgstr "ОК"
 
 #: rustconn/src/alert.rs:33 rustconn/src/alert.rs:94
-#: rustconn/src/dialogs/ask_prompt.rs:141 rustconn/src/dialogs/cluster.rs:807
+#: rustconn/src/dialogs/ask_prompt.rs:141 rustconn/src/dialogs/cluster.rs:830
 #: rustconn/src/dialogs/credential_transfer.rs:144
 #: rustconn/src/dialogs/credential_transfer.rs:457
 #: rustconn/src/dialogs/flatpak_components.rs:310
@@ -48,19 +48,21 @@ msgstr "ОК"
 #: rustconn/src/dialogs/workspace.rs:237 rustconn/src/dialogs/workspace.rs:291
 #: rustconn/src/embedded_rdp/autotype.rs:166 rustconn/src/script_runner.rs:784
 #: rustconn/src/sidebar/saved_searches.rs:179
-#: rustconn/src/split_view/adapter.rs:1198
+#: rustconn/src/split_view/adapter.rs:1376
 #: rustconn/src/terminal/safe_paste.rs:166
-#: rustconn/src/terminal/tab_menu.rs:373 rustconn/src/terminal/tab_menu.rs:496
-#: rustconn/src/terminal/tab_menu.rs:720 rustconn/src/vault_ops.rs:315
-#: rustconn/src/window/batch_edit.rs:69 rustconn/src/window/clusters.rs:355
-#: rustconn/src/window/clusters.rs:410
+#: rustconn/src/terminal/split_close.rs:272
+#: rustconn/src/terminal/split_close.rs:320
+#: rustconn/src/terminal/tab_menu.rs:385 rustconn/src/terminal/tab_menu.rs:508
+#: rustconn/src/terminal/tab_menu.rs:742 rustconn/src/vault_ops.rs:315
+#: rustconn/src/window/batch_edit.rs:69 rustconn/src/window/clusters.rs:379
+#: rustconn/src/window/clusters.rs:434
 #: rustconn/src/window/connection_dialogs.rs:982
 #: rustconn/src/window/edit_group.rs:2046
 #: rustconn/src/window/edit_group.rs:2095
 #: rustconn/src/window/group_broadcast.rs:379
-#: rustconn/src/window/key_setup.rs:1010 rustconn/src/window/mc_launch.rs:453
-#: rustconn/src/window/mod.rs:3660 rustconn/src/window/mod.rs:3724
-#: rustconn/src/window/mod.rs:4736 rustconn/src/window/mod.rs:5784
+#: rustconn/src/window/key_setup.rs:1022 rustconn/src/window/mc_launch.rs:453
+#: rustconn/src/window/mod.rs:3839 rustconn/src/window/mod.rs:3903
+#: rustconn/src/window/mod.rs:4919 rustconn/src/window/mod.rs:6014
 #: rustconn/src/window/operations.rs:118 rustconn/src/window/operations.rs:591
 #: rustconn/src/window/operations.rs:972 rustconn/src/window/operations.rs:1151
 #: rustconn/src/window/remote_script.rs:616 rustconn/src/window/sessions.rs:335
@@ -105,7 +107,7 @@ msgstr ""
 "настройках"
 
 #: rustconn/src/app.rs:919 rustconn/src/dialogs/shortcuts.rs:204
-#: rustconn/src/embedded_rdp/mod.rs:410 rustconn/src/split_view/bridge.rs:2213
+#: rustconn/src/embedded_rdp/mod.rs:410 rustconn/src/split_view/bridge.rs:2314
 #: rustconn/src/window/ui.rs:99
 msgid "Settings"
 msgstr "Настройки"
@@ -129,9 +131,9 @@ msgstr ""
 "Выбран способ хранения «{}», но сохранять пароли пока невозможно: {}. "
 "Откройте настройки, затем раздел «Секреты»."
 
-#: rustconn/src/app.rs:2138 rustconn/src/window/edit_actions.rs:1831
-#: rustconn/src/window/edit_actions.rs:1970
-#: rustconn/src/window/edit_actions.rs:1998
+#: rustconn/src/app.rs:2138 rustconn/src/window/edit_actions.rs:1833
+#: rustconn/src/window/edit_actions.rs:1972
+#: rustconn/src/window/edit_actions.rs:2000
 msgid "Failed to open URL: {}"
 msgstr "Не удалось открыть URL: {}"
 
@@ -216,47 +218,47 @@ msgstr "Это сочетание клавиш уже используется �
 msgid "Command macro “{}”: {}"
 msgstr "Командный макрос «{}»: {}"
 
-#: rustconn/src/detached_window.rs:61
+#: rustconn/src/detached_window.rs:62 rustconn/src/session_group_window.rs:66
 msgid "{} — RustConnRu"
 msgstr "{} — RustConnRu"
 
-#: rustconn/src/detached_window.rs:156
+#: rustconn/src/detached_window.rs:157
 #: rustconn/src/embedded_rdp/connection.rs:1785
 #: rustconn/src/embedded_rdp/connection.rs:2762
 #: rustconn/src/embedded_rdp/mod.rs:783 rustconn/src/embedded_rdp/mod.rs:2175
 #: rustconn/src/embedded_rdp/polling_handlers.rs:75
-#: rustconn/src/embedded_vnc/ui.rs:146
-#: rustconn/src/terminal/session_lifecycle.rs:394
+#: rustconn/src/embedded_vnc/ui.rs:146 rustconn/src/session_group_window.rs:346
+#: rustconn/src/terminal/session_lifecycle.rs:756
 msgid "Session disconnected"
 msgstr "Сеанс отключён"
 
-#: rustconn/src/detached_window.rs:459
+#: rustconn/src/detached_window.rs:460
 msgid "Move to Main Window"
 msgstr "Переместить в главное окно"
 
-#: rustconn/src/detached_window.rs:474 rustconn/src/window/ui.rs:326
+#: rustconn/src/detached_window.rs:475 rustconn/src/window/ui.rs:327
 msgid "Settings…"
 msgstr "Настройки…"
 
-#: rustconn/src/detached_window.rs:476 rustconn/src/window/ui.rs:344
+#: rustconn/src/detached_window.rs:477 rustconn/src/window/ui.rs:345
 msgid "Keyboard Shortcuts…"
 msgstr "Сочетания клавиш…"
 
-#: rustconn/src/detached_window.rs:477 rustconn/src/dialogs/shortcuts.rs:183
-#: rustconn/src/window/ui.rs:345
+#: rustconn/src/detached_window.rs:478 rustconn/src/dialogs/shortcuts.rs:183
+#: rustconn/src/window/ui.rs:346
 msgid "Help"
 msgstr "Справка"
 
-#: rustconn/src/detached_window.rs:478 rustconn/src/tray.rs:331
-#: rustconn/src/tray.rs:706 rustconn/src/window/ui.rs:346
+#: rustconn/src/detached_window.rs:479 rustconn/src/tray.rs:331
+#: rustconn/src/tray.rs:706 rustconn/src/window/ui.rs:347
 msgid "About RustConnRu"
 msgstr "О RustConnRu"
 
-#: rustconn/src/detached_window.rs:485 rustconn/src/window/ui.rs:82
+#: rustconn/src/detached_window.rs:486 rustconn/src/window/ui.rs:82
 msgid "Menu (F10)"
 msgstr "Меню (F10)"
 
-#: rustconn/src/detached_window.rs:489
+#: rustconn/src/detached_window.rs:490
 #: rustconn/src/embedded_web/navigation.rs:152
 #: rustconn/src/embedded_web/navigation.rs:153 rustconn/src/window/ui.rs:84
 msgid "Menu"
@@ -272,9 +274,9 @@ msgstr "Для подключения «{}» необходимо указать
 
 #: rustconn/src/dialogs/ask_prompt.rs:73 rustconn/src/dialogs/history.rs:105
 #: rustconn/src/dialogs/key_setup.rs:592 rustconn/src/dialogs/widgets.rs:1060
-#: rustconn/src/sidebar_ui.rs:419 rustconn/src/smart_folder_ui.rs:437
+#: rustconn/src/sidebar_ui.rs:468 rustconn/src/smart_folder_ui.rs:437
 #: rustconn/src/window/edit_dialogs.rs:785
-#: rustconn/src/window/edit_dialogs.rs:786 rustconn/src/window/mod.rs:5785
+#: rustconn/src/window/edit_dialogs.rs:786 rustconn/src/window/mod.rs:6015
 msgid "Connect"
 msgstr "Подключиться"
 
@@ -314,12 +316,12 @@ msgstr "Ввести пароль вручную"
 
 #: rustconn/src/dialogs/backend_missing.rs:56
 #: rustconn/src/embedded_rdp/connection.rs:2484 rustconn/src/vault_ops.rs:66
-#: rustconn/src/vault_ops.rs:316 rustconn/src/window/mod.rs:1210
+#: rustconn/src/vault_ops.rs:316 rustconn/src/window/mod.rs:1266
 msgid "Open Settings"
 msgstr "Открыть настройки"
 
-#: rustconn/src/dialogs/cluster.rs:62 rustconn/src/dialogs/cluster.rs:562
-#: rustconn/src/dialogs/cluster.rs:563
+#: rustconn/src/dialogs/cluster.rs:62 rustconn/src/dialogs/cluster.rs:565
+#: rustconn/src/dialogs/cluster.rs:566
 msgid "New Cluster"
 msgstr "Новый кластер"
 
@@ -397,7 +399,7 @@ msgstr ""
 
 #: rustconn/src/dialogs/cluster.rs:297
 #: rustconn/src/dialogs/settings/ui_tab.rs:501
-#: rustconn/src/dialogs/shortcuts.rs:175 rustconn/src/sidebar_ui.rs:1326
+#: rustconn/src/dialogs/shortcuts.rs:175 rustconn/src/sidebar_ui.rs:1387
 msgid "Connections"
 msgstr "Подключения"
 
@@ -409,8 +411,8 @@ msgstr "Выберите подключения для включения в э�
 msgid "Filter connections…"
 msgstr "Фильтровать подключения…"
 
-#: rustconn/src/dialogs/cluster.rs:331 rustconn/src/sidebar_ui.rs:1191
-#: rustconn/src/terminal/config.rs:292
+#: rustconn/src/dialogs/cluster.rs:331 rustconn/src/sidebar_ui.rs:1252
+#: rustconn/src/terminal/config.rs:302
 msgid "Select All"
 msgstr "Выбрать все"
 
@@ -422,11 +424,11 @@ msgstr "Снять выделение"
 msgid "Edit Cluster"
 msgstr "Изменить кластер"
 
-#: rustconn/src/dialogs/cluster.rs:554 rustconn/src/sidebar_ui.rs:1368
+#: rustconn/src/dialogs/cluster.rs:557 rustconn/src/sidebar_ui.rs:1429
 msgid "Manage Clusters"
 msgstr "Управление кластерами"
 
-#: rustconn/src/dialogs/cluster.rs:588
+#: rustconn/src/dialogs/cluster.rs:591
 msgid ""
 "Clusters open multiple servers together. To mirror keystrokes across them, "
 "split the resulting tabs and use the Broadcast toggle in the header bar."
@@ -435,7 +437,7 @@ msgstr ""
 "Чтобы передавать нажатия клавиш во все сеансы, разделите открывшиеся вкладки "
 "на панели и включите «Трансляция ввода» на панели заголовка."
 
-#: rustconn/src/dialogs/cluster.rs:676
+#: rustconn/src/dialogs/cluster.rs:681
 #: rustconn/src/dialogs/connection_wizard/protocol_page.rs:284
 msgid "{} connection"
 msgid_plural "{} connections"
@@ -443,44 +445,48 @@ msgstr[0] "{} подключение"
 msgstr[1] "{} подключения"
 msgstr[2] "{} подключений"
 
-#: rustconn/src/dialogs/cluster.rs:692 rustconn/src/dialogs/cluster.rs:696
+#: rustconn/src/dialogs/cluster.rs:697 rustconn/src/dialogs/cluster.rs:701
 msgid "Connect to cluster"
 msgstr "Подключиться к кластеру"
 
-#: rustconn/src/dialogs/cluster.rs:701 rustconn/src/dialogs/cluster.rs:705
+#: rustconn/src/dialogs/cluster.rs:706 rustconn/src/dialogs/cluster.rs:710
+msgid "Connect to cluster in a new window"
+msgstr "Подключиться к кластеру в новом окне"
+
+#: rustconn/src/dialogs/cluster.rs:715 rustconn/src/dialogs/cluster.rs:719
 msgid "Disconnect all cluster sessions"
 msgstr "Отключить все сеансы кластера"
 
-#: rustconn/src/dialogs/cluster.rs:710 rustconn/src/dialogs/cluster.rs:713
+#: rustconn/src/dialogs/cluster.rs:724 rustconn/src/dialogs/cluster.rs:727
 msgid "Edit cluster"
 msgstr "Изменить кластер"
 
-#: rustconn/src/dialogs/cluster.rs:717 rustconn/src/dialogs/cluster.rs:721
+#: rustconn/src/dialogs/cluster.rs:731 rustconn/src/dialogs/cluster.rs:735
 msgid "Delete cluster"
 msgstr "Удалить кластер"
 
-#: rustconn/src/dialogs/cluster.rs:754
+#: rustconn/src/dialogs/cluster.rs:770
 msgid "No clusters defined. Click 'New Cluster' to create one."
 msgstr "Кластеры не заданы. Нажмите «Новый кластер», чтобы создать кластер."
 
-#: rustconn/src/dialogs/cluster.rs:804 rustconn/src/window/clusters.rs:582
+#: rustconn/src/dialogs/cluster.rs:827 rustconn/src/window/clusters.rs:625
 msgid "Delete Cluster?"
 msgstr "Удалить кластер?"
 
-#: rustconn/src/dialogs/cluster.rs:805
+#: rustconn/src/dialogs/cluster.rs:828
 msgid "This cluster will be permanently removed."
 msgstr "Этот кластер будет удалён безвозвратно."
 
-#: rustconn/src/dialogs/cluster.rs:808 rustconn/src/dialogs/recording.rs:600
+#: rustconn/src/dialogs/cluster.rs:831 rustconn/src/dialogs/recording.rs:600
 #: rustconn/src/dialogs/script.rs:175 rustconn/src/dialogs/script.rs:683
 #: rustconn/src/dialogs/template_manager.rs:114
 #: rustconn/src/dialogs/template_manager.rs:192
 #: rustconn/src/dialogs/tunnel.rs:728 rustconn/src/dialogs/workspace.rs:119
 #: rustconn/src/dialogs/workspace.rs:292
-#: rustconn/src/sidebar/saved_searches.rs:265 rustconn/src/sidebar_ui.rs:592
+#: rustconn/src/sidebar/saved_searches.rs:265 rustconn/src/sidebar_ui.rs:653
 #: rustconn/src/smart_folder_ui.rs:406 rustconn/src/smart_folder_ui.rs:459
-#: rustconn/src/window/clusters.rs:587 rustconn/src/window/edit_actions.rs:485
-#: rustconn/src/window/key_setup.rs:1011 rustconn/src/window/operations.rs:173
+#: rustconn/src/window/clusters.rs:630 rustconn/src/window/edit_actions.rs:487
+#: rustconn/src/window/key_setup.rs:1023 rustconn/src/window/operations.rs:173
 #: rustconn/src/window/snippets.rs:413 rustconn/src/window/snippets.rs:503
 #: rustconn/src/window/templates.rs:151
 msgid "Delete"
@@ -795,7 +801,7 @@ msgstr "Добавить правило"
 
 #: rustconn/src/dialogs/connection/advanced_tab.rs:653
 #: rustconn/src/dialogs/shortcuts.rs:187 rustconn/src/dialogs/wol.rs:38
-#: rustconn/src/sidebar_ui.rs:548 rustconn/src/smart_folder_ui.rs:452
+#: rustconn/src/sidebar_ui.rs:609 rustconn/src/smart_folder_ui.rs:452
 msgid "Wake On LAN"
 msgstr "Wake On LAN"
 
@@ -1604,7 +1610,7 @@ msgstr "Проверить подключение"
 #: rustconn/src/dialogs/connection/general_tab.rs:144
 #: rustconn/src/dialogs/connection_wizard/auth_page.rs:72
 #: rustconn/src/dialogs/export.rs:402 rustconn/src/dialogs/template.rs:194
-#: rustconn/src/dialogs/template.rs:532 rustconn/src/split_view/bridge.rs:1785
+#: rustconn/src/dialogs/template.rs:532 rustconn/src/split_view/bridge.rs:1886
 #: rustconn/src/window/edit_dialogs.rs:834
 msgid "Protocol"
 msgstr "Протокол"
@@ -1626,7 +1632,7 @@ msgstr "https://example.com"
 #: rustconn/src/dialogs/connection_wizard/connection_page.rs:777
 #: rustconn/src/dialogs/connection_wizard/connection_page.rs:783
 #: rustconn/src/dialogs/export.rs:390 rustconn/src/dialogs/template.rs:549
-#: rustconn/src/dialogs/template.rs:1785 rustconn/src/split_view/bridge.rs:1792
+#: rustconn/src/dialogs/template.rs:1785 rustconn/src/split_view/bridge.rs:1893
 #: rustconn/src/window/copy_field_actions.rs:79
 #: rustconn/src/window/edit_dialogs.rs:842
 msgid "Host"
@@ -1761,7 +1767,7 @@ msgstr ""
 "Ключ поиска: {}"
 
 #: rustconn/src/dialogs/connection/dialog/populate.rs:45
-#: rustconn/src/window/edit_group.rs:779 rustconn/src/window/key_setup.rs:377
+#: rustconn/src/window/edit_group.rs:779 rustconn/src/window/key_setup.rs:389
 msgid "Select SSH Key"
 msgstr "Выбрать ключ SSH"
 
@@ -2231,7 +2237,7 @@ msgstr "Аутентификация"
 #: rustconn/src/dialogs/connection/web.rs:148
 #: rustconn/src/dialogs/connection_wizard/connection_page.rs:121
 #: rustconn/src/dialogs/export.rs:408 rustconn/src/dialogs/template.rs:565
-#: rustconn/src/split_view/bridge.rs:1800
+#: rustconn/src/split_view/bridge.rs:1901
 #: rustconn/src/window/connection_dialogs.rs:498
 #: rustconn/src/window/copy_field_actions.rs:82
 #: rustconn/src/window/edit_dialogs.rs:862
@@ -2759,7 +2765,7 @@ msgstr ""
 #: rustconn/src/dialogs/connection/spice.rs:158
 #: rustconn/src/dialogs/connection/vnc.rs:236
 #: rustconn/src/dialogs/template.rs:904 rustconn/src/dialogs/template.rs:1099
-#: rustconn/src/dialogs/template.rs:1234 rustconn/src/split_view/bridge.rs:2125
+#: rustconn/src/dialogs/template.rs:1234 rustconn/src/split_view/bridge.rs:2226
 msgid "Features"
 msgstr "Возможности"
 
@@ -2794,7 +2800,7 @@ msgstr "Перенаправление принтера"
 msgid "Share your local printer with the remote session"
 msgstr "Предоставить удалённому сеансу доступ к локальному принтеру"
 
-#: rustconn/src/dialogs/connection/rdp.rs:389 rustconn/src/window/mod.rs:5758
+#: rustconn/src/dialogs/connection/rdp.rs:389 rustconn/src/window/mod.rs:5988
 msgid "Microphone"
 msgstr "Микрофон"
 
@@ -2802,7 +2808,7 @@ msgstr "Микрофон"
 msgid "Send the local microphone to the remote session"
 msgstr "Передавать звук локального микрофона в удалённый сеанс"
 
-#: rustconn/src/dialogs/connection/rdp.rs:399 rustconn/src/window/mod.rs:5761
+#: rustconn/src/dialogs/connection/rdp.rs:399 rustconn/src/window/mod.rs:5991
 msgid "Smart Cards"
 msgstr "Смарт-карты"
 
@@ -3776,7 +3782,7 @@ msgstr "Агент SSH"
 
 #: rustconn/src/dialogs/connection/ssh.rs:389
 #: rustconn/src/dialogs/connection_wizard/auth_page.rs:340
-#: rustconn/src/dialogs/template.rs:635 rustconn/src/window/mod.rs:5764
+#: rustconn/src/dialogs/template.rs:635 rustconn/src/window/mod.rs:5994
 msgid "Security Key (FIDO2)"
 msgstr "Ключ безопасности (FIDO2)"
 
@@ -3865,7 +3871,7 @@ msgstr "Выбрать из агента SSH"
 msgid "Key file not found"
 msgstr "Файл ключа не найден"
 
-#: rustconn/src/dialogs/connection/ssh.rs:527 rustconn/src/sidebar_ui.rs:538
+#: rustconn/src/dialogs/connection/ssh.rs:527 rustconn/src/sidebar_ui.rs:599
 msgid "Set Up Key Authentication…"
 msgstr "Настроить аутентификацию по ключу…"
 
@@ -4820,9 +4826,9 @@ msgstr "Ваши шаблоны"
 
 #: rustconn/src/dialogs/connection_wizard/mod.rs:460
 #: rustconn/src/dialogs/connection_wizard/protocol_page.rs:231
-#: rustconn/src/dialogs/shortcuts.rs:190 rustconn/src/sidebar_ui.rs:570
-#: rustconn/src/sidebar_ui.rs:650 rustconn/src/sidebar_ui.rs:1358
-#: rustconn/src/split_view/bridge.rs:2039 rustconn/src/window/ui.rs:257
+#: rustconn/src/dialogs/shortcuts.rs:190 rustconn/src/sidebar_ui.rs:631
+#: rustconn/src/sidebar_ui.rs:711 rustconn/src/sidebar_ui.rs:1419
+#: rustconn/src/split_view/bridge.rs:2140 rustconn/src/window/ui.rs:257
 msgid "New Connection"
 msgstr "Новое подключение"
 
@@ -4870,13 +4876,14 @@ msgstr "Парольная фраза переносимого файла"
 #: rustconn/src/dialogs/credential_transfer.rs:458
 #: rustconn/src/dialogs/shortcuts.rs:206 rustconn/src/dialogs/widgets.rs:1059
 #: rustconn/src/embedded_rdp/mod.rs:594 rustconn/src/embedded_vnc/ui.rs:51
-#: rustconn/src/sidebar_ui.rs:263 rustconn/src/terminal/config.rs:289
+#: rustconn/src/sidebar_ui.rs:306 rustconn/src/terminal/config.rs:299
 msgid "Copy"
 msgstr "Копировать"
 
 #: rustconn/src/dialogs/credential_transfer.rs:152
-#: rustconn/src/dialogs/key_setup.rs:628 rustconn/src/dialogs/script.rs:171
-#: rustconn/src/terminal/playback.rs:264 rustconn/src/window/mod.rs:1322
+#: rustconn/src/dialogs/key_setup.rs:628
+#: rustconn/src/dialogs/network_scan.rs:268 rustconn/src/dialogs/script.rs:171
+#: rustconn/src/terminal/playback.rs:264 rustconn/src/window/mod.rs:1378
 #: rustconn/src/window/remote_script.rs:403
 msgid "Stop"
 msgstr "Остановить"
@@ -4996,10 +5003,9 @@ msgstr "Копирование остановлено"
 #: rustconn/src/dialogs/recording.rs:831 rustconn/src/dialogs/recording.rs:843
 #: rustconn/src/dialogs/settings/cloud_sync_tab.rs:238
 #: rustconn/src/dialogs/tunnel_builder/mod.rs:640
-#: rustconn/src/dialogs/widgets.rs:1054 rustconn/src/sidebar_ui.rs:506
-#: rustconn/src/split_view/adapter.rs:1199
-#: rustconn/src/terminal/tab_menu.rs:721 rustconn/src/vault_ops.rs:65
-#: rustconn/src/window/mod.rs:4737
+#: rustconn/src/dialogs/widgets.rs:1054 rustconn/src/split_view/adapter.rs:1377
+#: rustconn/src/terminal/tab_menu.rs:743 rustconn/src/vault_ops.rs:65
+#: rustconn/src/window/mod.rs:4920
 msgid "Close"
 msgstr "Закрыть"
 
@@ -5454,7 +5460,7 @@ msgid "Failed"
 msgstr "Ошибка"
 
 #: rustconn/src/dialogs/history.rs:33 rustconn/src/dialogs/shortcuts.rs:184
-#: rustconn/src/sidebar_ui.rs:1241
+#: rustconn/src/sidebar_ui.rs:1302
 msgid "Connection History"
 msgstr "История подключений"
 
@@ -5524,7 +5530,7 @@ msgstr "Импортировать подключения"
 #: rustconn/src/dialogs/import/mod.rs:62 rustconn/src/dialogs/import/mod.rs:63
 #: rustconn/src/dialogs/settings/cloud_sync_tab.rs:184
 #: rustconn/src/dialogs/shortcuts.rs:193 rustconn/src/dialogs/widgets.rs:1058
-#: rustconn/src/split_view/bridge.rs:2053 rustconn/src/window/edit_group.rs:976
+#: rustconn/src/split_view/bridge.rs:2154 rustconn/src/window/edit_group.rs:976
 msgid "Import"
 msgstr "Импортировать"
 
@@ -6591,7 +6597,7 @@ msgid "Log Content"
 msgstr "Содержимое журнала"
 
 #: rustconn/src/dialogs/log_viewer.rs:354
-#: rustconn/src/split_view/adapter.rs:1908
+#: rustconn/src/split_view/adapter.rs:2104
 msgid "Loading…"
 msgstr "Загрузка…"
 
@@ -6640,6 +6646,118 @@ msgstr "На удалённом компьютере"
 #: rustconn/src/dialogs/mod.rs:52
 msgid "Only in full screen"
 msgstr "Только в полноэкранном режиме"
+
+#: rustconn/src/dialogs/network_scan.rs:68
+msgid "Network Scan"
+msgstr "Сканирование сети"
+
+#: rustconn/src/dialogs/network_scan.rs:74
+#: rustconn/src/dialogs/network_scan.rs:332
+msgid "Scan"
+msgstr "Сканировать"
+
+#: rustconn/src/dialogs/network_scan.rs:85
+msgid "Addresses"
+msgstr "Адреса"
+
+#: rustconn/src/dialogs/network_scan.rs:87
+msgid ""
+"A network with its mask (192.168.1.0/24 or 192.168.1.0/255.255.255.0), or a "
+"first and a last address (192.168.1.10-192.168.1.50)."
+msgstr ""
+"Сеть с маской (192.168.1.0/24 или 192.168.1.0/255.255.255.0) либо первый и "
+"последний адреса (192.168.1.10-192.168.1.50)."
+
+#: rustconn/src/dialogs/network_scan.rs:91
+msgid "Network or address range"
+msgstr "Сеть или диапазон адресов"
+
+#: rustconn/src/dialogs/network_scan.rs:100
+msgid ""
+"Looks for hosts answering on the SSH, RDP, VNC, Telnet, HTTP and HTTPS ports."
+msgstr "Искать узлы, отвечающие на портах SSH, RDP, VNC, Telnet, HTTP и HTTPS."
+
+#: rustconn/src/dialogs/network_scan.rs:110
+msgid "Scan progress"
+msgstr "Ход сканирования"
+
+#: rustconn/src/dialogs/network_scan.rs:114
+msgid "Hosts Found"
+msgstr "Найденные узлы"
+
+#: rustconn/src/dialogs/network_scan.rs:116
+#: rustconn/src/dialogs/network_scan.rs:367
+msgid "A host whose firewall drops every scanned port is not listed."
+msgstr ""
+"Узел не отображается, если его межсетевой экран отбрасывает пакеты на всех "
+"проверяемых портах."
+
+#: rustconn/src/dialogs/network_scan.rs:201
+msgid "Enter a network or an address range."
+msgstr "Введите сеть или диапазон адресов."
+
+#: rustconn/src/dialogs/network_scan.rs:202
+msgid "“{}” is not an IPv4 address."
+msgstr "«{}» не является адресом IPv4."
+
+#: rustconn/src/dialogs/network_scan.rs:204
+msgid "“{}” is not a prefix length (0 to 32) or a netmask."
+msgstr "«{}» не является длиной префикса (от 0 до 32) или маской сети."
+
+#: rustconn/src/dialogs/network_scan.rs:208
+msgid "The last address must not be before the first one."
+msgstr "Последний адрес не должен предшествовать первому."
+
+#: rustconn/src/dialogs/network_scan.rs:212
+msgid "This range covers {} address; a scan is limited to {}."
+msgid_plural "This range covers {} addresses; a scan is limited to {}."
+msgstr[0] "Этот диапазон охватывает {} адрес; предел сканирования — {}."
+msgstr[1] "Этот диапазон охватывает {} адреса; предел сканирования — {}."
+msgstr[2] "Этот диапазон охватывает {} адресов; предел сканирования — {}."
+
+#: rustconn/src/dialogs/network_scan.rs:223
+msgid "Answers, but none of the scanned ports is open"
+msgstr "Отвечает, но ни один из проверенных портов не открыт"
+
+#: rustconn/src/dialogs/network_scan.rs:272
+msgid "Scanning {} to {}…"
+msgstr "Сканирование от {} до {}…"
+
+#: rustconn/src/dialogs/network_scan.rs:336
+msgid "The scan could not be started."
+msgstr "Не удалось начать сканирование."
+
+#: rustconn/src/dialogs/network_scan.rs:345
+msgid "Stopped after {} address."
+msgid_plural "Stopped after {} addresses."
+msgstr[0] "Остановлено после проверки {} адреса."
+msgstr[1] "Остановлено после проверки {} адресов."
+msgstr[2] "Остановлено после проверки {} адресов."
+
+#: rustconn/src/dialogs/network_scan.rs:352
+msgid "No host answered among {} address."
+msgid_plural "No host answered among {} addresses."
+msgstr[0] "Проверен {} адрес: ни один узел не ответил."
+msgstr[1] "Проверено {} адреса: ни один узел не ответил."
+msgstr[2] "Проверено {} адресов: ни один узел не ответил."
+
+#: rustconn/src/dialogs/network_scan.rs:359
+msgid "{} address scanned."
+msgid_plural "{} addresses scanned."
+msgstr[0] "Просканирован {} адрес."
+msgstr[1] "Просканировано {} адреса."
+msgstr[2] "Просканировано {} адресов."
+
+#: rustconn/src/dialogs/network_scan.rs:370
+msgid "{} host found."
+msgid_plural "{} hosts found."
+msgstr[0] "Найден {} узел."
+msgstr[1] "Найдено {} узла."
+msgstr[2] "Найдено {} узлов."
+
+#: rustconn/src/dialogs/network_scan.rs:397
+msgid "Add a {} connection to this host"
+msgstr "Добавить подключение {} к этому узлу"
 
 #: rustconn/src/dialogs/password.rs:58
 msgid "Authentication Required"
@@ -7074,8 +7192,8 @@ msgstr "Введите новое отображаемое имя для это�
 
 #: rustconn/src/dialogs/recording.rs:524 rustconn/src/dialogs/workspace.rs:127
 #: rustconn/src/dialogs/workspace.rs:238
-#: rustconn/src/sidebar/saved_searches.rs:238 rustconn/src/sidebar_ui.rs:375
-#: rustconn/src/sidebar_ui.rs:430 rustconn/src/window/edit_dialogs.rs:334
+#: rustconn/src/sidebar/saved_searches.rs:238 rustconn/src/sidebar_ui.rs:418
+#: rustconn/src/sidebar_ui.rs:481 rustconn/src/window/edit_dialogs.rs:334
 msgid "Rename"
 msgstr "Переименовать"
 
@@ -7142,7 +7260,7 @@ msgstr "Не удалось импортировать"
 #: rustconn/src/dialogs/recording.rs:828 rustconn/src/dialogs/recording.rs:840
 #: rustconn/src/dialogs/settings/ssh_agent_tab.rs:288 rustconn/src/toast.rs:110
 #: rustconn/src/toast.rs:325 rustconn/src/toast.rs:355
-#: rustconn/src/window/clusters.rs:553
+#: rustconn/src/window/clusters.rs:596
 #: rustconn/src/window/connection_dialogs.rs:928
 #: rustconn/src/window/edit_dialogs.rs:407
 #: rustconn/src/window/edit_dialogs.rs:511
@@ -7563,7 +7681,7 @@ msgstr "Назначения клавиш"
 
 #: rustconn/src/dialogs/settings/keybindings_tab.rs:58
 #: rustconn/src/dialogs/shortcuts.rs:182 rustconn/src/dialogs/shortcuts.rs:336
-#: rustconn/src/split_view/bridge.rs:2201
+#: rustconn/src/split_view/bridge.rs:2302
 msgid "Keyboard Shortcuts"
 msgstr "Сочетания клавиш"
 
@@ -7754,7 +7872,7 @@ msgstr ""
 "Текущие настройки будут перезаписаны. Для применения изменений требуется "
 "перезапуск."
 
-#: rustconn/src/dialogs/settings/mod.rs:596 rustconn/src/sidebar_ui.rs:619
+#: rustconn/src/dialogs/settings/mod.rs:596 rustconn/src/sidebar_ui.rs:680
 #: rustconn/src/window/session_restore.rs:199
 msgid "Restore"
 msgstr "Восстановить"
@@ -9220,7 +9338,7 @@ msgstr "Отправлять префикс Escape вместо составны
 #: rustconn/src/dialogs/settings/ui_tab.rs:599
 #: rustconn/src/dialogs/settings/ui_tab.rs:921
 #: rustconn/src/dialogs/shortcuts.rs:196
-#: rustconn/src/split_view/adapter.rs:1838 rustconn/src/tray.rs:309
+#: rustconn/src/split_view/adapter.rs:2034 rustconn/src/tray.rs:309
 #: rustconn/src/tray.rs:699 rustconn/src/window/ui.rs:266
 msgid "Local Shell"
 msgstr "Локальная оболочка"
@@ -9776,7 +9894,7 @@ msgid "View"
 msgstr "Вид"
 
 #: rustconn/src/dialogs/shortcuts.rs:181 rustconn/src/tray.rs:338
-#: rustconn/src/tray.rs:712 rustconn/src/window/ui.rs:347
+#: rustconn/src/tray.rs:712 rustconn/src/window/ui.rs:348
 msgid "Quit"
 msgstr "Выйти"
 
@@ -9788,23 +9906,23 @@ msgstr "Статистика"
 msgid "SSH Tunnel Manager"
 msgstr "Диспетчер туннелей SSH"
 
-#: rustconn/src/dialogs/shortcuts.rs:192 rustconn/src/sidebar_ui.rs:651
-#: rustconn/src/sidebar_ui.rs:1162 rustconn/src/sidebar_ui.rs:1363
+#: rustconn/src/dialogs/shortcuts.rs:192 rustconn/src/sidebar_ui.rs:712
+#: rustconn/src/sidebar_ui.rs:1223 rustconn/src/sidebar_ui.rs:1424
 #: rustconn/src/window/connection_dialogs.rs:378 rustconn/src/window/ui.rs:262
 msgid "New Group"
 msgstr "Создать группу"
 
-#: rustconn/src/dialogs/shortcuts.rs:195 rustconn/src/sidebar_ui.rs:649
-#: rustconn/src/sidebar_ui.rs:1381 rustconn/src/split_view/bridge.rs:2046
+#: rustconn/src/dialogs/shortcuts.rs:195 rustconn/src/sidebar_ui.rs:710
+#: rustconn/src/sidebar_ui.rs:1442 rustconn/src/split_view/bridge.rs:2147
 #: rustconn/src/window/edit_dialogs.rs:778 rustconn/src/window/ui.rs:265
 msgid "Quick Connect"
 msgstr "Быстрое подключение"
 
-#: rustconn/src/dialogs/shortcuts.rs:197 rustconn/src/sidebar_ui.rs:1171
+#: rustconn/src/dialogs/shortcuts.rs:197 rustconn/src/sidebar_ui.rs:1232
 msgid "Move to Group"
 msgstr "Переместить в группу"
 
-#: rustconn/src/dialogs/shortcuts.rs:199 rustconn/src/split_view/bridge.rs:2209
+#: rustconn/src/dialogs/shortcuts.rs:199 rustconn/src/split_view/bridge.rs:2310
 msgid "Search"
 msgstr "Найти"
 
@@ -9821,7 +9939,7 @@ msgid "Command Palette (Commands)"
 msgstr "Палитра команд (команды)"
 
 #: rustconn/src/dialogs/shortcuts.rs:207 rustconn/src/embedded_rdp/mod.rs:602
-#: rustconn/src/embedded_vnc/ui.rs:62 rustconn/src/terminal/config.rs:290
+#: rustconn/src/embedded_vnc/ui.rs:62 rustconn/src/terminal/config.rs:300
 #: rustconn/src/terminal/safe_paste.rs:167
 msgid "Paste"
 msgstr "Вставить"
@@ -9831,7 +9949,7 @@ msgid "Find in Terminal"
 msgstr "Найти в терминале"
 
 #: rustconn/src/dialogs/shortcuts.rs:209 rustconn/src/dialogs/shortcuts.rs:811
-#: rustconn/src/terminal/tab_menu.rs:1321
+#: rustconn/src/terminal/tab_menu.rs:85
 msgid "Close Tab"
 msgstr "Закрыть вкладку"
 
@@ -9843,7 +9961,7 @@ msgstr "Перейти к следующей вкладке"
 msgid "Previous Tab"
 msgstr "Перейти к предыдущей вкладке"
 
-#: rustconn/src/dialogs/shortcuts.rs:212 rustconn/src/terminal/mod.rs:558
+#: rustconn/src/dialogs/shortcuts.rs:212 rustconn/src/terminal/mod.rs:598
 msgid "Tab Overview"
 msgstr "Открыть обзор вкладок"
 
@@ -9875,17 +9993,16 @@ msgstr "Разделить по вертикали"
 msgid "Close Pane"
 msgstr "Закрыть панель"
 
-#: rustconn/src/dialogs/shortcuts.rs:221 rustconn/src/sidebar_ui.rs:497
-#: rustconn/src/split_view/adapter.rs:1129
-#: rustconn/src/split_view/adapter.rs:1671
-#: rustconn/src/split_view/adapter.rs:1740
-msgid "Remove from Split"
-msgstr "Убрать из разделённого вида"
+#: rustconn/src/dialogs/shortcuts.rs:221 rustconn/src/sidebar_ui.rs:551
+#: rustconn/src/split_view/adapter.rs:191
+#: rustconn/src/split_view/adapter.rs:1308
+msgid "Move to Own Tab"
+msgstr "Переместить в отдельную вкладку"
 
-#: rustconn/src/dialogs/shortcuts.rs:222
-#: rustconn/src/split_view/adapter.rs:1676
-#: rustconn/src/split_view/adapter.rs:1745
-#: rustconn/src/terminal/tab_menu.rs:1261
+#: rustconn/src/dialogs/shortcuts.rs:222 rustconn/src/sidebar_ui.rs:555
+#: rustconn/src/split_view/adapter.rs:197
+#: rustconn/src/terminal/split_close.rs:321
+#: rustconn/src/terminal/tab_menu.rs:1277
 msgid "Remove Split"
 msgstr "Убрать разделение"
 
@@ -9933,7 +10050,7 @@ msgstr "Поиск сочетаний клавиш…"
 msgid "Edit Smart Folder"
 msgstr "Изменить умную папку"
 
-#: rustconn/src/dialogs/smart_folder.rs:68 rustconn/src/sidebar_ui.rs:652
+#: rustconn/src/dialogs/smart_folder.rs:68 rustconn/src/sidebar_ui.rs:713
 #: rustconn/src/smart_folder_ui.rs:69
 msgid "New Smart Folder"
 msgstr "Создать умную папку"
@@ -10468,8 +10585,8 @@ msgstr ""
 "Создайте шаблон для быстрого создания подключений с заранее заданными "
 "настройками."
 
-#: rustconn/src/dialogs/template_manager.rs:110 rustconn/src/sidebar_ui.rs:389
-#: rustconn/src/sidebar_ui.rs:573 rustconn/src/smart_folder_ui.rs:404
+#: rustconn/src/dialogs/template_manager.rs:110 rustconn/src/sidebar_ui.rs:432
+#: rustconn/src/sidebar_ui.rs:634 rustconn/src/smart_folder_ui.rs:404
 #: rustconn/src/smart_folder_ui.rs:442 rustconn/src/window/snippets.rs:407
 msgid "Edit"
 msgstr "Изменить"
@@ -11232,7 +11349,7 @@ msgid "Connecting…"
 msgstr "Подключение…"
 
 #: rustconn/src/embedded.rs:80 rustconn/src/embedded.rs:84
-#: rustconn/src/sidebar_ui.rs:415
+#: rustconn/src/sidebar_ui.rs:458 rustconn/src/sidebar_ui.rs:566
 msgid "Disconnect"
 msgstr "Отключиться"
 
@@ -11877,16 +11994,16 @@ msgid "Save files from remote clipboard"
 msgstr "Сохранить файлы из удалённого буфера обмена"
 
 #: rustconn/src/embedded_rdp/mod.rs:786 rustconn/src/embedded_vnc/ui.rs:149
-#: rustconn/src/split_view/adapter.rs:1670
-#: rustconn/src/split_view/adapter.rs:1739 rustconn/src/terminal/mod.rs:1462
-#: rustconn/src/terminal/session_lifecycle.rs:407
-#: rustconn/src/terminal/tab_menu.rs:1181
+#: rustconn/src/split_view/adapter.rs:185 rustconn/src/terminal/config.rs:419
+#: rustconn/src/terminal/mod.rs:1560
+#: rustconn/src/terminal/session_lifecycle.rs:791
+#: rustconn/src/terminal/tab_menu.rs:1197
 msgid "Reconnect"
 msgstr "Переподключиться"
 
 #: rustconn/src/embedded_rdp/mod.rs:788 rustconn/src/embedded_vnc/ui.rs:151
-#: rustconn/src/terminal/mod.rs:1464
-#: rustconn/src/terminal/session_lifecycle.rs:409
+#: rustconn/src/terminal/mod.rs:1562
+#: rustconn/src/terminal/session_lifecycle.rs:793
 msgid "Reconnect to this session"
 msgstr "Переподключиться к этому сеансу"
 
@@ -12007,7 +12124,7 @@ msgid "RDP session running in external window"
 msgstr "Сеанс RDP работает во внешнем окне"
 
 #: rustconn/src/embedded_rdp/ui.rs:185 rustconn/src/session/vnc.rs:342
-#: rustconn/src/sidebar/view.rs:834 rustconn/src/window/mod.rs:3221
+#: rustconn/src/sidebar/view.rs:834 rustconn/src/window/mod.rs:3400
 #: rustconn/src/window/remote_script.rs:209
 msgid "Connection failed"
 msgstr "Не удалось подключиться"
@@ -12077,7 +12194,7 @@ msgid "No login form fields found on this page"
 msgstr "На этой странице не найдены поля формы входа"
 
 #: rustconn/src/embedded_web/navigation.rs:84
-#: rustconn/src/embedded_web/navigation.rs:85 rustconn/src/sidebar_ui.rs:984
+#: rustconn/src/embedded_web/navigation.rs:85 rustconn/src/sidebar_ui.rs:1045
 msgid "Back"
 msgstr "Назад"
 
@@ -12285,7 +12402,7 @@ msgstr "Скорость"
 msgid "Fit to screen"
 msgstr "По размеру экрана"
 
-#: rustconn/src/i18n_markers.rs:76 rustconn/src/window/ui.rs:338
+#: rustconn/src/i18n_markers.rs:76 rustconn/src/window/ui.rs:339
 msgid "Fullscreen"
 msgstr "Полноэкранный режим"
 
@@ -12395,6 +12512,10 @@ msgstr "Не удалось запустить сценарий «{}»: {}"
 msgid "Auto-run script “{}” could not be loaded: {}"
 msgstr "Не удалось загрузить сценарий автозапуска «{}»: {}"
 
+#: rustconn/src/session_group_window.rs:83
+msgid "Move Tab to Main Window"
+msgstr "Переместить вкладку в главное окно"
+
 #: rustconn/src/sidebar/mod.rs:162
 msgid "Search… (? for help)"
 msgstr "Поиск… (? — справка)"
@@ -12447,15 +12568,15 @@ msgstr "Фильтровать по протоколу (фильтры акти�
 msgid "Trash"
 msgstr "Корзина"
 
-#: rustconn/src/sidebar/mod.rs:2066
+#: rustconn/src/sidebar/mod.rs:2107
 msgid "Open Password Vault (Active)"
 msgstr "Открыть хранилище паролей (активно)"
 
-#: rustconn/src/sidebar/mod.rs:2071
+#: rustconn/src/sidebar/mod.rs:2112
 msgid "Password Vault Not Found"
 msgstr "Хранилище паролей не найдено"
 
-#: rustconn/src/sidebar/mod.rs:2074
+#: rustconn/src/sidebar/mod.rs:2115
 msgid "Password Vault Disabled"
 msgstr "Хранилище паролей отключено"
 
@@ -12571,230 +12692,233 @@ msgstr "Ошибка синхронизации: {}"
 msgid "Connecting"
 msgstr "Подключение"
 
-#: rustconn/src/sidebar_ui.rs:352 rustconn/src/window/clusters.rs:356
+#: rustconn/src/sidebar_ui.rs:395 rustconn/src/window/clusters.rs:380
 msgid "Connect All"
 msgstr "Подключить все"
 
-#: rustconn/src/sidebar_ui.rs:356 rustconn/src/sidebar_ui.rs:529
+#: rustconn/src/sidebar_ui.rs:399 rustconn/src/sidebar_ui.rs:590
 msgid "Run Local Script…"
 msgstr "Выполнить локальный сценарий…"
 
-#: rustconn/src/sidebar_ui.rs:365
+#: rustconn/src/sidebar_ui.rs:408
 msgid "New Connection in Group"
 msgstr "Создать подключение в группе"
 
-#: rustconn/src/sidebar_ui.rs:369 rustconn/src/window/connection_dialogs.rs:376
+#: rustconn/src/sidebar_ui.rs:412 rustconn/src/window/connection_dialogs.rs:376
 msgid "New Subgroup"
 msgstr "Создать подгруппу"
 
-#: rustconn/src/sidebar_ui.rs:378 rustconn/src/sidebar_ui.rs:444
+#: rustconn/src/sidebar_ui.rs:421 rustconn/src/sidebar_ui.rs:495
 msgid "Move to Group…"
 msgstr "Переместить в группу…"
 
-#: rustconn/src/sidebar_ui.rs:384 rustconn/src/sidebar_ui.rs:432
+#: rustconn/src/sidebar_ui.rs:427 rustconn/src/sidebar_ui.rs:483
 msgid "Duplicate"
 msgstr "Создать копию"
 
-#: rustconn/src/sidebar_ui.rs:393
+#: rustconn/src/sidebar_ui.rs:436
 msgid "Sync Now"
 msgstr "Синхронизировать сейчас"
 
-#: rustconn/src/sidebar_ui.rs:397
+#: rustconn/src/sidebar_ui.rs:440
 msgid "Enable Cloud Sync…"
 msgstr "Включить облачную синхронизацию…"
 
-#: rustconn/src/sidebar_ui.rs:405
+#: rustconn/src/sidebar_ui.rs:448
 msgid "Refresh Dynamic Folder"
 msgstr "Обновить динамическую папку"
 
-#: rustconn/src/sidebar_ui.rs:423
+#: rustconn/src/sidebar_ui.rs:466
+msgid "Show Session"
+msgstr "Показать сеанс"
+
+#: rustconn/src/sidebar_ui.rs:474
 msgid "Remove from Favorites"
 msgstr "Удалить из избранного"
 
-#: rustconn/src/sidebar_ui.rs:425
+#: rustconn/src/sidebar_ui.rs:476
 msgid "Add to Favorites"
 msgstr "Добавить в избранное"
 
-#: rustconn/src/sidebar_ui.rs:436
+#: rustconn/src/sidebar_ui.rs:487
 msgid "Duplicate as Range…"
 msgstr "Дублировать с диапазоном…"
 
-#: rustconn/src/sidebar_ui.rs:440
+#: rustconn/src/sidebar_ui.rs:491
 msgid "Duplicate via Wizard…"
 msgstr "Создать копию с помощью мастера…"
 
-#: rustconn/src/sidebar_ui.rs:465
+#: rustconn/src/sidebar_ui.rs:516
 msgid "Open new session"
 msgstr "Открыть новый сеанс"
 
-#: rustconn/src/sidebar_ui.rs:502 rustconn/src/split_view/adapter.rs:1149
-#: rustconn/src/split_view/adapter.rs:1673
-#: rustconn/src/split_view/adapter.rs:1742
-#: rustconn/src/terminal/tab_menu.rs:1269
+#: rustconn/src/sidebar_ui.rs:561 rustconn/src/split_view/adapter.rs:194
+#: rustconn/src/split_view/adapter.rs:1327
+#: rustconn/src/terminal/tab_menu.rs:1285
 msgid "Move to New Window"
 msgstr "Переместить в новое окно"
 
-#: rustconn/src/sidebar_ui.rs:517
+#: rustconn/src/sidebar_ui.rs:578
 msgid "Run Snippet…"
 msgstr "Выполнить фрагмент…"
 
-#: rustconn/src/sidebar_ui.rs:524
+#: rustconn/src/sidebar_ui.rs:585
 msgid "Session Log…"
 msgstr "Журнал сеанса…"
 
-#: rustconn/src/sidebar_ui.rs:534
+#: rustconn/src/sidebar_ui.rs:595
 msgid "Open SFTP"
 msgstr "Открыть SFTP"
 
-#: rustconn/src/sidebar_ui.rs:544
+#: rustconn/src/sidebar_ui.rs:605
 msgid "Open Browser via Tunnel"
 msgstr "Открыть браузер через туннель"
 
-#: rustconn/src/sidebar_ui.rs:550 rustconn/src/smart_folder_ui.rs:454
+#: rustconn/src/sidebar_ui.rs:611 rustconn/src/smart_folder_ui.rs:454
 msgid "Check if Online"
 msgstr "Проверить доступность"
 
-#: rustconn/src/sidebar_ui.rs:557
+#: rustconn/src/sidebar_ui.rs:618
 msgid "Stop Recording"
 msgstr "Остановить запись"
 
-#: rustconn/src/sidebar_ui.rs:562
+#: rustconn/src/sidebar_ui.rs:623
 msgid "Start Recording"
 msgstr "Начать запись"
 
-#: rustconn/src/sidebar_ui.rs:582
+#: rustconn/src/sidebar_ui.rs:643
 msgid "Stop tracking"
 msgstr "Прекратить отслеживание"
 
-#: rustconn/src/sidebar_ui.rs:626
+#: rustconn/src/sidebar_ui.rs:687
 msgid "Delete Permanently…"
 msgstr "Удалить безвозвратно…"
 
-#: rustconn/src/sidebar_ui.rs:635 rustconn/src/window/edit_actions.rs:397
+#: rustconn/src/sidebar_ui.rs:696 rustconn/src/window/edit_actions.rs:399
 msgid "Empty Trash"
 msgstr "Очистить корзину"
 
-#: rustconn/src/sidebar_ui.rs:654 rustconn/src/sidebar_ui.rs:1382
+#: rustconn/src/sidebar_ui.rs:715 rustconn/src/sidebar_ui.rs:1443
 msgid "Import…"
 msgstr "Импортировать…"
 
-#: rustconn/src/sidebar_ui.rs:655 rustconn/src/sidebar_ui.rs:1383
+#: rustconn/src/sidebar_ui.rs:716 rustconn/src/sidebar_ui.rs:1444
 msgid "Export…"
 msgstr "Экспортировать…"
 
-#: rustconn/src/sidebar_ui.rs:1165
+#: rustconn/src/sidebar_ui.rs:1226
 msgid "Create new group"
 msgstr "Создать группу"
 
-#: rustconn/src/sidebar_ui.rs:1174
+#: rustconn/src/sidebar_ui.rs:1235
 msgid "Move selected connections to group"
 msgstr "Переместить выбранные подключения в группу"
 
-#: rustconn/src/sidebar_ui.rs:1181 rustconn/src/window/batch_edit.rs:46
+#: rustconn/src/sidebar_ui.rs:1242 rustconn/src/window/batch_edit.rs:46
 msgid "Batch Edit"
 msgstr "Групповое редактирование"
 
-#: rustconn/src/sidebar_ui.rs:1184
+#: rustconn/src/sidebar_ui.rs:1245
 msgid "Edit selected connections together"
 msgstr "Изменить выбранные подключения одновременно"
 
-#: rustconn/src/sidebar_ui.rs:1194
+#: rustconn/src/sidebar_ui.rs:1255
 msgid "Select all connections"
 msgstr "Выбрать все подключения"
 
-#: rustconn/src/sidebar_ui.rs:1201
+#: rustconn/src/sidebar_ui.rs:1262
 msgid "Clear Selection"
 msgstr "Снять выделение"
 
-#: rustconn/src/sidebar_ui.rs:1203
+#: rustconn/src/sidebar_ui.rs:1264
 msgid "Clear selection"
 msgstr "Снять выделение"
 
-#: rustconn/src/sidebar_ui.rs:1210
+#: rustconn/src/sidebar_ui.rs:1271
 msgid "Delete Selected"
 msgstr "Удалить выбранные"
 
-#: rustconn/src/sidebar_ui.rs:1213
+#: rustconn/src/sidebar_ui.rs:1274
 msgid "Delete selected connections"
 msgstr "Удалить выбранные подключения"
 
-#: rustconn/src/sidebar_ui.rs:1244
+#: rustconn/src/sidebar_ui.rs:1305
 msgid "View connection history"
 msgstr "Просмотреть историю подключений"
 
-#: rustconn/src/sidebar_ui.rs:1257
+#: rustconn/src/sidebar_ui.rs:1318
 msgid "Select Connections"
 msgstr "Выбрать подключения"
 
-#: rustconn/src/sidebar_ui.rs:1260
+#: rustconn/src/sidebar_ui.rs:1321
 msgid "Toggle multi-select mode for connections"
 msgstr "Переключить режим множественного выбора подключений"
 
-#: rustconn/src/sidebar_ui.rs:1270
+#: rustconn/src/sidebar_ui.rs:1331
 msgid "Sort alphabetically"
 msgstr "Сортировать по алфавиту"
 
-#: rustconn/src/sidebar_ui.rs:1273
+#: rustconn/src/sidebar_ui.rs:1334
 msgid "Sort connections alphabetically"
 msgstr "Сортировать подключения по алфавиту"
 
-#: rustconn/src/sidebar_ui.rs:1279
+#: rustconn/src/sidebar_ui.rs:1340
 msgid "Sort by recent usage"
 msgstr "Сортировать по времени последнего использования"
 
-#: rustconn/src/sidebar_ui.rs:1282
+#: rustconn/src/sidebar_ui.rs:1343
 msgid "Sort connections by recent usage"
 msgstr "Сортировать подключения по времени последнего использования"
 
-#: rustconn/src/sidebar_ui.rs:1288
+#: rustconn/src/sidebar_ui.rs:1349
 msgid "Open password vault"
 msgstr "Открыть хранилище паролей"
 
-#: rustconn/src/sidebar_ui.rs:1292
+#: rustconn/src/sidebar_ui.rs:1353
 msgid "Open password vault for credential management"
 msgstr "Открыть хранилище паролей для управления учётными данными"
 
-#: rustconn/src/sidebar_ui.rs:1298
+#: rustconn/src/sidebar_ui.rs:1359
 msgid "Toggle smart folders"
 msgstr "Показать или скрыть умные папки"
 
-#: rustconn/src/sidebar_ui.rs:1301
+#: rustconn/src/sidebar_ui.rs:1362
 msgid "Show or hide smart folders panel"
 msgstr "Показать или скрыть панель умных папок"
 
-#: rustconn/src/sidebar_ui.rs:1336
+#: rustconn/src/sidebar_ui.rs:1397
 msgid "Search (Ctrl+F)"
 msgstr "Поиск (Ctrl+F)"
 
-#: rustconn/src/sidebar_ui.rs:1337
+#: rustconn/src/sidebar_ui.rs:1398
 msgid "Toggle search"
 msgstr "Показать или скрыть поиск"
 
-#: rustconn/src/sidebar_ui.rs:1360 rustconn/src/window/ui.rs:259
+#: rustconn/src/sidebar_ui.rs:1421 rustconn/src/window/ui.rs:259
 msgid "New Connection (Advanced)…"
 msgstr "Создать подключение (расширенные настройки)…"
 
-#: rustconn/src/sidebar_ui.rs:1370
+#: rustconn/src/sidebar_ui.rs:1431
 msgid "Manage Workspaces"
 msgstr "Управлять рабочими пространствами"
 
-#: rustconn/src/sidebar_ui.rs:1373 rustconn/src/window/snippets.rs:218
+#: rustconn/src/sidebar_ui.rs:1434 rustconn/src/window/snippets.rs:218
 msgid "Manage Snippets"
 msgstr "Управлять фрагментами"
 
-#: rustconn/src/sidebar_ui.rs:1374 rustconn/src/window/ui.rs:298
+#: rustconn/src/sidebar_ui.rs:1435 rustconn/src/window/ui.rs:299
 msgid "Tools"
 msgstr "Инструменты"
 
-#: rustconn/src/sidebar_ui.rs:1392
+#: rustconn/src/sidebar_ui.rs:1453
 msgid "Sort Alphabetically"
 msgstr "Сортировать по алфавиту"
 
-#: rustconn/src/sidebar_ui.rs:1395
+#: rustconn/src/sidebar_ui.rs:1456
 msgid "Sort by Recent Use"
 msgstr "Сортировать по времени последнего использования"
 
-#: rustconn/src/sidebar_ui.rs:1398
+#: rustconn/src/sidebar_ui.rs:1459
 msgid "Connection list menu"
 msgstr "Меню списка подключений"
 
@@ -12814,217 +12938,230 @@ msgstr "Нет умных папок"
 msgid "Drag to move this session to another panel or tab"
 msgstr "Перетащите сеанс в другую панель или вкладку"
 
-#: rustconn/src/split_view/adapter.rs:1031
-#: rustconn/src/split_view/adapter.rs:1033
+#: rustconn/src/split_view/adapter.rs:188
+#: rustconn/src/split_view/adapter.rs:1009 rustconn/src/window/ui.rs:145
+msgid "Broadcast"
+msgstr "Трансляция"
+
+#: rustconn/src/split_view/adapter.rs:198
+msgid "Close Connection"
+msgstr "Закрыть подключение"
+
+#: rustconn/src/split_view/adapter.rs:1018
+msgid "Untick to keep this panel out of the keystroke broadcast"
+msgstr ""
+"Снимите флажок, чтобы исключить эту панель из трансляции нажатий клавиш"
+
+#: rustconn/src/split_view/adapter.rs:1116
+msgid "Broadcast: {}"
+msgstr "Трансляция: {}"
+
+#: rustconn/src/split_view/adapter.rs:1211
+#: rustconn/src/split_view/adapter.rs:1213
 msgid "Show panel actions"
 msgstr "Показать действия панели"
 
-#: rustconn/src/split_view/adapter.rs:1122
+#: rustconn/src/split_view/adapter.rs:1302
 msgid "Remove this session from the split and show it in its own tab"
 msgstr ""
 "Убрать этот сеанс из разделённого представления и показать в отдельной "
 "вкладке"
 
-#: rustconn/src/split_view/adapter.rs:1142
+#: rustconn/src/split_view/adapter.rs:1320
 msgid "Move this session out of the split into its own window"
 msgstr "Переместить этот сеанс из разделённого представления в отдельное окно"
 
-#: rustconn/src/split_view/adapter.rs:1161
-#: rustconn/src/split_view/adapter.rs:1166
+#: rustconn/src/split_view/adapter.rs:1339
+#: rustconn/src/split_view/adapter.rs:1344
 msgid "Close session"
 msgstr "Закрыть сеанс"
 
-#: rustconn/src/split_view/adapter.rs:1193
+#: rustconn/src/split_view/adapter.rs:1371
 msgid "Close this pane?"
 msgstr "Закрыть эту панель?"
 
-#: rustconn/src/split_view/adapter.rs:1195
+#: rustconn/src/split_view/adapter.rs:1373
 msgid "The session in this pane will be disconnected and closed."
 msgstr "Подключение в этой панели будет разорвано, а сеанс — закрыт."
 
-#: rustconn/src/split_view/adapter.rs:1418
+#: rustconn/src/split_view/adapter.rs:1597
 msgid "Terminal panel"
 msgstr "Панель терминала"
 
-#: rustconn/src/split_view/adapter.rs:1677
-#: rustconn/src/split_view/adapter.rs:1746
-msgid "Close Connection"
-msgstr "Закрыть подключение"
-
-#: rustconn/src/split_view/adapter.rs:1797
+#: rustconn/src/split_view/adapter.rs:1993
 msgid "Empty Panel"
 msgstr "Пустая панель"
 
-#: rustconn/src/split_view/adapter.rs:1798
+#: rustconn/src/split_view/adapter.rs:1994
 msgid "Select an existing tab to display in this panel"
 msgstr "Выберите существующую вкладку для отображения в этой панели"
 
-#: rustconn/src/split_view/adapter.rs:1808
+#: rustconn/src/split_view/adapter.rs:2004
 msgid "Select Tab…"
 msgstr "Выбрать вкладку…"
 
-#: rustconn/src/split_view/adapter.rs:1809
+#: rustconn/src/split_view/adapter.rs:2005
 msgid "Choose an open tab to display in this panel"
 msgstr "Выбрать открытую вкладку для отображения в этой панели"
 
-#: rustconn/src/split_view/adapter.rs:1839
+#: rustconn/src/split_view/adapter.rs:2035
 msgid "Open a new local shell in this panel"
 msgstr "Открыть новую локальную оболочку в этой панели"
 
-#: rustconn/src/split_view/adapter.rs:1866
+#: rustconn/src/split_view/adapter.rs:2062
 msgid "Close panel"
 msgstr "Закрыть панель"
 
-#: rustconn/src/split_view/adapter.rs:1877
+#: rustconn/src/split_view/adapter.rs:2073
 msgid "Close split view panel"
 msgstr "Закрыть панель разделённого представления"
 
-#: rustconn/src/split_view/bridge.rs:1780
+#: rustconn/src/split_view/bridge.rs:1881
 msgid "Basic Information"
 msgstr "Основная информация"
 
-#: rustconn/src/split_view/bridge.rs:2012
+#: rustconn/src/split_view/bridge.rs:2113
 #: rustconn/assets/io.github.zbndev.RustConnRu.desktop:4
 msgid "Manage remote connections easily"
 msgstr "Простое управление удалёнными подключениями"
 
-#: rustconn/src/split_view/bridge.rs:2092
+#: rustconn/src/split_view/bridge.rs:2193
 msgid "Double-click a connection in the sidebar to get started"
 msgstr "Чтобы начать, дважды щёлкните подключение на боковой панели"
 
-#: rustconn/src/split_view/bridge.rs:2106
+#: rustconn/src/split_view/bridge.rs:2207
 msgid "Don't show this page at startup"
 msgstr "Не показывать эту страницу при запуске"
 
-#: rustconn/src/split_view/bridge.rs:2131
+#: rustconn/src/split_view/bridge.rs:2232
 msgid "Embedded SSH, RDP, VNC, SPICE"
 msgstr "Встроенные клиенты SSH, RDP, VNC, SPICE"
 
-#: rustconn/src/split_view/bridge.rs:2133
+#: rustconn/src/split_view/bridge.rs:2234
 msgid "Secure credential storage"
 msgstr "Безопасное хранение учётных данных"
 
-#: rustconn/src/split_view/bridge.rs:2136
+#: rustconn/src/split_view/bridge.rs:2237
 msgid "Remote host monitoring"
 msgstr "Мониторинг удалённых узлов"
 
-#: rustconn/src/split_view/bridge.rs:2138
+#: rustconn/src/split_view/bridge.rs:2239
 msgid "Cloud Sync across devices"
 msgstr "Облачная синхронизация между устройствами"
 
-#: rustconn/src/split_view/bridge.rs:2139
+#: rustconn/src/split_view/bridge.rs:2240
 msgid "Expect automation & tasks"
 msgstr "Автоматизация с Expect и задачи"
 
-#: rustconn/src/split_view/bridge.rs:2140
+#: rustconn/src/split_view/bridge.rs:2241
 msgid "Groups, tags, and templates"
 msgstr "Группы, метки и шаблоны"
 
-#: rustconn/src/split_view/bridge.rs:2141
+#: rustconn/src/split_view/bridge.rs:2242
 msgid "Zero Trust tunnels"
 msgstr "Туннели Zero Trust"
 
-#: rustconn/src/split_view/bridge.rs:2142
+#: rustconn/src/split_view/bridge.rs:2243
 msgid "Command snippets & clusters"
 msgstr "Фрагменты команд и кластеры"
 
-#: rustconn/src/split_view/bridge.rs:2145
+#: rustconn/src/split_view/bridge.rs:2246
 msgid "Drag & drop files to sessions"
 msgstr "Перетаскивание файлов в сеансы"
 
-#: rustconn/src/split_view/bridge.rs:2205
+#: rustconn/src/split_view/bridge.rs:2306
 msgid "New connection"
 msgstr "Создать подключение"
 
-#: rustconn/src/split_view/bridge.rs:2206
+#: rustconn/src/split_view/bridge.rs:2307
 msgid "Quick connect"
 msgstr "Быстрое подключение"
 
-#: rustconn/src/split_view/bridge.rs:2207
+#: rustconn/src/split_view/bridge.rs:2308
 msgid "Command palette"
 msgstr "Палитра команд"
 
-#: rustconn/src/split_view/bridge.rs:2208
+#: rustconn/src/split_view/bridge.rs:2309
 msgid "Local shell"
 msgstr "Локальная оболочка"
 
-#: rustconn/src/split_view/bridge.rs:2210
+#: rustconn/src/split_view/bridge.rs:2311
 msgid "Split vertical / horizontal"
 msgstr "Разделить по вертикали / горизонтали"
 
-#: rustconn/src/split_view/bridge.rs:2211
+#: rustconn/src/split_view/bridge.rs:2312
 msgid "Disable shortcuts"
 msgstr "Отключить сочетания клавиш"
 
-#: rustconn/src/split_view/bridge.rs:2212
+#: rustconn/src/split_view/bridge.rs:2313
 msgid "Import connections"
 msgstr "Импортировать подключения"
 
-#: rustconn/src/split_view/bridge.rs:2242
+#: rustconn/src/split_view/bridge.rs:2343
 msgid "Quick Access"
 msgstr "Быстрый доступ"
 
-#: rustconn/src/split_view/bridge.rs:2246
+#: rustconn/src/split_view/bridge.rs:2347
 msgid "Fuzzy search & command palette"
 msgstr "Нечёткий поиск и палитра команд"
 
-#: rustconn/src/split_view/bridge.rs:2247
+#: rustconn/src/split_view/bridge.rs:2348
 msgid "Pin favorites to sidebar"
 msgstr "Закрепить избранное на боковой панели"
 
-#: rustconn/src/split_view/bridge.rs:2248
+#: rustconn/src/split_view/bridge.rs:2349
 msgid "Split view for terminals"
 msgstr "Разделённое представление терминалов"
 
-#: rustconn/src/split_view/bridge.rs:2251
+#: rustconn/src/split_view/bridge.rs:2352
 msgid "Tab Overview grid (Ctrl+Shift+O)"
 msgstr "Сетка обзора вкладок (Ctrl+Shift+O)"
 
-#: rustconn/src/split_view/bridge.rs:2271
+#: rustconn/src/split_view/bridge.rs:2372
 msgid "Import Formats"
 msgstr "Форматы импорта"
 
-#: rustconn/src/split_view/bridge.rs:2493
+#: rustconn/src/split_view/bridge.rs:2594
 msgid "All tabs are already displayed in this split view"
 msgstr "Все вкладки уже отображаются в этом разделённом представлении"
 
-#: rustconn/src/split_view/bridge.rs:2540
+#: rustconn/src/split_view/bridge.rs:2641
 msgid "Select a tab to display"
 msgstr "Выберите вкладку для отображения"
 
-#: rustconn/src/terminal/config.rs:296
+#: rustconn/src/terminal/config.rs:306
 msgid "Save Selection as Snippet…"
 msgstr "Сохранить выделенное как фрагмент…"
 
-#: rustconn/src/terminal/config.rs:410
+#: rustconn/src/terminal/config.rs:465
 msgid "Execute Snippet…"
 msgstr "Выполнить фрагмент…"
 
-#: rustconn/src/terminal/mod.rs:554
+#: rustconn/src/terminal/mod.rs:594
 msgid "Tab Overview (Ctrl+Shift+O)"
 msgstr "Обзор вкладок (Ctrl+Shift+O)"
 
-#: rustconn/src/terminal/mod.rs:571 rustconn/src/terminal/tab_lifecycle.rs:35
+#: rustconn/src/terminal/mod.rs:611 rustconn/src/terminal/tab_lifecycle.rs:35
 msgid "Welcome"
 msgstr "Добро пожаловать"
 
-#: rustconn/src/terminal/mod.rs:1106
+#: rustconn/src/terminal/mod.rs:1204
 msgid "Output filter '{}' is not installed; session output is not filtered"
 msgstr "Фильтр вывода «{}» не установлен; вывод сеанса не фильтруется"
 
-#: rustconn/src/terminal/mod.rs:1456
+#: rustconn/src/terminal/mod.rs:1554
 msgid "Command not found: {}"
 msgstr "Команда не найдена: {}"
 
-#: rustconn/src/terminal/mod.rs:1458
+#: rustconn/src/terminal/mod.rs:1556
 msgid "Failed to start '{}'"
 msgstr "Не удалось запустить «{}»"
 
-#: rustconn/src/terminal/mod.rs:1480
+#: rustconn/src/terminal/mod.rs:1578
 msgid "'{}' is not installed"
 msgstr "«{}» не установлен"
 
-#: rustconn/src/terminal/mod.rs:1483
+#: rustconn/src/terminal/mod.rs:1581
 msgid "Failed to start '{}': {}"
 msgstr "Не удалось запустить «{}»: {}"
 
@@ -13084,31 +13221,89 @@ msgstr ""
 "В буфере обмена несколько строк. Каждая строка будет выполнена сразу после "
 "вставки — проверьте содержимое перед продолжением."
 
-#: rustconn/src/terminal/session_lifecycle.rs:179
+#: rustconn/src/terminal/session_lifecycle.rs:317
+msgid "Press Enter again to log in"
+msgstr "Нажмите Enter ещё раз для входа"
+
+#: rustconn/src/terminal/session_lifecycle.rs:319
+msgid "Press Enter again to reconnect"
+msgstr "Нажмите Enter ещё раз для переподключения"
+
+#: rustconn/src/terminal/session_lifecycle.rs:331
+#: rustconn/src/terminal/session_lifecycle.rs:780
+msgid "Press R to reconnect, Q to close"
+msgstr "Нажмите R для переподключения, Q для закрытия"
+
+#: rustconn/src/terminal/session_lifecycle.rs:534
 msgid "Reconnected at {}"
 msgstr "Повторное подключение в {}"
 
-#: rustconn/src/terminal/session_lifecycle.rs:401
-#: rustconn/src/terminal/session_lifecycle.rs:456
+#: rustconn/src/terminal/session_lifecycle.rs:766
+msgid ""
+"Press R to reconnect, Q to close, or Enter twice for the suggested action"
+msgstr ""
+"Нажмите R для переподключения, Q для закрытия или дважды Enter для "
+"предлагаемого действия"
+
+#: rustconn/src/terminal/session_lifecycle.rs:785
+#: rustconn/src/terminal/session_lifecycle.rs:940
 msgid "Auto-reconnecting…"
 msgstr "Автоматическое переподключение…"
 
-#: rustconn/src/terminal/session_lifecycle.rs:496
-#: rustconn/src/terminal/session_lifecycle.rs:506
+#: rustconn/src/terminal/session_lifecycle.rs:980
+#: rustconn/src/terminal/session_lifecycle.rs:990
 msgid "Auto-reconnecting (attempt {}/{})"
 msgstr "Автоматическое переподключение (попытка {}/{})"
 
-#: rustconn/src/terminal/session_lifecycle.rs:584
+#: rustconn/src/terminal/session_lifecycle.rs:1158
 msgid "Sign-in expired"
 msgstr "Срок действия авторизации истёк"
 
-#: rustconn/src/terminal/session_lifecycle.rs:593
+#: rustconn/src/terminal/session_lifecycle.rs:1167
 msgid "Log In to {}"
 msgstr "Войти в {}"
 
-#: rustconn/src/terminal/session_lifecycle.rs:597
+#: rustconn/src/terminal/session_lifecycle.rs:1171
 msgid "Run “{}” to sign in again in the browser"
 msgstr "Выполните «{}», чтобы снова войти через браузер"
+
+#: rustconn/src/terminal/split_close.rs:43
+msgid "{} and {} more"
+msgstr "{} и ещё {}"
+
+#: rustconn/src/terminal/split_close.rs:224
+msgid ""
+"Some of these tabs hold a split view. Closing them also disconnects the "
+"other sessions shown there: {}."
+msgstr ""
+"Некоторые из этих вкладок содержат разделённый вид. При их закрытии также "
+"отключатся остальные показанные в них сеансы: {}."
+
+#: rustconn/src/terminal/split_close.rs:269
+msgid "Close Tabs With Split Views?"
+msgstr "Закрыть вкладки с разделённым видом?"
+
+#: rustconn/src/terminal/split_close.rs:273
+#: rustconn/src/terminal/split_close.rs:322
+msgid "Close All Sessions"
+msgstr "Закрыть все сеансы"
+
+#: rustconn/src/terminal/split_close.rs:314
+msgid "Close Split Tab?"
+msgstr "Закрыть разделённую вкладку?"
+
+#: rustconn/src/terminal/split_close.rs:316
+msgid ""
+"This tab belongs to '{}'. Its split view also shows {}.\n"
+"\n"
+"Remove Split keeps every session open in its own tab. Close All Sessions "
+"disconnects all of them."
+msgstr ""
+"Эта вкладка принадлежит сеансу «{}». Её разделённый вид также показывает "
+"{}.\n"
+"\n"
+"Команда «Убрать разделение» оставляет каждый сеанс открытым в отдельной "
+"вкладке. Команда «Закрыть все сеансы» отключает их все."
 
 #. Translators: starts the tab tooltip line listing the sessions shown in a
 #. split view, e.g. "Panes: server_A, server_B". Keep it on one line.
@@ -13116,143 +13311,147 @@ msgstr "Выполните «{}», чтобы снова войти через �
 msgid "Panes:"
 msgstr "Панели:"
 
-#: rustconn/src/terminal/tab_menu.rs:312
+#: rustconn/src/terminal/tab_menu.rs:83
+msgid "Close Tab…"
+msgstr "Закрыть вкладку…"
+
+#: rustconn/src/terminal/tab_menu.rs:324
 msgid "Set Tab Group"
 msgstr "Задать группу вкладки"
 
-#: rustconn/src/terminal/tab_menu.rs:320
+#: rustconn/src/terminal/tab_menu.rs:332
 msgid "New group name…"
 msgstr "Имя новой группы…"
 
-#: rustconn/src/terminal/tab_menu.rs:325
+#: rustconn/src/terminal/tab_menu.rs:337
 msgid "Enter a group name for this tab"
 msgstr "Введите имя группы для этой вкладки"
 
-#: rustconn/src/terminal/tab_menu.rs:330
+#: rustconn/src/terminal/tab_menu.rs:342
 msgid "Existing groups:"
 msgstr "Существующие группы:"
 
-#: rustconn/src/terminal/tab_menu.rs:358
+#: rustconn/src/terminal/tab_menu.rs:370
 msgid "or enter a new name:"
 msgstr "или введите новое имя:"
 
-#: rustconn/src/terminal/tab_menu.rs:374 rustconn/src/terminal/tab_menu.rs:497
+#: rustconn/src/terminal/tab_menu.rs:386 rustconn/src/terminal/tab_menu.rs:509
 #: rustconn/src/window/batch_edit.rs:71
 msgid "Apply"
 msgstr "Применить"
 
-#: rustconn/src/terminal/tab_menu.rs:484
+#: rustconn/src/terminal/tab_menu.rs:496
 msgid "Rename Tab"
 msgstr "Переименовать вкладку"
 
-#: rustconn/src/terminal/tab_menu.rs:486
+#: rustconn/src/terminal/tab_menu.rs:498
 msgid ""
 "The label names this tab only. Leave it empty to go back to the default name."
 msgstr ""
 "Это имя относится только к данной вкладке. Оставьте поле пустым, чтобы "
 "вернуть имя по умолчанию."
 
-#: rustconn/src/terminal/tab_menu.rs:492
+#: rustconn/src/terminal/tab_menu.rs:504
 msgid "Tab name"
 msgstr "Имя вкладки"
 
-#: rustconn/src/terminal/tab_menu.rs:714 rustconn/src/terminal/tab_menu.rs:1213
-msgid "Close All in Group"
-msgstr "Закрыть все в группе"
-
-#: rustconn/src/terminal/tab_menu.rs:716
+#: rustconn/src/terminal/tab_menu.rs:729
 msgid "Close {} tabs in group '{}'?"
 msgstr "Закрыть вкладки ({}) в группе «{}»?"
 
-#: rustconn/src/terminal/tab_menu.rs:1009
+#: rustconn/src/terminal/tab_menu.rs:739 rustconn/src/terminal/tab_menu.rs:1229
+msgid "Close All in Group"
+msgstr "Закрыть все в группе"
+
+#: rustconn/src/terminal/tab_menu.rs:1025
 msgid "Save Output"
 msgstr "Сохранить вывод"
 
-#: rustconn/src/terminal/tab_menu.rs:1015
+#: rustconn/src/terminal/tab_menu.rs:1031
 msgid "Text files"
 msgstr "Текстовые файлы"
 
-#: rustconn/src/terminal/tab_menu.rs:1041
+#: rustconn/src/terminal/tab_menu.rs:1057
 msgid "Output saved"
 msgstr "Вывод сохранён"
 
-#: rustconn/src/terminal/tab_menu.rs:1051
+#: rustconn/src/terminal/tab_menu.rs:1067
 msgid "Could not save output"
 msgstr "Не удалось сохранить вывод"
 
-#: rustconn/src/terminal/tab_menu.rs:1113
+#: rustconn/src/terminal/tab_menu.rs:1129
 msgid "Move to New Window on {}"
 msgstr "Переместить в новое окно на {}"
 
-#: rustconn/src/terminal/tab_menu.rs:1133
+#: rustconn/src/terminal/tab_menu.rs:1149
 msgid "Monitor {} ({})"
 msgstr "Монитор {} ({})"
 
-#: rustconn/src/terminal/tab_menu.rs:1134
+#: rustconn/src/terminal/tab_menu.rs:1150
 msgid "Monitor {}"
 msgstr "Монитор {}"
 
-#: rustconn/src/terminal/tab_menu.rs:1188
+#: rustconn/src/terminal/tab_menu.rs:1204
 msgid "Unpin Tab"
 msgstr "Открепить вкладку"
 
-#: rustconn/src/terminal/tab_menu.rs:1190
+#: rustconn/src/terminal/tab_menu.rs:1206
 msgid "Pin Tab"
 msgstr "Закрепить вкладку"
 
-#: rustconn/src/terminal/tab_menu.rs:1201
+#: rustconn/src/terminal/tab_menu.rs:1217
 msgid "Rename Tab…"
 msgstr "Переименовать вкладку…"
 
-#: rustconn/src/terminal/tab_menu.rs:1209
+#: rustconn/src/terminal/tab_menu.rs:1225
 msgid "Set Group…"
 msgstr "Задать группу…"
 
-#: rustconn/src/terminal/tab_menu.rs:1211
+#: rustconn/src/terminal/tab_menu.rs:1227
 msgid "Remove from Group"
 msgstr "Удалить из группы"
 
-#: rustconn/src/terminal/tab_menu.rs:1223
+#: rustconn/src/terminal/tab_menu.rs:1239
 msgid "Remove from Broadcast"
 msgstr "Исключить из рассылки ввода"
 
-#: rustconn/src/terminal/tab_menu.rs:1225
+#: rustconn/src/terminal/tab_menu.rs:1241
 msgid "Add to Broadcast"
 msgstr "Добавить в рассылку ввода"
 
-#: rustconn/src/terminal/tab_menu.rs:1247
+#: rustconn/src/terminal/tab_menu.rs:1263
 msgid "Monitor"
 msgstr "Отслеживание"
 
-#: rustconn/src/terminal/tab_menu.rs:1256
+#: rustconn/src/terminal/tab_menu.rs:1272
 msgid "Split with Other Tabs…"
 msgstr "Разделить вид с другими вкладками…"
 
-#: rustconn/src/terminal/tab_menu.rs:1299
+#: rustconn/src/terminal/tab_menu.rs:1315
 msgid "Edit Connection…"
 msgstr "Изменить подключение…"
 
-#: rustconn/src/terminal/tab_menu.rs:1315
+#: rustconn/src/terminal/tab_menu.rs:1331
 msgid "Save Output…"
 msgstr "Сохранить вывод…"
 
-#: rustconn/src/terminal/tab_menu.rs:1322
+#: rustconn/src/terminal/tab_menu.rs:1338
 msgid "Close Others"
 msgstr "Закрыть остальные"
 
-#: rustconn/src/terminal/tab_menu.rs:1327
+#: rustconn/src/terminal/tab_menu.rs:1343
 msgid "Close to the Left"
 msgstr "Закрыть слева"
 
-#: rustconn/src/terminal/tab_menu.rs:1328
+#: rustconn/src/terminal/tab_menu.rs:1344
 msgid "Close to the Right"
 msgstr "Закрыть справа"
 
-#: rustconn/src/terminal/tab_menu.rs:1332
+#: rustconn/src/terminal/tab_menu.rs:1348
 msgid "Close All Ungrouped"
 msgstr "Закрыть все вне групп"
 
-#: rustconn/src/terminal/tab_menu.rs:1336
+#: rustconn/src/terminal/tab_menu.rs:1352
 msgid "Close All Tabs"
 msgstr "Закрыть все вкладки"
 
@@ -13261,7 +13460,7 @@ msgid "Info"
 msgstr "Информация"
 
 #: rustconn/src/toast.rs:307 rustconn/src/window/batch_edit.rs:241
-#: rustconn/src/window/key_setup.rs:868
+#: rustconn/src/window/key_setup.rs:880
 msgid "Undo"
 msgstr "Отменить"
 
@@ -13302,7 +13501,7 @@ msgstr "Быстрое подключение…"
 msgid "{} Active Session(s)"
 msgstr "Активных сеансов: {}"
 
-#: rustconn/src/vault_ops.rs:50 rustconn/src/window/mod.rs:5741
+#: rustconn/src/vault_ops.rs:50 rustconn/src/window/mod.rs:5971
 msgid "Passphrase Does Not Open the Portable File"
 msgstr "Парольная фраза не подходит к переносимому файлу"
 
@@ -13445,26 +13644,26 @@ msgstr "Значок (эмодзи или имя значка GTK; пустое 
 msgid "Updated {} connections"
 msgstr "Обновлено подключений: {}"
 
-#: rustconn/src/window/clusters.rs:197
+#: rustconn/src/window/clusters.rs:217
 msgid "Error Creating Cluster"
 msgstr "Ошибка создания кластера"
 
-#: rustconn/src/window/clusters.rs:198 rustconn/src/window/clusters.rs:546
+#: rustconn/src/window/clusters.rs:218 rustconn/src/window/clusters.rs:589
 msgid "Failed to save cluster: {}"
 msgstr "Не удалось сохранить кластер: {}"
 
-#: rustconn/src/window/clusters.rs:256
+#: rustconn/src/window/clusters.rs:277
 msgid "Cluster has no connections"
 msgstr "В кластере нет подключений"
 
-#: rustconn/src/window/clusters.rs:342
+#: rustconn/src/window/clusters.rs:366
 msgid "“{}” opens {} connection at once."
 msgid_plural "“{}” opens {} connections at once."
 msgstr[0] "«{}» открывает сразу {} подключение."
 msgstr[1] "«{}» открывает сразу {} подключения."
 msgstr[2] "«{}» открывает сразу {} подключений."
 
-#: rustconn/src/window/clusters.rs:350
+#: rustconn/src/window/clusters.rs:374
 msgid ""
 "Most of them may come from its auto-membership pattern. If that is more than "
 "you expected, cancel and narrow the pattern."
@@ -13473,11 +13672,11 @@ msgstr ""
 "в кластер. Если это больше, чем ожидалось, отмените действие и сузьте "
 "правило отбора."
 
-#: rustconn/src/window/clusters.rs:354
+#: rustconn/src/window/clusters.rs:378
 msgid "Open All Connections?"
 msgstr "Открыть все подключения?"
 
-#: rustconn/src/window/clusters.rs:399
+#: rustconn/src/window/clusters.rs:423
 msgid ""
 "{} cluster member has a jump host that no longer exists or points to itself: "
 "{}."
@@ -13494,7 +13693,7 @@ msgstr[2] ""
 "У {} участников кластера указаны промежуточные узлы, которые больше не "
 "существуют или совпадают с самими участниками: {}."
 
-#: rustconn/src/window/clusters.rs:405
+#: rustconn/src/window/clusters.rs:429
 msgid ""
 "Connecting now skips those jump hosts, so these members may reach their "
 "servers directly. Open a member on its own to see the details."
@@ -13503,24 +13702,24 @@ msgstr ""
 "участники кластера могут подключиться к своим серверам напрямую. Откройте "
 "участника отдельно, чтобы увидеть подробности."
 
-#: rustconn/src/window/clusters.rs:409
+#: rustconn/src/window/clusters.rs:433
 msgid "Jump Host Unavailable"
 msgstr "Промежуточный узел недоступен"
 
-#: rustconn/src/window/clusters.rs:411 rustconn/src/window/mod.rs:3661
-#: rustconn/src/window/mod.rs:3727 rustconn/src/window/rdp_vnc.rs:788
+#: rustconn/src/window/clusters.rs:435 rustconn/src/window/mod.rs:3840
+#: rustconn/src/window/mod.rs:3906 rustconn/src/window/rdp_vnc.rs:788
 msgid "Connect Anyway"
 msgstr "Всё равно подключиться"
 
-#: rustconn/src/window/clusters.rs:545
+#: rustconn/src/window/clusters.rs:588
 msgid "Error Updating Cluster"
 msgstr "Ошибка обновления кластера"
 
-#: rustconn/src/window/clusters.rs:554
+#: rustconn/src/window/clusters.rs:597
 msgid "Could not access application state"
 msgstr "Не удалось получить доступ к состоянию приложения"
 
-#: rustconn/src/window/clusters.rs:584
+#: rustconn/src/window/clusters.rs:627
 msgid ""
 "Are you sure you want to delete the cluster '{}'?\n"
 "This will not delete the connections in the cluster."
@@ -13528,11 +13727,11 @@ msgstr ""
 "Вы уверены, что хотите удалить кластер «{}»?\n"
 "Подключения в кластере удалены не будут."
 
-#: rustconn/src/window/clusters.rs:607
+#: rustconn/src/window/clusters.rs:650
 msgid "Error Deleting Cluster"
 msgstr "Ошибка удаления кластера"
 
-#: rustconn/src/window/clusters.rs:608
+#: rustconn/src/window/clusters.rs:651
 msgid "Failed to delete cluster: {}"
 msgstr "Не удалось удалить кластер: {}"
 
@@ -13767,15 +13966,15 @@ msgstr ""
 
 #: rustconn/src/window/credentials.rs:1050
 #: rustconn/src/window/credentials.rs:1286
-#: rustconn/src/window/edit_actions.rs:2424
+#: rustconn/src/window/edit_actions.rs:2426
 msgid "Connection failed. Host unreachable."
 msgstr "Не удалось подключиться. Узел недоступен."
 
-#: rustconn/src/window/detach_actions.rs:77
+#: rustconn/src/window/detach_actions.rs:78
 msgid "This session already has its own window."
 msgstr "Этот сеанс уже открыт в отдельном окне."
 
-#: rustconn/src/window/detach_actions.rs:79
+#: rustconn/src/window/detach_actions.rs:80
 msgid ""
 "This session is displayed by a separate viewer, which already runs in its "
 "own window."
@@ -13783,7 +13982,7 @@ msgstr ""
 "Этот сеанс отображается во внешней программе просмотра, которая уже работает "
 "в отдельном окне."
 
-#: rustconn/src/window/detach_actions.rs:82
+#: rustconn/src/window/detach_actions.rs:83
 msgid ""
 "Remove the split layout from this tab before moving the session to its own "
 "window."
@@ -13791,7 +13990,7 @@ msgstr ""
 "Уберите разделение панелей в этой вкладке, прежде чем перемещать сеанс в "
 "отдельное окно."
 
-#: rustconn/src/window/detach_actions.rs:85
+#: rustconn/src/window/detach_actions.rs:86
 msgid ""
 "This session is displayed in a split layout. Return it to its own tab first."
 msgstr ""
@@ -13808,28 +14007,28 @@ msgstr "Не удалось переместить сеанс в отдельн�
 msgid "Could not move the session back to the main window."
 msgstr "Не удалось вернуть сеанс в главное окно."
 
-#: rustconn/src/window/edit_actions.rs:366
+#: rustconn/src/window/edit_actions.rs:368
 msgid "Item restored"
 msgstr "Элемент восстановлен"
 
-#: rustconn/src/window/edit_actions.rs:393
+#: rustconn/src/window/edit_actions.rs:395
 msgid "Empty trash?"
 msgstr "Очистить корзину?"
 
-#: rustconn/src/window/edit_actions.rs:395
+#: rustconn/src/window/edit_actions.rs:397
 msgid "Deleted items will be removed permanently. This cannot be undone."
 msgstr ""
 "Удалённые элементы будут безвозвратно удалены. Это действие нельзя отменить."
 
-#: rustconn/src/window/edit_actions.rs:419
+#: rustconn/src/window/edit_actions.rs:421
 msgid "Trash emptied"
 msgstr "Корзина очищена"
 
-#: rustconn/src/window/edit_actions.rs:427
+#: rustconn/src/window/edit_actions.rs:429
 msgid "Failed to empty trash: {}"
 msgstr "Не удалось очистить корзину: {}"
 
-#: rustconn/src/window/edit_actions.rs:470
+#: rustconn/src/window/edit_actions.rs:472
 msgid ""
 "“{}” will be removed together with its saved password, if any. This cannot "
 "be undone."
@@ -13837,7 +14036,7 @@ msgstr ""
 "«{}» будет удалено вместе с сохранённым паролем, если он есть. Это действие "
 "нельзя отменить."
 
-#: rustconn/src/window/edit_actions.rs:474
+#: rustconn/src/window/edit_actions.rs:476
 msgid ""
 "The group “{}” will be removed together with its saved password, if any. Its "
 "connections stay in the trash. This cannot be undone."
@@ -13845,69 +14044,69 @@ msgstr ""
 "Группа «{}» будет удалена вместе с сохранённым паролем, если он есть. Её "
 "подключения останутся в корзине. Это действие нельзя отменить."
 
-#: rustconn/src/window/edit_actions.rs:483
+#: rustconn/src/window/edit_actions.rs:485
 msgid "Delete permanently?"
 msgstr "Удалить безвозвратно?"
 
-#: rustconn/src/window/edit_actions.rs:505
+#: rustconn/src/window/edit_actions.rs:507
 msgid "Deleted permanently"
 msgstr "Удалено безвозвратно"
 
-#: rustconn/src/window/edit_actions.rs:515
+#: rustconn/src/window/edit_actions.rs:517
 msgid "Failed to delete permanently: {}"
 msgstr "Не удалось удалить безвозвратно: {}"
 
-#: rustconn/src/window/edit_actions.rs:614
+#: rustconn/src/window/edit_actions.rs:616
 msgid "No Wake On LAN configured. Edit the connection to set a MAC address."
 msgstr "Wake On LAN не настроен. Укажите MAC-адрес в настройках подключения."
 
-#: rustconn/src/window/edit_actions.rs:642
+#: rustconn/src/window/edit_actions.rs:644
 msgid "Wake On LAN sent to {} — waiting for host to come online…"
 msgstr "Пакет Wake On LAN отправлен на {} — ожидание доступности узла…"
 
-#: rustconn/src/window/edit_actions.rs:683
+#: rustconn/src/window/edit_actions.rs:685
 msgid "{} is online — connecting…"
 msgstr "{} доступен — подключение…"
 
-#: rustconn/src/window/edit_actions.rs:698
+#: rustconn/src/window/edit_actions.rs:700
 msgid "{} did not come online after WoL"
 msgstr "{} не стал доступен после WoL"
 
-#: rustconn/src/window/edit_actions.rs:710
+#: rustconn/src/window/edit_actions.rs:712
 msgid "Failed to send Wake On LAN packet. Check network permissions."
 msgstr ""
 "Не удалось отправить пакет Wake On LAN. Проверьте разрешения на доступ к "
 "сети."
 
-#: rustconn/src/window/edit_actions.rs:745
+#: rustconn/src/window/edit_actions.rs:747
 msgid "Checking if {} is online…"
 msgstr "Проверка доступности {}…"
 
-#: rustconn/src/window/edit_actions.rs:776
+#: rustconn/src/window/edit_actions.rs:778
 msgid "{} is online"
 msgstr "{} доступен"
 
-#: rustconn/src/window/edit_actions.rs:791
+#: rustconn/src/window/edit_actions.rs:793
 msgid "{} did not come online within timeout"
 msgstr "{} не стал доступен за отведённое время"
 
-#: rustconn/src/window/edit_actions.rs:798
+#: rustconn/src/window/edit_actions.rs:800
 msgid "Host check failed: {}"
 msgstr "Ошибка проверки узла: {}"
 
-#: rustconn/src/window/edit_actions.rs:942
+#: rustconn/src/window/edit_actions.rs:944
 msgid "This connection type cannot host a SOCKS tunnel"
 msgstr "Этот тип подключения не поддерживает создание туннеля SOCKS"
 
-#: rustconn/src/window/edit_actions.rs:963
+#: rustconn/src/window/edit_actions.rs:965
 msgid "application is busy"
 msgstr "приложение занято"
 
-#: rustconn/src/window/edit_actions.rs:966
+#: rustconn/src/window/edit_actions.rs:968
 msgid "the SSH connection it tunnels through is gone"
 msgstr "SSH-подключение, через которое работает туннель, больше не существует"
 
-#: rustconn/src/window/edit_actions.rs:1100
+#: rustconn/src/window/edit_actions.rs:1102
 msgid ""
 "The SOCKS proxy password variable ‘{}’ is not secret, so it was not used. "
 "Mark it as secret in Global Variables."
@@ -13915,28 +14114,28 @@ msgstr ""
 "Переменная с паролем прокси SOCKS «{}» не помечена как секретная, поэтому "
 "она не использована. Пометьте её как секретную в глобальных переменных."
 
-#: rustconn/src/window/edit_actions.rs:1106
+#: rustconn/src/window/edit_actions.rs:1108
 msgid "The SOCKS proxy password variable ‘{}’ has no value"
 msgstr "Для переменной с паролем прокси SOCKS «{}» не задано значение"
 
-#: rustconn/src/window/edit_actions.rs:1113
+#: rustconn/src/window/edit_actions.rs:1115
 msgid "Could not start the SOCKS relay: {}"
 msgstr "Не удалось запустить ретранслятор SOCKS: {}"
 
-#: rustconn/src/window/edit_actions.rs:1366
-#: rustconn/src/window/edit_actions.rs:1500
-#: rustconn/src/window/edit_actions.rs:1759
-#: rustconn/src/window/edit_actions.rs:1868
+#: rustconn/src/window/edit_actions.rs:1368
+#: rustconn/src/window/edit_actions.rs:1502
+#: rustconn/src/window/edit_actions.rs:1761
+#: rustconn/src/window/edit_actions.rs:1870
 #: rustconn/src/window/protocols.rs:2385
 msgid "Could not open the SSH tunnel: {}"
 msgstr "Не удалось открыть туннель SSH: {}"
 
-#: rustconn/src/window/edit_actions.rs:1379
-#: rustconn/src/window/edit_actions.rs:1479
+#: rustconn/src/window/edit_actions.rs:1381
+#: rustconn/src/window/edit_actions.rs:1481
 msgid "Starting the tunnel…"
 msgstr "Запуск туннеля…"
 
-#: rustconn/src/window/edit_actions.rs:1439
+#: rustconn/src/window/edit_actions.rs:1441
 msgid ""
 "The tunnelled browser command ‘{}’ can't use a proxy; opening the embedded "
 "browser instead. Set a Chromium-based browser or Firefox in Settings to use "
@@ -13946,7 +14145,7 @@ msgstr ""
 "открывается встроенный браузер. Чтобы использовать внешний браузер, выберите "
 "в настройках браузер на базе Chromium или Firefox."
 
-#: rustconn/src/window/edit_actions.rs:1443
+#: rustconn/src/window/edit_actions.rs:1445
 msgid ""
 "The tunnelled browser command ‘{}’ is not a Chromium-based browser. Only "
 "Chromium-family browsers can be proxied through the tunnel; set a chromium/"
@@ -13956,7 +14155,7 @@ msgstr ""
 "Chromium. Через туннель можно направить только браузеры семейства Chromium; "
 "задайте команду chromium/chrome/brave/vivaldi/edge в настройках."
 
-#: rustconn/src/window/edit_actions.rs:1449
+#: rustconn/src/window/edit_actions.rs:1451
 msgid ""
 "The tunnelled browser command ‘{}’ was not found on PATH; opening the "
 "embedded browser instead. Check the command in Settings, or clear it to auto-"
@@ -13966,7 +14165,7 @@ msgstr ""
 "открывается встроенный браузер. Проверьте команду в настройках или очистите "
 "поле, чтобы выбрать браузер автоматически."
 
-#: rustconn/src/window/edit_actions.rs:1453
+#: rustconn/src/window/edit_actions.rs:1455
 msgid ""
 "The tunnelled browser command ‘{}’ was not found on PATH. Check the command "
 "in Settings, or clear it to auto-detect a browser."
@@ -13974,7 +14173,7 @@ msgstr ""
 "Команда «{}» для браузера через туннель не найдена в PATH. Проверьте команду "
 "в настройках или очистите поле, чтобы выбрать браузер автоматически."
 
-#: rustconn/src/window/edit_actions.rs:1459
+#: rustconn/src/window/edit_actions.rs:1461
 msgid ""
 "No Chromium-based browser found; opening the embedded browser instead. "
 "Install a Chromium-based browser to tunnel an external one."
@@ -13983,7 +14182,7 @@ msgstr ""
 "браузер. Чтобы использовать внешний браузер через туннель, установите "
 "браузер на базе Chromium."
 
-#: rustconn/src/window/edit_actions.rs:1462
+#: rustconn/src/window/edit_actions.rs:1464
 msgid ""
 "No Chromium-based browser found. Install a Chromium-based browser, or use a "
 "build with the embedded browser, to open a tunnelled browser."
@@ -13992,26 +14191,26 @@ msgstr ""
 "установите браузер на базе Chromium или используйте сборку со встроенным "
 "браузером."
 
-#: rustconn/src/window/edit_actions.rs:1570
-#: rustconn/src/window/edit_actions.rs:1593
-#: rustconn/src/window/edit_actions.rs:1646
+#: rustconn/src/window/edit_actions.rs:1572
+#: rustconn/src/window/edit_actions.rs:1595
+#: rustconn/src/window/edit_actions.rs:1648
 msgid "Failed to open browser: {}"
 msgstr "Не удалось открыть браузер: {}"
 
-#: rustconn/src/window/edit_actions.rs:1588
+#: rustconn/src/window/edit_actions.rs:1590
 msgid "Opened a tunnelled browser"
 msgstr "Открыт браузер через туннель"
 
-#: rustconn/src/window/edit_actions.rs:1623
+#: rustconn/src/window/edit_actions.rs:1625
 msgid "{} (tunnel)"
 msgstr "{} (туннель)"
 
-#: rustconn/src/window/edit_actions.rs:1637
-#: rustconn/src/window/edit_actions.rs:1799
+#: rustconn/src/window/edit_actions.rs:1639
+#: rustconn/src/window/edit_actions.rs:1801
 msgid "Could not open the page: {}"
 msgstr "Не удалось открыть страницу: {}"
 
-#: rustconn/src/window/edit_actions.rs:1893
+#: rustconn/src/window/edit_actions.rs:1895
 msgid ""
 "This browser can't use a proxy, so the page was not opened. Use a Chromium-"
 "based browser, Firefox or the embedded browser."
@@ -14019,12 +14218,12 @@ msgstr ""
 "Этот браузер не поддерживает прокси, поэтому страница не открыта. "
 "Используйте браузер на базе Chromium, Firefox или встроенный браузер."
 
-#: rustconn/src/window/edit_actions.rs:1959
-#: rustconn/src/window/edit_actions.rs:2012
+#: rustconn/src/window/edit_actions.rs:1961
+#: rustconn/src/window/edit_actions.rs:2014
 msgid "Opened in browser"
 msgstr "Открыто в браузере"
 
-#: rustconn/src/window/edit_actions.rs:1984
+#: rustconn/src/window/edit_actions.rs:1986
 msgid ""
 "No browser that can use a proxy was found, so the page was not opened. "
 "Install Chromium or Firefox, or use the embedded browser."
@@ -14032,26 +14231,26 @@ msgstr ""
 "Браузер с поддержкой прокси не найден, поэтому страница не открыта. "
 "Установите Chromium или Firefox либо используйте встроенный браузер."
 
-#: rustconn/src/window/edit_actions.rs:2161
+#: rustconn/src/window/edit_actions.rs:2163
 msgid "SSH agent not running. Run 'eval $(ssh-agent)' and retry."
 msgstr ""
 "Агент SSH не запущен. Выполните 'eval $(ssh-agent)' и повторите попытку."
 
-#: rustconn/src/window/edit_actions.rs:2172
+#: rustconn/src/window/edit_actions.rs:2174
 msgid "Could not check whether the SSH agent holds the key. Opening mc anyway."
 msgstr ""
 "Не удалось проверить наличие ключа в агенте SSH. mc всё равно будет открыт."
 
-#: rustconn/src/window/edit_actions.rs:2178
+#: rustconn/src/window/edit_actions.rs:2180
 msgid "SSH key not available"
 msgstr "Ключ SSH недоступен"
 
-#: rustconn/src/window/edit_actions.rs:2199 rustconn/src/window/mc_launch.rs:62
+#: rustconn/src/window/edit_actions.rs:2201 rustconn/src/window/mc_launch.rs:62
 msgid "SFTP is only available for SSH connections."
 msgstr "SFTP доступен только для подключений SSH."
 
-#: rustconn/src/window/edit_actions.rs:2228
-#: rustconn/src/window/edit_actions.rs:2525
+#: rustconn/src/window/edit_actions.rs:2230
+#: rustconn/src/window/edit_actions.rs:2527
 msgid ""
 "External file managers cannot access SSH agent in "
 "Flatpak.                          Enable \"SFTP via mc\" in Settings for "
@@ -14061,18 +14260,18 @@ msgstr ""
 "Flatpak.                          Включите «SFTP через mc» в настройках для "
 "надёжного доступа."
 
-#: rustconn/src/window/edit_actions.rs:2244
-#: rustconn/src/window/edit_actions.rs:2543
+#: rustconn/src/window/edit_actions.rs:2246
+#: rustconn/src/window/edit_actions.rs:2545
 msgid "Jump host detected. Opening SFTP via mc instead of the file manager."
 msgstr ""
 "Обнаружен промежуточный узел. SFTP открывается через mc вместо файлового "
 "менеджера."
 
-#: rustconn/src/window/edit_actions.rs:2271
+#: rustconn/src/window/edit_actions.rs:2273
 msgid "Opening SFTP…"
 msgstr "Открытие SFTP…"
 
-#: rustconn/src/window/edit_actions.rs:2318
+#: rustconn/src/window/edit_actions.rs:2320
 msgid "SSH agent not running — file manager may not authenticate."
 msgstr ""
 "Агент SSH не запущен — файловый менеджер может не пройти аутентификацию."
@@ -14417,40 +14616,48 @@ msgstr ""
 msgid "Global variables could not be saved to disk."
 msgstr "Не удалось сохранить глобальные переменные на диск."
 
-#: rustconn/src/window/key_setup.rs:668
+#: rustconn/src/window/history_actions.rs:382
+msgid "Connection “{}” added"
+msgstr "Подключение «{}» добавлено"
+
+#: rustconn/src/window/history_actions.rs:393
+msgid "Failed to add the connection"
+msgstr "Не удалось добавить подключение"
+
+#: rustconn/src/window/key_setup.rs:680
 msgid "The connection could not be read. Try again."
 msgstr "Не удалось прочитать данные подключения. Повторите попытку."
 
-#: rustconn/src/window/key_setup.rs:855
+#: rustconn/src/window/key_setup.rs:867
 msgid "The key works, but the connection could not be switched to it: {}"
 msgstr ""
 "Ключ работает, но не удалось настроить подключение на его использование: {}"
 
-#: rustconn/src/window/key_setup.rs:867
+#: rustconn/src/window/key_setup.rs:879
 msgid "'{}' now signs in with a key"
 msgstr "Для «{}» теперь используется вход по ключу"
 
-#: rustconn/src/window/key_setup.rs:895
+#: rustconn/src/window/key_setup.rs:907
 msgid "the application is busy"
 msgstr "приложение занято"
 
-#: rustconn/src/window/key_setup.rs:899
+#: rustconn/src/window/key_setup.rs:911
 msgid "the connection no longer exists"
 msgstr "подключение больше не существует"
 
-#: rustconn/src/window/key_setup.rs:902
+#: rustconn/src/window/key_setup.rs:914
 msgid "the connection is not an SSH connection"
 msgstr "подключение не использует SSH"
 
-#: rustconn/src/window/key_setup.rs:926
+#: rustconn/src/window/key_setup.rs:938
 msgid "Restored the previous sign-in settings for '{}'"
 msgstr "Восстановлены прежние настройки входа для «{}»"
 
-#: rustconn/src/window/key_setup.rs:933
+#: rustconn/src/window/key_setup.rs:945
 msgid "The previous sign-in settings could not be restored."
 msgstr "Не удалось восстановить прежние настройки входа."
 
-#: rustconn/src/window/key_setup.rs:977
+#: rustconn/src/window/key_setup.rs:989
 msgid ""
 "Once the session is open and the host key is recorded, choose Set Up Key "
 "Authentication again."
@@ -14458,11 +14665,11 @@ msgstr ""
 "После открытия сеанса и сохранения ключа узла снова выберите «Настроить "
 "аутентификацию по ключу»."
 
-#: rustconn/src/window/key_setup.rs:1005
+#: rustconn/src/window/key_setup.rs:1017
 msgid "Delete Generated Key?"
 msgstr "Удалить созданный ключ?"
 
-#: rustconn/src/window/key_setup.rs:1007
+#: rustconn/src/window/key_setup.rs:1019
 msgid ""
 "The key files are removed from this computer. If the public key was already "
 "installed, it stays in the server's authorized_keys."
@@ -14555,31 +14762,31 @@ msgstr ""
 "Midnight Commander использует его для входа на этот сервер. RustConn хранит "
 "его только пока открыта эта вкладка mc."
 
-#: rustconn/src/window/mod.rs:407
+#: rustconn/src/window/mod.rs:411
 msgid "The jump host set for “{}” no longer exists."
 msgstr "Промежуточный узел, заданный для «{}», больше не существует."
 
-#: rustconn/src/window/mod.rs:411
+#: rustconn/src/window/mod.rs:415
 msgid "“{}” is set to use itself as its jump host."
 msgstr ""
 "Подключение «{}» настроено на использование самого себя в качестве "
 "промежуточного узла."
 
-#: rustconn/src/window/mod.rs:423
+#: rustconn/src/window/mod.rs:427
 msgid "The setting is inherited from the group “{}”."
 msgstr "Настройка унаследована от группы «{}»."
 
-#: rustconn/src/window/mod.rs:428
+#: rustconn/src/window/mod.rs:432
 msgid "The setting is the Global Jump Host in Settings."
 msgstr "Это параметр «Глобальный промежуточный узел» в настройках."
 
-#: rustconn/src/window/mod.rs:433
+#: rustconn/src/window/mod.rs:437
 msgid ""
 "Connecting to “{}” now reaches the server directly, without a jump host."
 msgstr ""
 "Теперь подключение к «{}» выполняется напрямую, без промежуточного узла."
 
-#: rustconn/src/window/mod.rs:437
+#: rustconn/src/window/mod.rs:441
 msgid ""
 "Connecting to “{}” now skips that jump host and uses only the rest of its "
 "configured route."
@@ -14587,15 +14794,15 @@ msgstr ""
 "Теперь при подключении к «{}» этот промежуточный узел пропускается, а "
 "остальная часть настроенного маршрута сохраняется."
 
-#: rustconn/src/window/mod.rs:1186 rustconn/src/window/mod.rs:1197
+#: rustconn/src/window/mod.rs:1242 rustconn/src/window/mod.rs:1253
 msgid "Dismiss"
 msgstr "Закрыть"
 
-#: rustconn/src/window/mod.rs:1229
+#: rustconn/src/window/mod.rs:1285
 msgid "Open Log"
 msgstr "Открыть журнал"
 
-#: rustconn/src/window/mod.rs:1232
+#: rustconn/src/window/mod.rs:1288
 msgid ""
 "RustConnRu closed unexpectedly the last time it ran. A crash log was saved "
 "locally."
@@ -14603,39 +14810,39 @@ msgstr ""
 "При прошлом запуске RustConnRu неожиданно завершил работу. Журнал сбоя "
 "сохранён на этом компьютере."
 
-#: rustconn/src/window/mod.rs:1257
+#: rustconn/src/window/mod.rs:1313
 msgid "Could not open the crash log. It is saved at {}"
 msgstr "Не удалось открыть журнал сбоя. Он сохранён в {}"
 
-#: rustconn/src/window/mod.rs:1286
+#: rustconn/src/window/mod.rs:1342
 msgid "Touch your hardware key to unlock the password database"
 msgstr "Коснитесь аппаратного ключа, чтобы разблокировать базу данных паролей"
 
-#: rustconn/src/window/mod.rs:2788
+#: rustconn/src/window/mod.rs:2930
 msgid "Already running in an external window"
 msgstr "Уже запущено во внешнем окне"
 
-#: rustconn/src/window/mod.rs:3017
+#: rustconn/src/window/mod.rs:3196
 msgid "Connection to ‘{}’ failed"
 msgstr "Не удалось подключиться к «{}»"
 
-#: rustconn/src/window/mod.rs:3365 rustconn/src/window/mod.rs:3379
+#: rustconn/src/window/mod.rs:3544 rustconn/src/window/mod.rs:3558
 msgid "Pre-connect task failed: {}"
 msgstr "Ошибка задачи перед подключением: {}"
 
-#: rustconn/src/window/mod.rs:3413
+#: rustconn/src/window/mod.rs:3592
 msgid "Port knock failed: {}"
 msgstr "Ошибка простукивания портов: {}"
 
-#: rustconn/src/window/mod.rs:3462
+#: rustconn/src/window/mod.rs:3641
 msgid "SPA failed: {}"
 msgstr "Ошибка SPA: {}"
 
-#: rustconn/src/window/mod.rs:3646
+#: rustconn/src/window/mod.rs:3825
 msgid "{} (via {})"
 msgstr "{} (через {})"
 
-#: rustconn/src/window/mod.rs:3652
+#: rustconn/src/window/mod.rs:3831
 msgid ""
 "This connection no longer goes where it did.\n"
 "\n"
@@ -14659,35 +14866,35 @@ msgstr ""
 "Если вы не вносили это изменение, отмените подключение — иначе сохранённые "
 "учётные данные могут быть отправлены на другой компьютер."
 
-#: rustconn/src/window/mod.rs:3657
+#: rustconn/src/window/mod.rs:3836
 msgid "Routing changed for “{}”"
 msgstr "Маршрут для «{}» изменился"
 
-#: rustconn/src/window/mod.rs:3721
+#: rustconn/src/window/mod.rs:3900
 msgid "Jump Host Unavailable for “{}”"
 msgstr "Промежуточный узел для «{}» недоступен"
 
-#: rustconn/src/window/mod.rs:3726
+#: rustconn/src/window/mod.rs:3905
 msgid "Connect Directly"
 msgstr "Подключиться напрямую"
 
-#: rustconn/src/window/mod.rs:3815 rustconn/src/window/mod.rs:3990
+#: rustconn/src/window/mod.rs:3994 rustconn/src/window/mod.rs:4169
 msgid "Connection “{}” created"
 msgstr "Подключение «{}» создано"
 
-#: rustconn/src/window/mod.rs:4247
+#: rustconn/src/window/mod.rs:4430
 msgid "RustConnRu - {}"
 msgstr "RustConnRu - {}"
 
-#: rustconn/src/window/mod.rs:4459
+#: rustconn/src/window/mod.rs:4642
 msgid "Settings saved"
 msgstr "Настройки сохранены"
 
-#: rustconn/src/window/mod.rs:4496
+#: rustconn/src/window/mod.rs:4679
 msgid "Passphrase Not Saved on This Computer"
 msgstr "Парольная фраза не сохранена на этом компьютере"
 
-#: rustconn/src/window/mod.rs:4498
+#: rustconn/src/window/mod.rs:4681
 msgid ""
 "The passphrase could not be encrypted for local storage, so it is kept for "
 "this session only and you will be asked for it again after a restart. Choose "
@@ -14699,11 +14906,11 @@ msgstr ""
 "ввести снова. Выберите «Системная связка ключей» или проверьте, может ли "
 "RustConn записывать данные в свой каталог данных."
 
-#: rustconn/src/window/mod.rs:4544
+#: rustconn/src/window/mod.rs:4727
 msgid "Credentials Not Saved to Keyring"
 msgstr "Учётные данные не сохранены в связке ключей"
 
-#: rustconn/src/window/mod.rs:4546
+#: rustconn/src/window/mod.rs:4729
 msgid ""
 "The system keyring did not accept the credentials, so they are kept for this "
 "session only and will be gone after a restart. Check that your keyring "
@@ -14714,15 +14921,15 @@ msgstr ""
 "связки ключей запущена, а связка разблокирована, затем снова сохраните "
 "настройки."
 
-#: rustconn/src/window/mod.rs:4730
+#: rustconn/src/window/mod.rs:4913
 msgid "Close RustConnRu?"
 msgstr "Закрыть RustConnRu?"
 
-#: rustconn/src/window/mod.rs:4732
+#: rustconn/src/window/mod.rs:4915
 msgid "{} session tab(s) are open. Active connections will be disconnected."
 msgstr "Открыто вкладок сеансов: {}. Активные подключения будут разорваны."
 
-#: rustconn/src/window/mod.rs:4769
+#: rustconn/src/window/mod.rs:4952
 msgid ""
 "Settings could not be read, so defaults are in use. The unreadable file was "
 "kept as {}."
@@ -14730,7 +14937,7 @@ msgstr ""
 "Не удалось прочитать настройки, поэтому используются значения по умолчанию. "
 "Нечитаемый файл сохранён как {}."
 
-#: rustconn/src/window/mod.rs:4774
+#: rustconn/src/window/mod.rs:4957
 msgid ""
 "These settings were saved by a newer RustConnRu ({}). A backup is kept "
 "before they are changed."
@@ -14738,35 +14945,35 @@ msgstr ""
 "Эти настройки сохранены в более новой версии RustConnRu ({}). Перед их "
 "изменением сохраняется резервная копия."
 
-#: rustconn/src/window/mod.rs:4799
+#: rustconn/src/window/mod.rs:4982
 msgid "Cloud sync failed for '{}': {}"
 msgstr "Ошибка облачной синхронизации для «{}»: {}"
 
-#: rustconn/src/window/mod.rs:4982
+#: rustconn/src/window/mod.rs:5165
 msgid "Startup connection not found"
 msgstr "Подключение для открытия при запуске не найдено"
 
-#: rustconn/src/window/mod.rs:5055
+#: rustconn/src/window/mod.rs:5238
 msgid "Failed to open .rdp file"
 msgstr "Не удалось открыть файл .rdp"
 
-#: rustconn/src/window/mod.rs:5091
+#: rustconn/src/window/mod.rs:5274
 msgid "Failed to open .vv file"
 msgstr "Не удалось открыть файл .vv"
 
-#: rustconn/src/window/mod.rs:5128
+#: rustconn/src/window/mod.rs:5311
 msgid "Tunnel “{}” stopped: {}"
 msgstr "Туннель «{}» остановлен: {}"
 
-#: rustconn/src/window/mod.rs:5144
+#: rustconn/src/window/mod.rs:5327
 msgid "Gave up reconnecting tunnel “{}”: {}"
 msgstr "Попытки восстановления туннеля «{}» прекращены: {}"
 
-#: rustconn/src/window/mod.rs:5657
+#: rustconn/src/window/mod.rs:5887
 msgid "Successfully exported {} connection(s). {} skipped."
 msgstr "Успешно экспортировано подключений: {}. Пропущено: {}."
 
-#: rustconn/src/window/mod.rs:5743
+#: rustconn/src/window/mod.rs:5973
 msgid ""
 "The passphrase you saved does not decrypt the portable credential file, so "
 "none of the passwords in it can be read. Open Settings ▸ Secrets and enter "
@@ -14776,11 +14983,11 @@ msgstr ""
 "учётных данных, поэтому ни один пароль из него нельзя прочитать. Откройте "
 "«Настройки ▸ Секреты» и введите парольную фразу, с которой был создан файл."
 
-#: rustconn/src/window/mod.rs:5778
+#: rustconn/src/window/mod.rs:6008
 msgid "Share Local Devices?"
 msgstr "Предоставить доступ к локальным устройствам?"
 
-#: rustconn/src/window/mod.rs:5780
+#: rustconn/src/window/mod.rs:6010
 msgid ""
 "The file {} asks to share these devices with {}:\n"
 "\n"
@@ -14805,12 +15012,12 @@ msgstr ""
 "Прямая передача клавиатурного ввода отключена — сочетания клавиш "
 "восстановлены"
 
-#: rustconn/src/window/navigation_actions.rs:284
+#: rustconn/src/window/navigation_actions.rs:286
 msgid "Broadcast enabled — keystrokes mirrored to all split panels"
 msgstr ""
 "Трансляция включена — нажатия клавиш передаются во все разделённые панели"
 
-#: rustconn/src/window/navigation_actions.rs:286
+#: rustconn/src/window/navigation_actions.rs:288
 msgid "Broadcast disabled — keystrokes go to focused panel only"
 msgstr ""
 "Трансляция отключена — нажатия клавиш передаются только в активную панель"
@@ -15417,7 +15624,7 @@ msgstr "Команда завершена: {}"
 msgid "Command failed with status {}: {}"
 msgstr "Команда завершилась с кодом ошибки {}: {}"
 
-#: rustconn/src/window/session_lifecycle.rs:1296
+#: rustconn/src/window/session_lifecycle.rs:1315
 msgid ""
 "Sign in again in the browser. The session reconnects when the login finishes."
 msgstr ""
@@ -15604,18 +15811,18 @@ msgstr "Перед выполнением фрагмента откройте с
 msgid "Enter Variable Values"
 msgstr "Ввести значения переменных"
 
-#: rustconn/src/window/sorting.rs:485 rustconn/src/window/sorting.rs:506
+#: rustconn/src/window/sorting.rs:487 rustconn/src/window/sorting.rs:508
 msgid ""
 "Imported folders are managed by sync and their structure cannot be changed"
 msgstr ""
 "Импортированные папки управляются синхронизацией, и их структуру нельзя "
 "изменить"
 
-#: rustconn/src/window/sorting.rs:517
+#: rustconn/src/window/sorting.rs:519
 msgid "Cannot move a folder into one of its own subfolders"
 msgstr "Нельзя переместить папку в одну из её собственных вложенных папок"
 
-#: rustconn/src/window/split_view_actions.rs:503
+#: rustconn/src/window/split_view_actions.rs:585
 msgid ""
 "Tip: press Ctrl+Shift+B or use the Broadcast button to mirror keystrokes "
 "across split panels"
@@ -15623,9 +15830,9 @@ msgstr ""
 "Совет: нажмите Ctrl+Shift+B или используйте кнопку «Трансляция», чтобы "
 "передавать нажатия клавиш во все разделённые панели"
 
-#: rustconn/src/window/split_view_actions.rs:545
-#: rustconn/src/window/split_view_actions.rs:766
-#: rustconn/src/window/split_view_actions.rs:1257
+#: rustconn/src/window/split_view_actions.rs:627
+#: rustconn/src/window/split_view_actions.rs:848
+#: rustconn/src/window/split_view_actions.rs:1368
 msgid ""
 "Split view is not available for external-viewer sessions. Switch this "
 "connection to embedded mode to use split."
@@ -15633,18 +15840,18 @@ msgstr ""
 "Разделённый вид недоступен для сеансов во внешней программе просмотра. Для "
 "разделения переключите это подключение во встроенный режим."
 
-#: rustconn/src/window/split_view_actions.rs:1251
+#: rustconn/src/window/split_view_actions.rs:1362
 msgid ""
 "This tab already has a split. Remove it first, or use Select Tab in a panel."
 msgstr ""
 "Эта вкладка уже разделена. Сначала уберите разделение или воспользуйтесь "
 "командой «Выбрать вкладку» на панели."
 
-#: rustconn/src/window/split_view_actions.rs:1278
+#: rustconn/src/window/split_view_actions.rs:1389
 msgid "There are no other tabs that can be shown in a split."
 msgstr "Нет других вкладок, которые можно показать в разделённом виде."
 
-#: rustconn/src/window/split_view_actions.rs:1377
+#: rustconn/src/window/split_view_actions.rs:1488
 msgid "Some tabs could not be added to the split."
 msgstr "Некоторые вкладки не удалось добавить в разделённый вид."
 
@@ -15668,7 +15875,7 @@ msgstr "Порт: {}"
 msgid "User: {}"
 msgstr "Пользователь: {}"
 
-#: rustconn/src/window/terminal_actions.rs:441
+#: rustconn/src/window/terminal_actions.rs:439
 msgid ""
 "Could not start recording for '{}' — the recordings folder is missing or not "
 "writable"
@@ -15676,7 +15883,7 @@ msgstr ""
 "Не удалось начать запись для «{}» — папка записей отсутствует или недоступна "
 "для записи"
 
-#: rustconn/src/window/terminal_actions.rs:505
+#: rustconn/src/window/terminal_actions.rs:503
 msgid "This viewer runs independently and cannot be closed from RustConn"
 msgstr ""
 "Эта программа просмотра работает независимо, и её нельзя закрыть из RustConn"
@@ -15716,10 +15923,6 @@ msgstr "Локальная оболочка (Ctrl+Shift+T)"
 #: rustconn/src/window/ui.rs:136
 msgid "Open Local Shell"
 msgstr "Открыть локальную оболочку"
-
-#: rustconn/src/window/ui.rs:145
-msgid "Broadcast"
-msgstr "Трансляция"
 
 #: rustconn/src/window/ui.rs:151
 msgid "Mirror keystrokes to all split panels (Ctrl+Shift+B)"
@@ -15783,58 +15986,62 @@ msgid "Wake On LAN…"
 msgstr "Пробуждение по сети (Wake On LAN)…"
 
 #: rustconn/src/window/ui.rs:294
+msgid "Network Scan…"
+msgstr "Сканирование сети…"
+
+#: rustconn/src/window/ui.rs:295
 msgid "SSH Tunnels…"
 msgstr "Туннели SSH…"
 
-#: rustconn/src/window/ui.rs:303
+#: rustconn/src/window/ui.rs:304
 msgid "Active Sessions…"
 msgstr "Активные сеансы…"
 
-#: rustconn/src/window/ui.rs:304
+#: rustconn/src/window/ui.rs:305
 msgid "Connection History…"
 msgstr "История подключений…"
 
-#: rustconn/src/window/ui.rs:305
+#: rustconn/src/window/ui.rs:306
 msgid "Statistics…"
 msgstr "Статистика…"
 
-#: rustconn/src/window/ui.rs:306
+#: rustconn/src/window/ui.rs:307
 msgid "Recordings…"
 msgstr "Записи…"
 
-#: rustconn/src/window/ui.rs:307
+#: rustconn/src/window/ui.rs:308
 msgid "Session Logs…"
 msgstr "Журналы сеансов…"
 
-#: rustconn/src/window/ui.rs:310
+#: rustconn/src/window/ui.rs:311
 msgid "Sessions"
 msgstr "Сеансы"
 
-#: rustconn/src/window/ui.rs:315
+#: rustconn/src/window/ui.rs:316
 msgid "Import Connections…"
 msgstr "Импортировать подключения…"
 
-#: rustconn/src/window/ui.rs:316
+#: rustconn/src/window/ui.rs:317
 msgid "Export Connections…"
 msgstr "Экспортировать подключения…"
 
-#: rustconn/src/window/ui.rs:317
+#: rustconn/src/window/ui.rs:318
 msgid "Copy Connection"
 msgstr "Копировать подключение"
 
-#: rustconn/src/window/ui.rs:319
+#: rustconn/src/window/ui.rs:320
 msgid "Paste Connection"
 msgstr "Вставить подключение"
 
-#: rustconn/src/window/ui.rs:332
+#: rustconn/src/window/ui.rs:333
 msgid "Components…"
 msgstr "Компоненты…"
 
-#: rustconn/src/window/ui.rs:339
+#: rustconn/src/window/ui.rs:340
 msgid "Compact Interface"
 msgstr "Компактный интерфейс"
 
-#: rustconn/src/window/ui.rs:341
+#: rustconn/src/window/ui.rs:342
 msgid "Keyboard Passthrough"
 msgstr "Прямая передача клавиатурного ввода"
 
@@ -15870,9 +16077,12 @@ msgstr "RustConnRu"
 msgid "Connection Manager"
 msgstr "Менеджер подключений"
 
-#: rustconn/assets/io.github.zbndev.RustConnRu.desktop:17
+#: rustconn/assets/io.github.zbndev.RustConnRu.desktop:11
 msgid "ssh;rdp;vnc;spice;mosh;telnet;zerotrust;connection;terminal;remote;kubernetes;k8s;serial;sftp;"
 msgstr "ssh;rdp;vnc;spice;mosh;telnet;zerotrust;подключение;терминал;удалённый;kubernetes;k8s;serial;sftp;"
+
+#~ msgid "Remove from Split"
+#~ msgstr "Убрать из разделённого вида"
 
 #~ msgid "Cluster has been saved successfully."
 #~ msgstr "Кластер успешно сохранён."

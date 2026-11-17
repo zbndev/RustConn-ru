@@ -3,6 +3,7 @@ class Rustconn < Formula
   homepage "https://github.com/zbndev/RustConn-ru"
   # This formula is intentionally HEAD-only: fork releases are prepared manually
   # and are not a Homebrew publication channel.
+  license "GPL-3.0-or-later"
   head "https://github.com/zbndev/RustConn-ru.git", branch: "main"
 
   depends_on "gettext" => :build

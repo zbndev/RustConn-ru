@@ -45,9 +45,9 @@ Then perform ALL of the following steps:
    scripts/bump-version.sh X.Y.Z --write    # apply (maintainer only, see below)
    ```
 
-   `--write` also rewrites the Flathub manifest's version line, which an agent
-   must not touch (`packaging/AGENTS.md`, "Flathub is maintainer-only"). An agent
-   runs the dry run and reports its diff; the Flathub line is a maintainer step.
+   Run the dry run and review its diff before applying version changes.
+   This fork's Flathub reference uses a local directory, not a release tag;
+   do not add a tag or a publication step. See `packaging/AGENTS.md`.
 
    It takes the file list from `PKG_FILES` in `scripts/release.sh` at runtime, so
    the two cannot drift, and it writes the workspace `Cargo.toml` plus all 16

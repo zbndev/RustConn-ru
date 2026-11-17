@@ -6,14 +6,12 @@ still applies.
 
 ## The one rule that matters most
 
-**An agent prepares a release; it never cuts one.** `./scripts/release.sh
---dry-run` runs every gate and stops before executing the plan — that is the agent
-action and it is expected. Running the script for real, passing `--yes`, or
-reaching for `git tag`/`git push` by hand is the maintainer's call. The tag push is
-what triggers the Release workflow and the Flathub/OBS/Snap updates, so there is no
-quiet way to undo it: v0.20.1 was cut by an agent and reached a published release
-with five artifacts while carrying a red CI job. The
-`release-manual-only-guard` hook blocks all three routes; do not rely on it.
+**Packaging publication is maintainer-only.** Fork workflows run only when
+explicitly dispatched; pushing a branch or tag does not publish packages.
+Agents may prepare local packaging changes but must not dispatch workflows,
+create release tags, or publish artifacts. The fork's release workflow builds a
+draft release from a maintainer-created `vX.Y.Z-ru.N` tag; publication remains
+the maintainer's separate decision.
 
 ## Flathub publication is maintainer-only
 

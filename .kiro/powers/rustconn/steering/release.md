@@ -254,20 +254,16 @@ MUST point at the new release tag (the `release.sh` gate checks
 ```
 
 ### 12. `packaging/flatpak/io.github.zbndev.RustConnRu.yml`
-```yaml
-        tag: vX.Y.Z
-```
+Keep the fork source. The manual release workflow pins it to the reviewed
+`github.sha`; do not substitute an upstream release tag.
 
 ### 13. `packaging/flatpak/io.github.zbndev.RustConnRu.local.yml`
 DO NOT modify — uses local path.
 
-### 14. `packaging/flathub/io.github.zbndev.RustConnRu.yml` (maintainer step)
-```yaml
-        tag: vX.Y.Z
-```
-An agent does not write this file (`packaging/AGENTS.md`, "Flathub is
-maintainer-only"). List it in the release report as a maintainer step, together
-with the Flathub copy of `cargo-sources.json`.
+### 14. `packaging/flathub/io.github.zbndev.RustConnRu.yml` (reference only)
+DO NOT add a release tag — this fork's local reference template uses `type: dir`.
+It is not a Flathub submission. Publication and source-generation constraints
+are documented in `packaging/AGENTS.md`.
 
 ### 15. `rustconn/assets/io.github.zbndev.RustConnRu.metainfo.xml`
 Add `<release>` at the TOP of `<releases>`:
