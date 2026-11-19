@@ -86,6 +86,9 @@ modules:
 
   - name: vte
     buildsystem: meson
+    build-options:
+      env:
+        CXXFLAGS: -I/app/include
     config-opts:
       - -Dglade=false
       - -Dgtk3=false
@@ -343,7 +346,7 @@ modules:
         CARGO_NET_OFFLINE: 'true'
         PKG_CONFIG_PATH: /app/lib64/pkgconfig:/app/lib/pkgconfig:/app/share/pkgconfig:/usr/lib/pkgconfig:/usr/share/pkgconfig
     build-commands:
-      # GNOME 50 SDK (GCC 15) appends -O2 via CFLAGS after aws-lc-sys sets -O0 for
+      # GNOME 51 SDK (GCC 15) appends -O2 via CFLAGS after aws-lc-sys sets -O0 for
       # jitterentropy-base.c, which triggers a #error requiring -O0. The wrapper
       # detects jitterentropy source files and forces -O0 at the very end.
       - |

@@ -6,7 +6,7 @@
 #
 
 Name:           rustconn
-Version:        0.25.2
+Version:        0.25.5
 Release:        0
 # rpmlint caps Summary at 79 characters (summary-too-long, badness 200); the
 # protocol list belongs in %%description, which has room for all of it. Kept in
@@ -396,6 +396,29 @@ done
 %{_datadir}/icons/hicolor/*/apps/io.github.zbndev.RustConnRu.*
 
 %changelog
+* Thu Nov 19 2026 Anton Isaiev <totoshko88@gmail.com> - 0.25.5-0
+- Version bump to 0.25.5
+- Added: Debug Logging dialog, sidebar empty states, per-tile Broadcast check in Tile Tabs (#351, #436)
+- Fixed: pager text in script logs, existing log permissions kept, hidden ask default stops the script, Tab Broadcast notice name
+- Changed: per-pane Broadcast checks need three terminals; consistent names for Tab Broadcast, Execute Snippet and Filter Command
+- Dependencies: regex 1.13.2, regex-automata 0.4.19, regex-syntax 0.8.12, smallvec 1.16.6
+
+* Wed Nov 18 2026 Anton Isaiev <totoshko88@gmail.com> - 0.25.4-0
+- Version bump to 0.25.4
+- Added: Tile Tabs in a cluster window (#436); vendor save-config scripts, pager instruction, Huawei OLT provisioning, ask ... default, ${CWD} and private log paths
+- Fixed: cluster dialog size, hidden protocol fields kept on edit, smart folder delete asks first, Scripts dialog Run state, hidden answers stay hidden
+- Changed: Scripts dialog redesigned as a two-pane layout; bundled examples refreshed with a backup; script API break for ScriptHost implementors
+- Dependencies: bytes 1.12.2, zip 9.7.0
+
+* Tue Nov 17 2026 Anton Isaiev <totoshko88@gmail.com> - 0.25.3-0
+- Version bump to 0.25.3
+- Added: Broadcast toggle in a cluster window (#436), Duplicate Tab in the tab menu (#437)
+- Added: closing a cluster window with two or more sessions asks first
+- Fixed: closing the import dialog from the result page imports what it lists
+- Fixed: Favorites and search-result context menus, command palette tags and groups
+- Fixed: shortcut recorder, keyboard passthrough, terminal Ctrl+G / Ctrl+T
+- Changed: connection dialog has Cancel and confirms unsaved edits
+- Dependencies: clap 4.6.8, uuid 1.29.3, zeroize 1.9.2 and clap helpers; RUSTSEC-2026-0543 (chrono) accepted until 0.26
 * Tue Nov 17 2026 Anton Isaiev <totoshko88@gmail.com> - 0.25.2-0
 - Version bump to 0.25.2
 - Fixed: quitting while an SSH tunnel is starting no longer leaves ssh -N running

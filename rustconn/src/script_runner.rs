@@ -12,6 +12,7 @@ use std::cell::RefCell;
 use std::collections::HashMap;
 use std::fs::File;
 use std::io::Write;
+use std::path::Path;
 use std::rc::{Rc, Weak};
 use std::time::{Duration, Instant};
 
@@ -104,6 +105,22 @@ thread_local! {
         RefCell::new(HashMap::new());
 }
 
+/// Opens a script transcript with owner-only permissions on Unix.
+///
+/// A transcript can contain secrets (Eltex `detailed`, MikroTik
+/// `show-sensitive`), so a fresh file is created as `0600`. An existing file
+/// keeps its permissions: it was not created by the script.
+fn open_script_log(path: &Path) -> std::io::Result<File> {
+    let mut options = File::options();
+    options.create(true).append(true);
+    #[cfg(unix)]
+    {
+        use std::os::unix::fs::OpenOptionsExt;
+        options.mode(0o600);
+    }
+    options.open(path)
+}
+
 /// The `ScriptHost` implementation for the GUI.
 struct GuiHost {
     notebook: SharedNotebook,
@@ -132,21 +149,27 @@ impl ScriptHost for GuiHost {
             .feed_local_output(self.session_id, msg.as_bytes());
     }
 
-    fn set_log(&mut self, path: Option<&str>) {
+    fn set_log(&mut self, path: Option<&str>) -> bool {
+        // Flush the held-back last line into the log being closed.
+        let tail = self.engine.borrow_mut().flush_log_output();
         let mut writer = self.log_writer.borrow_mut();
+        if let Some(file) = writer.as_mut() {
+            let _ = file.write_all(&tail);
+        }
         *writer = match path {
             Some(path) => {
-                let file = File::options().create(true).append(true).open(path);
+                let file = open_script_log(Path::new(path));
                 match file {
                     Ok(file) => Some(file),
                     Err(e) => {
                         tracing::error!(%e, path, "script log file could not be opened");
-                        None
+                        return false;
                     }
                 }
             }
             None => None,
         };
+        true
     }
 
     fn get_prompt(&mut self) -> Option<String> {
@@ -157,11 +180,11 @@ impl ScriptHost for GuiHost {
         (!cleaned.is_empty()).then_some(cleaned)
     }
 
-    fn ask(&mut self, prompt: &str, echo: bool) {
+    fn ask(&mut self, prompt: &str, echo: bool, default: Option<&str>) {
         let engine = Rc::clone(&self.engine);
         let resume = Rc::clone(&self.resume);
         let parent = parent_widget(&self.runtime);
-        show_ask_dialog(parent.as_ref(), prompt, echo, move |answer| {
+        show_ask_dialog(parent.as_ref(), prompt, echo, default, move |answer| {
             let mut engine = engine.borrow_mut();
             engine.on_ask_result(answer);
             drop(engine);
@@ -472,12 +495,15 @@ impl ScriptRunner {
     fn register_observer(&self) {
         let engine = Rc::clone(&self.engine);
         let log_writer = Rc::clone(&self.log_writer);
+        let log_engine = Rc::clone(&self.engine);
         let this = self.this.clone();
 
         self.notebook
             .add_output_observer(self.session_id, move |chunk| {
                 if let Some(writer) = log_writer.borrow_mut().as_mut() {
-                    let _ = writer.write_all(chunk);
+                    // Pager prompts are removed, as they are from the buffer.
+                    let filtered = log_engine.borrow_mut().filter_log_output(chunk);
+                    let _ = writer.write_all(&filtered);
                 }
                 let run = {
                     let mut engine = engine.borrow_mut();
@@ -582,6 +608,13 @@ impl ScriptRunner {
         }
         self.cleaned = true;
         let elapsed = self.started.elapsed();
+        // The held-back last line of the transcript goes out with the rest.
+        if let Ok(mut engine) = self.engine.try_borrow_mut() {
+            let tail = engine.flush_log_output();
+            if let Some(file) = self.log_writer.borrow_mut().as_mut() {
+                let _ = file.write_all(&tail);
+            }
+        }
         if let Some(timer) = self.timer.take() {
             timer.remove();
         }
@@ -760,6 +793,7 @@ fn show_ask_dialog(
     parent: Option<&gtk4::Widget>,
     prompt: &str,
     echo: bool,
+    default: Option<&str>,
     callback: impl FnOnce(Option<String>) + 'static,
 ) {
     use adw::prelude::*;
@@ -779,6 +813,11 @@ fn show_ask_dialog(
             .build()
     };
     entry.set_activates_default(true);
+    // A pre-filled answer is selected so typing replaces it and Enter keeps it.
+    if let Some(default) = default {
+        entry.set_text(default);
+        entry.select_region(0, -1);
+    }
     dialog.set_extra_child(Some(&entry));
 
     dialog.add_response("cancel", &crate::i18n::i18n("Cancel"));
@@ -787,10 +826,11 @@ fn show_ask_dialog(
     dialog.set_close_response("cancel");
 
     let callback = std::cell::RefCell::new(Some(callback));
+    let response_entry = entry.clone();
     dialog.connect_response(None, move |_, response| {
         if let Some(callback) = callback.borrow_mut().take() {
             if response == "ok" {
-                let value = entry.text().to_string();
+                let value = response_entry.text().to_string();
                 callback(Some(value));
             } else {
                 callback(None);
@@ -802,6 +842,9 @@ fn show_ask_dialog(
         dialog.present(Some(parent));
     } else {
         dialog.present(None::<&gtk4::Widget>);
+    }
+    if default.is_some() {
+        entry.grab_focus();
     }
 }
 
@@ -963,4 +1006,36 @@ pub fn stop_script_for_session(session_id: Uuid) -> bool {
 #[must_use]
 pub fn is_script_running(session_id: Uuid) -> bool {
     ACTIVE_SCRIPTS.with(|cell| cell.borrow().contains_key(&session_id))
+}
+
+#[cfg(test)]
+mod tests {
+    use super::open_script_log;
+
+    #[cfg(unix)]
+    #[test]
+    fn script_logs_are_owner_only() {
+        use std::os::unix::fs::PermissionsExt;
+
+        let dir = tempfile::tempdir().expect("tempdir");
+        let path = dir.path().join("script.log");
+
+        drop(open_script_log(&path).expect("create"));
+        let mode = std::fs::metadata(&path)
+            .expect("metadata")
+            .permissions()
+            .mode()
+            & 0o777;
+        assert_eq!(mode, 0o600, "a new transcript is private");
+
+        std::fs::set_permissions(&path, std::fs::Permissions::from_mode(0o644))
+            .expect("widen for the test");
+        drop(open_script_log(&path).expect("reopen"));
+        let mode = std::fs::metadata(&path)
+            .expect("metadata")
+            .permissions()
+            .mode()
+            & 0o777;
+        assert_eq!(mode, 0o644, "an existing file keeps its permissions");
+    }
 }

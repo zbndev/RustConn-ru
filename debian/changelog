@@ -1,3 +1,66 @@
+rustconn (0.25.5-1) unstable; urgency=medium
+
+  * Version bump to 0.25.5
+  * Added: Debug Logging dialog in the main menu (#351)
+  * Added: empty-state hints in the connection sidebar
+  * Added: per-tile Broadcast check in Tile Tabs of a cluster window (#436)
+  * Fixed: pager text no longer appears in script logs; an existing log
+    keeps its permissions; ask ... default with a hidden answer stops
+    the script
+  * Fixed: the broadcast-stopped notice uses the Tab Broadcast name
+  * Changed: per-pane Broadcast checks need three terminals
+  * Changed: consistent names for Tab Broadcast, Execute Snippet and
+    Filter Command
+  * Dependencies: regex 1.13.2, regex-automata 0.4.19, regex-syntax
+    0.8.12, smallvec 1.16.6
+
+ -- Anton Isaiev <totoshko88@gmail.com>  Thu, 19 Nov 2026 12:00:00 +0200
+
+rustconn (0.25.4-1) unstable; urgency=medium
+
+  * Version bump to 0.25.4
+  * Added: Tile Tabs in a cluster window shows every tab in a grid (#436)
+  * Added: vendor save-config and inventory scripts, the pager
+    instruction, Huawei OLT ONT provisioning, ask ... default, ${CWD} and
+    private log paths
+  * Fixed: New/Edit Cluster dialog fits its content
+  * Fixed: editing a connection keeps protocol fields the editor cannot
+    show
+  * Fixed: deleting a smart folder asks first
+  * Fixed: Run in the Scripts dialog no longer stays disabled; a copy of
+    a hidden answer stays hidden; an unreadable bundled example is not
+    overwritten
+  * Changed: Scripts dialog redesigned as a two-pane layout; bundled
+    examples are refreshed with a backup of local edits; script API break
+    for ScriptHost implementors
+  * Improved: script library search and layout; password show/hide state
+    for screen readers
+  * Dependencies: bytes 1.12.2, zip 9.7.0
+
+ -- Anton Isaiev <totoshko88@gmail.com>  Wed, 18 Nov 2026 12:00:00 +0200
+
+rustconn (0.25.3-1) unstable; urgency=medium
+
+  * Version bump to 0.25.3
+  * Added: Broadcast toggle in a cluster window (#436)
+  * Added: Duplicate Tab in the tab menu (#437)
+  * Added: closing a cluster window with two or more sessions asks first
+  * Fixed: closing the import dialog from the result page imports what
+    it lists
+  * Fixed: Remove from Favorites inside the Favorites group, and search
+    results keep the real state and name of a connection
+  * Fixed: command palette tags, groups and running sessions; shortcut
+    recorder, keyboard passthrough and terminal Ctrl+G / Ctrl+T
+  * Fixed: connection editor keeps window mode, dynamic-folder flag and
+    post-login scripts; the wizard keeps its input on failure
+  * Changed: connection dialog has Cancel and confirms unsaved edits;
+    one spelling per menu item; Ukrainian wording uses the word for session consistently
+  * Dependencies: clap 4.6.8, clap_complete 4.6.12, clap_derive 4.6.8,
+    clap_lex 1.1.2, clap_mangen 0.3.4, uuid 1.29.3, zeroize 1.9.2;
+    RUSTSEC-2026-0543 (chrono) accepted until 0.26
+
+ -- Anton Isaiev <totoshko88@gmail.com>  Tue, 17 Nov 2026 12:00:00 +0200
+
 rustconn (0.25.2-1) unstable; urgency=medium
 
   * Version bump to 0.25.2

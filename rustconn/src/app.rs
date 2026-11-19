@@ -317,6 +317,16 @@ fn main_window() -> Option<adw::ApplicationWindow> {
     MAIN_WINDOW.with(|cell| cell.borrow().as_ref().and_then(glib::WeakRef::upgrade))
 }
 
+/// Whether keyboard passthrough mode is currently on (the main window's
+/// `toggle-passthrough` action state).
+pub fn passthrough_active() -> bool {
+    main_window()
+        .and_then(|w| w.lookup_action("toggle-passthrough"))
+        .and_then(|a| a.state())
+        .and_then(|v| v.get::<bool>())
+        .unwrap_or(false)
+}
+
 /// Returns the focused visible application window, for parenting a dialog.
 ///
 /// `GtkApplication::active_window` is deliberately not used: it returns any
@@ -334,6 +344,16 @@ fn focused_application_window(app: &adw::Application) -> Option<gtk4::Window> {
 
 /// Application ID for `RustConnRu`
 pub const APP_ID: &str = "io.github.zbndev.RustConnRu";
+
+/// Set once a tray icon really exists. Closing the window may only hide it
+/// when this is true; the `enable_tray_icon` setting alone says nothing about
+/// a desktop that has no tray host or a switch flipped since startup.
+static TRAY_ACTIVE: std::sync::atomic::AtomicBool = std::sync::atomic::AtomicBool::new(false);
+
+/// Whether a system tray icon was created in this process.
+pub fn tray_is_active() -> bool {
+    TRAY_ACTIVE.load(std::sync::atomic::Ordering::Relaxed)
+}
 
 /// Shared tray manager type
 type SharedTrayManager = Rc<RefCell<Option<TrayManager>>>;
@@ -470,6 +490,12 @@ fn build_ui(app: &adw::Application, tray_manager: SharedTrayManager) {
         apply_sidebar_font_class(window.gtk_window().upcast_ref());
     }
 
+    // A codec the user switched off must stay off from the first RDP session,
+    // not only after Settings has been opened once (Cisco OpenH264 licence).
+    rustconn_core::rdp_client::openh264_download::set_openh264_enabled(
+        state.borrow().settings().connection.use_openh264,
+    );
+
     // Initialize tray icon if enabled in settings
     let enable_tray = state.borrow().settings().ui.enable_tray_icon;
     if enable_tray {
@@ -509,6 +535,7 @@ fn build_ui(app: &adw::Application, tray_manager: SharedTrayManager) {
                 update_tray_state(&tray, &state_for_tray, 0, &mut initial_cache);
                 tray.force_refresh();
                 *tray_mgr_for_init.borrow_mut() = Some(tray);
+                TRAY_ACTIVE.store(true, std::sync::atomic::Ordering::Relaxed);
             });
         }
     }
@@ -1119,6 +1146,7 @@ fn try_create_macos_tray(state: SharedAppState, tray_manager: SharedTrayManager,
         // The 2 s sync in `setup_tray_handling` fills in the live count.
         update_tray_state(&tray, &state, 0, &mut initial_cache);
         *tray_manager.borrow_mut() = Some(tray);
+        TRAY_ACTIVE.store(true, std::sync::atomic::Ordering::Relaxed);
         if attempt > 0 {
             tracing::info!(attempt, "macOS tray icon created (after retry)");
         } else {
@@ -1937,6 +1965,23 @@ fn setup_app_actions(
     });
     app.add_action(&shortcuts_action);
 
+    // Debug Logging action: shows the command that starts RustConn with a
+    // debug log and copies it. Logging is configured once at startup from
+    // `RUST_LOG`, so this cannot switch it on in the running process.
+    let debug_log_action = gio::SimpleAction::new("debug-log", None);
+    let app_for_debug_log = app.downgrade();
+    let window_weak = window.gtk_window().downgrade();
+    debug_log_action.connect_activate(move |_, _| {
+        let parent = app_for_debug_log
+            .upgrade()
+            .and_then(|app| focused_application_window(&app))
+            .or_else(|| window_weak.upgrade().map(Cast::upcast));
+        if let Some(window) = parent {
+            show_debug_log_dialog(&window);
+        }
+    });
+    app.add_action(&debug_log_action);
+
     // Help action (F1): opens the user guide, the same page as the AppStream
     // `help` URL. Parented to the focused window so the portal's chooser, if
     // one appears, is in front of the window the user pressed F1 in.
@@ -1960,13 +2005,15 @@ fn setup_app_actions(
 /// common terminal/readline chords and are suspended while a terminal or
 /// embedded viewer has focus (issue #197).
 const TERMINAL_CONFLICTING_ACTIONS: &[&str] = &[
-    "win.search",          // Ctrl+F
-    "win.command-palette", // Ctrl+P
-    "win.new-connection",  // Ctrl+N
-    "win.close-tab",       // Ctrl+W
-    "win.show-history",    // Ctrl+H
-    "win.move-to-group",   // Ctrl+M
-    "win.import",          // Ctrl+I
+    "win.search",             // Ctrl+F
+    "win.command-palette",    // Ctrl+P
+    "win.new-connection",     // Ctrl+N
+    "win.close-tab",          // Ctrl+W
+    "win.show-history",       // Ctrl+H
+    "win.move-to-group",      // Ctrl+M
+    "win.import",             // Ctrl+I
+    "win.password-generator", // Ctrl+G (abort in emacs/nano/vim)
+    "win.ssh-tunnels",        // Ctrl+T (transpose-chars in readline)
 ];
 
 /// Applies keyboard shortcuts from settings, falling back to defaults.
@@ -2141,6 +2188,43 @@ fn open_user_guide(parent: Option<&gtk4::Window>) {
     });
 }
 
+/// Command that starts RustConn with an RDP-oriented debug log.
+///
+/// `info` for everything plus `debug` for the RDP client only keeps the log
+/// small. The `sspi` and `ironrdp` directives are forced to `warn` in
+/// `main.rs` whatever this string says, so the account password cannot reach
+/// the log through it.
+fn debug_log_command(flatpak: bool) -> String {
+    const FILTER: &str = "info,rustconn_core::rdp_client=debug";
+    if flatpak {
+        format!("flatpak run --env=RUST_LOG={FILTER} {APP_ID} 2>&1 | tee rustconn.log")
+    } else {
+        format!("RUST_LOG={FILTER} rustconn 2>&1 | tee rustconn.log")
+    }
+}
+
+/// Explains how to collect a debug log and offers to copy the command.
+fn show_debug_log_dialog(parent: &gtk4::Window) {
+    let command = debug_log_command(rustconn_core::flatpak::is_flatpak());
+    let body = crate::i18n::i18n_f(
+        "Quit RustConnRu, then run this in a terminal and reproduce the problem:\n\n{}\n\nThe log is written to rustconn.log in the current directory. Passwords are never logged, but the log contains host names, user names and file paths. Read it before you share it.",
+        &[&command],
+    );
+    let dialog = adw::AlertDialog::new(Some(&gettext("Debug Logging")), Some(&body));
+    dialog.add_response("close", &gettext("Close"));
+    dialog.add_response("copy", &gettext("Copy Command"));
+    dialog.set_response_appearance("copy", adw::ResponseAppearance::Suggested);
+    dialog.set_default_response(Some("close"));
+    dialog.set_close_response("close");
+    let display = gtk4::prelude::WidgetExt::display(parent);
+    dialog.connect_response(None, move |_, response| {
+        if response == "copy" {
+            display.clipboard().set_text(&command);
+        }
+    });
+    dialog.present(Some(parent));
+}
+
 /// Shows the about dialog
 fn show_about_dialog(parent: &gtk4::Window) {
     let description = gettext(
@@ -2154,7 +2238,6 @@ Serial, Kubernetes, and Zero Trust connections from a single application.",
         "RustConnRu {version}\n\
          GTK {gtk_major}.{gtk_minor}.{gtk_micro}\n\
          libadwaita {adw_major}.{adw_minor}.{adw_micro}\n\
-         Rust {rust_version}\n\
          OS: {os}",
         version = env!("CARGO_PKG_VERSION"),
         gtk_major = gtk4::major_version(),
@@ -2163,7 +2246,6 @@ Serial, Kubernetes, and Zero Trust connections from a single application.",
         adw_major = adw::major_version(),
         adw_minor = adw::minor_version(),
         adw_micro = adw::micro_version(),
-        rust_version = env!("CARGO_PKG_RUST_VERSION"),
         os = std::env::consts::OS,
     );
 

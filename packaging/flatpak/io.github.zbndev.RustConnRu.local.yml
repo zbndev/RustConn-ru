@@ -327,7 +327,7 @@ modules:
         CARGO_NET_OFFLINE: 'true'
         PKG_CONFIG_PATH: /app/lib64/pkgconfig:/app/lib/pkgconfig:/app/share/pkgconfig:/usr/lib/pkgconfig:/usr/share/pkgconfig
     build-commands:
-      # GNOME 50 SDK (GCC 15) appends -O2 via CFLAGS after aws-lc-sys sets -O0 for
+      # GNOME 51 SDK (GCC 15) appends -O2 via CFLAGS after aws-lc-sys sets -O0 for
       # jitterentropy-base.c, which triggers a #error requiring -O0. The wrapper
       # detects jitterentropy source files and forces -O0 at the very end.
       - |
@@ -335,12 +335,10 @@ modules:
         chmod +x /app/bin/cc-wrap
       # Rename deprecated cargo/config to config.toml
       - if [ -f cargo/config ]; then mv cargo/config cargo/config.toml; fi
-      # Keep in sync with the Flathub manifest, which carries the reasoning for
-      # each of the three: GTK 4.22.4 and libadwaita 1.9.3 come from the GNOME 50
       # Features the GNOME 51 runtime backs. VTE comes from the bundled 0.84.1
       # module above; libadwaita and GTK come from the runtime.
-      - CC=/app/bin/cc-wrap cargo build --release -p rustconn --features 'adw-1-10,vte-0-84,gtk-4-24'
-      - CC=/app/bin/cc-wrap cargo build --release -p rustconn-cli --features full
+      - CC=/app/bin/cc-wrap cargo build --locked --release -p rustconn --features 'adw-1-10,vte-0-84,gtk-4-24'
+      - CC=/app/bin/cc-wrap cargo build --locked --release -p rustconn-cli --features full
       - install -Dm755 target/release/rustconn /app/bin/rustconn
       - install -Dm755 target/release/rustconn-cli /app/bin/rustconn-cli
       # Translated desktop labels come from po/*.po.

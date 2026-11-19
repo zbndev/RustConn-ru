@@ -190,6 +190,23 @@ impl DetachedSessionWindow {
         toast_overlay.set_child(Some(&toolbar_view));
         window.set_content(Some(&toast_overlay));
 
+        // The header is hidden in fullscreen and there is no hover reveal, so
+        // say how to get out. A toast, not a banner: it is a hint, not a state.
+        // ponytail: names F11 as shipped; a rebinding is not followed, upgrade
+        // with the shared hover-reveal helper mentioned above.
+        {
+            let toast_overlay = toast_overlay.downgrade();
+            window.connect_fullscreened_notify(move |win| {
+                if win.is_fullscreen()
+                    && let Some(overlay) = toast_overlay.upgrade()
+                {
+                    overlay.add_toast(crate::toast::plain_toast(&i18n(
+                        "Press F11 to leave fullscreen",
+                    )));
+                }
+            });
+        }
+
         // Per-window wiring the main window gets in `app.rs`: the non-Latin
         // layout accelerator fallback plus the compact chrome. `set_compact_prefs`
         // already iterates every application window, so later preference changes
@@ -468,14 +485,15 @@ fn build_attach_button() -> Button {
 ///
 /// The menu holds the application-wide entries of the main menu: Settings
 /// (`win.settings`, which this window forwards to the main window), Keyboard
-/// Shortcuts, Help and About. Labels, tooltip and accessible name are the main
-/// menu's own strings.
+/// Shortcuts, Help, Debug Logging and About. Labels, tooltip and accessible name
+/// are the main menu's own strings.
 fn build_menu_button() -> MenuButton {
     let settings_section = gio::Menu::new();
     settings_section.append(Some(&i18n("Settings…")), Some("win.settings"));
     let app_section = gio::Menu::new();
     app_section.append(Some(&i18n("Keyboard Shortcuts…")), Some("app.shortcuts"));
     app_section.append(Some(&i18n("Help")), Some("app.help"));
+    app_section.append(Some(&i18n("Debug Logging…")), Some("app.debug-log"));
     app_section.append(Some(&i18n("About RustConnRu")), Some("app.about"));
     let menu = gio::Menu::new();
     menu.append_section(None, &settings_section);

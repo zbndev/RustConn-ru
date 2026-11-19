@@ -668,6 +668,46 @@ impl ConnectionSidebar {
         // Ensure indicator is clipped to overlay bounds
         overlay.set_clip_overlay(indicator_widget, true);
 
+        // Empty state: shown over the list when the tree has no rows, so an
+        // empty sidebar (Welcome tab off or closed) or a search with no match
+        // is not a blank panel. It does not take input, so the empty-space
+        // context menu underneath keeps working.
+        let empty_page = adw::StatusPage::new();
+        empty_page.set_vexpand(true);
+        empty_page.set_can_target(false);
+        empty_page.set_visible(false);
+        empty_page.add_css_class("compact");
+        overlay.add_overlay(&empty_page);
+        overlay.set_measure_overlay(&empty_page, false);
+        {
+            let update_empty = {
+                let tree_model = tree_model.clone();
+                let search_entry = search_entry.clone();
+                let empty_page = empty_page.clone();
+                move || {
+                    use gtk4::prelude::ListModelExt;
+                    if tree_model.n_items() > 0 {
+                        empty_page.set_visible(false);
+                    } else if search_entry.text().is_empty() {
+                        empty_page.set_icon_name(Some("network-server-symbolic"));
+                        empty_page.set_title(&i18n("No Connections Yet"));
+                        empty_page.set_description(Some(&i18n(
+                            "Add a connection or import existing ones.",
+                        )));
+                        empty_page.set_visible(true);
+                    } else {
+                        empty_page.set_icon_name(Some("system-search-symbolic"));
+                        empty_page.set_title(&i18n("No results"));
+                        empty_page.set_description(None);
+                        empty_page.set_visible(true);
+                    }
+                }
+            };
+            let on_change = update_empty.clone();
+            tree_model.connect_items_changed(move |_, _, _, _| on_change());
+            search_entry.connect_search_changed(move |_| update_empty());
+        }
+
         // Set up drop target on the list view for motion tracking
         let list_view_drop_target = DropTarget::new(glib::Type::STRING, gdk::DragAction::MOVE);
 
@@ -1531,8 +1571,11 @@ impl ConnectionSidebar {
                     item.downcast::<ConnectionItem>().ok()
                 };
 
+                // A pinned connection has two rows (Favorites and its own group),
+                // so the same id can be selected twice; every caller wants it once.
                 if let Some(conn_item) = conn_item
                     && let Ok(uuid) = Uuid::parse_str(&conn_item.id())
+                    && !ids.contains(&uuid)
                 {
                     ids.push(uuid);
                 }
@@ -1642,7 +1685,14 @@ impl ConnectionSidebar {
             let row_obj: &glib::Object = row.upcast_ref();
             for i in 0..model.n_items() {
                 if model.item(i).as_ref() == Some(row_obj) {
-                    view::select_single_position(&model, i);
+                    if view::select_for_context_menu(&model, i) {
+                        let point = gtk4::graphene::Point::new(x as f32, y as f32);
+                        let (ex, ey) = list_view
+                            .compute_point(&expander, &point)
+                            .map_or((16.0, 16.0), |p| (f64::from(p.x()), f64::from(p.y())));
+                        sidebar_ui::show_multi_select_context_menu(&expander, ex, ey, activation);
+                        return true;
+                    }
                     break;
                 }
             }
@@ -1767,6 +1817,20 @@ impl ConnectionSidebar {
             drop_indicator.hide();
             return gdk::DragAction::empty();
         };
+
+        // Favorites, Trash and its items, and the Favorites copy of a connection
+        // take no drop: a copy would move the connection out of its real group
+        // and the rest do nothing. Refuse it so no "into" highlight is shown.
+        if Self::get_item_from_widget(&row_widget).is_some_and(|item| {
+            let id = item.id();
+            id == PINNED_GROUP_ID
+                || id == trash::TRASH_GROUP_ID
+                || trash::parse_trash_item_id(&id).is_some()
+                || item.in_favorites()
+        }) {
+            drop_indicator.hide();
+            return gdk::DragAction::empty();
+        }
 
         // Get the row widget's allocation to determine position within it
         let (_, row_height) = row_widget.preferred_size();
@@ -2193,6 +2257,12 @@ mod imp {
         status: RefCell<String>,
         #[property(get, set)]
         is_pinned: RefCell<bool>,
+        /// Whether this row is the copy shown inside the virtual Favorites
+        /// group. Hides the star emblem there (every row in that group is a
+        /// favorite), while `is_pinned` keeps the connection's real state so
+        /// the context menu still offers **Remove from Favorites**.
+        #[property(get, set)]
+        in_favorites: RefCell<bool>,
         #[property(get, set)]
         icon: RefCell<String>,
         /// Cloud Sync mode for groups: "none", "master", or "import".
@@ -2244,6 +2314,7 @@ mod imp {
                 host: RefCell::default(),
                 status: RefCell::default(),
                 is_pinned: RefCell::default(),
+                in_favorites: RefCell::default(),
                 icon: RefCell::default(),
                 sync_mode: RefCell::default(),
                 sync_error: RefCell::default(),
