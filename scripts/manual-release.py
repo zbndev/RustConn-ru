@@ -161,7 +161,23 @@ def pin_flatpak(arguments: argparse.Namespace) -> None:
 def notes(arguments: argparse.Namespace) -> None:
     version, _ = release_parts(arguments.tag)
     repository = validate_repository(arguments.repository)
-    upstream_body = arguments.upstream_notes.read_bytes()
+    upstream_body = arguments.upstream_notes.read_text(encoding="utf-8").strip()
+    # Copy only the known leading section. A changed layout needs manual review.
+    sections = re.split(r"\n(?=##[ \t]+)", upstream_body, maxsplit=2)
+    title, _, changes = sections[0].partition("\n")
+    changelog = ""
+    if (
+        title == "## What's Changed"
+        and changes.strip()
+        and len(sections) > 1
+        and sections[1].partition("\n")[0] == "## Installation"
+    ):
+        changelog = f"\n---\n\n{sections[0].rstrip()}\n"
+    else:
+        print(
+            "warning: no recognized upstream changelog; add it to the draft manually",
+            file=sys.stderr,
+        )
     deb = f"rustconn_{version}_amd64.deb"
     rpm = f"rustconn-{version}-1.x86_64.rpm"
     appimage = f"RustConnRu-{version}-x86_64.AppImage"
@@ -226,21 +242,16 @@ flatpak install --user ./{flatpak}
 flatpak run io.github.zbndev.RustConnRu
 ```
 
-Публикация пакета AUR `rustconn-ru` **не предполагается и не гарантируется**.
-Перед использованием AUR самостоятельно проверьте наличие, владельца и содержимое
-такого пакета; инструкции выше используют только файлы данного релиза.
+### Arch Linux (AUR)
 
-## Исходные заметки upstream (дословно)
+Пакет [`rustconn-ru`](https://aur.archlinux.org/packages/rustconn-ru)
+обновляется отдельно от релиза на GitHub.
 
-> **Внимание: инструкции upstream — не инструкции форка.** Текст ниже сохранён
-> без изменений как данные из исходного релиза. Его ссылки, имена пакетов,
-> репозитории и команды установки относятся к upstream RustConn, а не к
-> RustConnRu. Для этого форка используйте инструкции и файлы выше.
-
----
-
+```sh
+yay -S rustconn-ru
+```
 """
-    arguments.output.write_bytes(header.encode("utf-8") + upstream_body)
+    arguments.output.write_text(header + changelog, encoding="utf-8")
 
 
 def argument_parser() -> argparse.ArgumentParser:
@@ -258,7 +269,7 @@ def argument_parser() -> argparse.ArgumentParser:
     command.add_argument("--repository", required=True)
     command.set_defaults(handler=pin_flatpak)
 
-    command = commands.add_parser("notes", help="combine fork instructions with upstream notes as data")
+    command = commands.add_parser("notes", help="write fork instructions and extract the upstream changelog")
     command.add_argument("--tag", required=True)
     command.add_argument("--repository", required=True)
     command.add_argument("--upstream-notes", required=True, type=Path)

@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **AppImage desktop translations** — removed hard-coded localized keys from the desktop template so `msgfmt --desktop` generates each key once; fixes linuxdeploy aborting with `Key Comment[uk] found more than once`. The desktop installer and reference Flatpak template now generate translations from the catalogues too.
 
 ### Changed
+- **Draft release notes** — generate Russian installation instructions including Arch Linux (AUR), then include only the original release's changelog. If the upstream notes are unavailable or use a different layout, keep the Russian instructions and add the changelog manually.
 - **Upstream 0.25.5 synchronization** — integrates releases 0.25.3–0.25.5, including session restore, sidebar empty states and the Debug Logging menu, while preserving Russian localization, RustConnRu branding and manual-only release workflows.
 - **Upstream 0.25.0 synchronization** — integrates the new release while preserving the Russian locale, RustConnRu identity and icons, fork attribution, manual-only workflows and removal of donation links.
 - **Upstream 0.25.2 synchronization** — integrates releases 0.25.1 and 0.25.2, including network scanning, cluster windows and session/split fixes, while preserving the Russian locale, RustConnRu branding and manual-only release workflows.

@@ -679,8 +679,11 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          gh api --method GET "repos/totoshko88/RustConn/releases/tags/v${RELEASE_VERSION}" \
-            --jq '.body // ""' > upstream-release-body.md
+          if ! gh api --method GET "repos/totoshko88/RustConn/releases/tags/v${RELEASE_VERSION}" \
+            --jq '.body // ""' > upstream-release-body.md; then
+            echo "::warning::Could not download upstream release notes; add the changelog to the draft manually."
+            : > upstream-release-body.md
+          fi
 
       - name: Generate fork release notes
         run: |
