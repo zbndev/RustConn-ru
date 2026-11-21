@@ -99,6 +99,14 @@ pub fn select_single_position(model: &gtk4::SelectionModel, position: u32) {
     }
 }
 
+/// Whether two or more rows are selected. Single-row commands (Rename, Edit,
+/// Duplicate) would act on one arbitrary row of such a selection, so keys and
+/// menus must take the whole-selection path instead.
+#[must_use]
+pub fn has_multi_selection(model: &gtk4::SelectionModel) -> bool {
+    model.is::<MultiSelection>() && model.selection().size() > 1
+}
+
 /// Prepares the selection for a right-click on `position`.
 ///
 /// Returns `true` when the row is part of a multi-selection of two or more rows:
@@ -106,7 +114,7 @@ pub fn select_single_position(model: &gtk4::SelectionModel, position: u32) {
 /// the row alone is selected, as [`select_single_position`] does, and `false` is
 /// returned.
 pub fn select_for_context_menu(model: &gtk4::SelectionModel, position: u32) -> bool {
-    if model.is::<MultiSelection>() && model.is_selected(position) && model.selection().size() > 1 {
+    if model.is_selected(position) && has_multi_selection(model) {
         return true;
     }
     select_single_position(model, position);
@@ -152,6 +160,7 @@ pub fn show_context_menu_for_connection_item(
     // set on the row when it was built; the protocol string cannot tell a
     // Zero Trust connection whose provider and config disagree.
     let can_tunnel_browser = item.browser_tunnel();
+    let has_wol = item.wol_configured();
     let is_connected = item.status() == "connected";
     let conn_id = item.id();
     // A connection is in a split when it carries a split-pane colour (>= 0);
@@ -203,20 +212,23 @@ pub fn show_context_menu_for_connection_item(
         x,
         y,
         &conn_id,
-        is_group,
-        is_ssh,
-        protocol == "ssh" || protocol == "winrm",
-        offers_key_setup,
-        can_tunnel_browser,
-        is_connected,
-        is_recording,
-        has_external_session,
-        is_pinned,
+        sidebar_ui::ItemMenuState {
+            is_group,
+            is_ssh,
+            can_run_script: protocol == "ssh" || protocol == "winrm",
+            offers_key_setup,
+            can_tunnel_browser,
+            has_wol,
+            is_connected,
+            is_recording,
+            has_external_session,
+            is_pinned,
+            is_root_group: item.is_root_group(),
+            has_dynamic_folder: item.has_dynamic_folder(),
+            in_split,
+            has_multi_session,
+        },
         &item.sync_mode(),
-        item.is_root_group(),
-        item.has_dynamic_folder(),
-        in_split,
-        has_multi_session,
         activation,
     );
 }
@@ -230,7 +242,7 @@ pub fn show_context_menu_for_connection_item(
 pub fn setup_list_item(
     _factory: &SignalListItemFactory,
     list_item: &ListItem,
-    _group_ops_mode: bool,
+    group_ops_mode: bool,
     recording_checker: Rc<RefCell<Option<Box<dyn Fn(&str) -> bool>>>>,
     multi_session_checker: Rc<RefCell<Option<Box<dyn Fn(&str) -> bool>>>>,
 ) {
@@ -346,6 +358,24 @@ pub fn setup_list_item(
         "Part of a split view",
     ))]);
     content_box.append(&split_marker);
+
+    // Selection mode shows a tick per row. It only mirrors the row's selected
+    // state (the row click does the selecting), so it takes no focus and no
+    // clicks, and a screen reader reads the selection from the row itself.
+    // shortcut: trailing, not leading: bind() prepends the emoji glyph and
+    // reads children by position; move it once the row has named slots.
+    if group_ops_mode {
+        let check = gtk4::CheckButton::new();
+        check.set_can_focus(false);
+        check.set_can_target(false);
+        check.add_css_class("selection-check");
+        check.update_state(&[gtk4::accessible::State::Hidden(true)]);
+        list_item
+            .bind_property("selected", &check, "active")
+            .sync_create()
+            .build();
+        content_box.append(&check);
+    }
 
     expander.set_child(Some(&content_box));
     list_item.set_child(Some(&expander));
@@ -1019,5 +1049,43 @@ pub fn unbind_list_item(
         for handler_id in handler_ids {
             item.disconnect(handler_id);
         }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::{has_multi_selection, select_for_context_menu};
+    use gtk4::prelude::*;
+
+    /// Right-click and keyboard menus on a selection of several rows act on all
+    /// of them; on anything else they act on the clicked row alone.
+    #[test]
+    #[ignore = "initialises GTK: needs a display and its own process; run alone with `cargo test -p rustconn --bin rustconn -- --ignored --exact <this test path>`"]
+    fn menus_take_the_whole_selection_only_when_there_is_one() {
+        if gtk4::init().is_err() {
+            return;
+        }
+        let store = gtk4::gio::ListStore::new::<gtk4::StringObject>();
+        for name in ["a", "b", "c"] {
+            store.append(&gtk4::StringObject::new(name));
+        }
+        let multi = gtk4::MultiSelection::new(Some(store.clone()));
+        let model: gtk4::SelectionModel = multi.clone().upcast();
+
+        assert!(!has_multi_selection(&model), "empty selection");
+        multi.select_item(0, true);
+        assert!(!has_multi_selection(&model), "one row");
+        multi.select_item(2, false);
+        assert!(has_multi_selection(&model), "two rows");
+
+        assert!(select_for_context_menu(&model, 2), "inside the selection");
+        assert_eq!(model.selection().size(), 2, "selection kept");
+
+        assert!(!select_for_context_menu(&model, 1), "outside the selection");
+        assert_eq!(model.selection().size(), 1, "collapsed to the clicked row");
+        assert!(model.is_selected(1));
+
+        let single: gtk4::SelectionModel = gtk4::SingleSelection::new(Some(store)).upcast();
+        assert!(!has_multi_selection(&single), "single mode");
     }
 }

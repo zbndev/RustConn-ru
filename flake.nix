@@ -18,7 +18,7 @@
       {
         packages.default = pkgs.rustPlatform.buildRustPackage {
           pname = "rustconn";
-          version = "0.25.5";
+          version = "0.26.0";
 
           src = self;
 

@@ -22,7 +22,7 @@
 
 rustPlatform.buildRustPackage (finalAttrs: {
   pname = "rustconn";
-  version = "0.25.5";
+  version = "0.26.0";
 
   # Reference-only recipe: build from this checkout instead of inventing a
   # fork release tag or pulling upstream sources with fork-specific assets.

@@ -9,7 +9,7 @@ use gtk4::prelude::*;
 use gtk4::{Box as GtkBox, Button, Label, Orientation, Separator, gdk, gio, glib};
 use libadwaita as adw;
 
-use crate::i18n::i18n;
+use crate::i18n::{i18n, with_accel};
 
 thread_local! {
     /// Tracks the currently open context menu popover across the entire application.
@@ -353,33 +353,58 @@ pub fn offers_key_setup(protocol: &str) -> bool {
     protocol == "ssh"
 }
 
-/// Shows the context menu for a connection item with group awareness
+/// What the sidebar context menu needs to know about the row it opens on.
+///
+/// Named fields, so a call site cannot swap two of the flags.
 #[expect(
-    clippy::fn_params_excessive_bools,
-    clippy::too_many_arguments,
-    reason = "function parameters mirror Clap-derived flags 1:1; bundling would only restate them"
+    clippy::struct_excessive_bools,
+    reason = "each flag gates one menu item; a bit set would only hide the names"
 )]
+#[derive(Debug, Clone, Copy, Default)]
+pub struct ItemMenuState {
+    pub is_group: bool,
+    pub is_ssh: bool,
+    pub can_run_script: bool,
+    pub offers_key_setup: bool,
+    pub can_tunnel_browser: bool,
+    /// The connection has a Wake-on-LAN configuration.
+    pub has_wol: bool,
+    pub is_connected: bool,
+    pub is_recording: bool,
+    pub has_external_session: bool,
+    pub is_pinned: bool,
+    pub is_root_group: bool,
+    pub has_dynamic_folder: bool,
+    pub in_split: bool,
+    pub has_multi_session: bool,
+}
+
+/// Shows the context menu for a connection item with group awareness
 pub fn show_context_menu_for_item(
     widget: &impl IsA<gtk4::Widget>,
     x: f64,
     y: f64,
     conn_id: &str,
-    is_group: bool,
-    is_ssh: bool,
-    can_run_script: bool,
-    offers_key_setup: bool,
-    can_tunnel_browser: bool,
-    is_connected: bool,
-    is_recording: bool,
-    has_external_session: bool,
-    is_pinned: bool,
+    state: ItemMenuState,
     sync_mode: &str,
-    is_root_group: bool,
-    has_dynamic_folder: bool,
-    in_split: bool,
-    has_multi_session: bool,
     activation: MenuActivation,
 ) {
+    let ItemMenuState {
+        is_group,
+        is_ssh,
+        can_run_script,
+        offers_key_setup,
+        can_tunnel_browser,
+        has_wol,
+        is_connected,
+        is_recording,
+        has_external_session,
+        is_pinned,
+        is_root_group,
+        has_dynamic_folder,
+        in_split,
+        has_multi_session,
+    } = state;
     let Some(root) = widget.root() else { return };
     let Some(window) = root.downcast_ref::<gtk4::ApplicationWindow>() else {
         return;
@@ -415,7 +440,7 @@ pub fn show_context_menu_for_item(
             items.push(ContextMenuItem::Separator);
         }
         // § Organisation and properties
-        items.push(ContextMenuItem::action(&i18n("Rename"), "rename-item"));
+        items.push(ContextMenuItem::action(&i18n("Rename…"), "rename-item"));
         if !is_import_group {
             items.push(ContextMenuItem::action(
                 &i18n("Move to Group…"),
@@ -478,7 +503,7 @@ pub fn show_context_menu_for_item(
         items.push(ContextMenuItem::action(&favorite_label, "toggle-pin"));
         // § Organisation
         items.push(ContextMenuItem::Separator);
-        items.push(ContextMenuItem::action(&i18n("Rename"), "rename-item"));
+        items.push(ContextMenuItem::action(&i18n("Rename…"), "rename-item"));
         items.push(ContextMenuItem::action(
             &i18n("Duplicate"),
             "duplicate-connection",
@@ -593,6 +618,26 @@ pub fn show_context_menu_for_item(
         }
         if is_ssh {
             items.push(ContextMenuItem::action(&i18n("Open SFTP"), "open-sftp"));
+            items.push(ContextMenuItem::action_with_target(
+                &i18n("Edit Remote File…"),
+                "edit-connection-file",
+                &conn_id.to_variant(),
+            ));
+        }
+        // The recorder and the relay need a live VTE session. With several
+        // sessions the row cannot say which one to use, so they stay in the
+        // tabs, where each item targets its own session.
+        if is_connected && !has_multi_session && !has_external_session {
+            items.push(ContextMenuItem::action_with_target(
+                &i18n("Share Session (read-only)"),
+                "share-connection-session",
+                &conn_id.to_variant(),
+            ));
+            items.push(ContextMenuItem::action_with_target(
+                &i18n("Record Script…"),
+                "record-connection-script",
+                &conn_id.to_variant(),
+            ));
         }
         if offers_key_setup {
             items.push(ContextMenuItem::action(
@@ -606,7 +651,9 @@ pub fn show_context_menu_for_item(
                 "open-browser-via-tunnel",
             ));
         }
-        items.push(ContextMenuItem::action(&i18n("Wake-on-LAN"), "wake-on-lan"));
+        if has_wol {
+            items.push(ContextMenuItem::action(&i18n("Wake-on-LAN"), "wake-on-lan"));
+        }
         items.push(ContextMenuItem::action(
             &i18n("Check if Online"),
             "check-host-online",
@@ -1231,13 +1278,24 @@ pub fn get_protocol_icon(protocol: &str) -> &'static str {
 
 /// Creates the bulk actions toolbar for group operations mode
 ///
-/// Compact icon-only pill buttons matching the protocol filter bar style.
+/// Compact icon-only pill buttons matching the protocol filter bar style, under
+/// a line that counts the selected rows. Returns the container and that label.
 #[must_use]
-pub fn create_bulk_actions_bar() -> GtkBox {
+pub fn create_bulk_actions_bar() -> (GtkBox, Label) {
+    let counter = Label::new(None);
+    counter.add_css_class("dim-label");
+    counter.add_css_class("caption");
+    counter.set_xalign(0.0);
+    counter.set_margin_start(12);
+    counter.set_margin_top(6);
+    counter.set_ellipsize(gtk4::pango::EllipsizeMode::End);
+    // Announced by screen readers when the count changes.
+    counter.update_property(&[gtk4::accessible::Property::Label(&i18n("Selected items"))]);
+
     let bar = GtkBox::new(Orientation::Horizontal, 0);
     bar.set_margin_start(6);
     bar.set_margin_end(6);
-    bar.set_margin_top(6);
+    bar.set_margin_top(2);
     bar.set_margin_bottom(6);
     bar.set_hexpand(true);
     bar.set_homogeneous(true);
@@ -1301,7 +1359,10 @@ pub fn create_bulk_actions_bar() -> GtkBox {
     ))]);
     bar.append(&delete_button);
 
-    bar
+    let container = GtkBox::new(Orientation::Vertical, 0);
+    container.append(&counter);
+    container.append(&bar);
+    (container, counter)
 }
 
 /// Creates the sidebar bottom toolbar with secondary actions
@@ -1420,7 +1481,7 @@ pub fn create_sidebar_header() -> (adw::HeaderBar, gtk4::ToggleButton) {
     // GtkSearchBar's search-mode-enabled property.
     let search_toggle = gtk4::ToggleButton::new();
     search_toggle.set_icon_name("system-search-symbolic");
-    search_toggle.set_tooltip_text(Some(&i18n("Search (Ctrl+F)")));
+    search_toggle.set_tooltip_text(Some(&with_accel(&i18n("Search"), "win.search")));
     search_toggle.update_property(&[gtk4::accessible::Property::Label(&i18n("Toggle search"))]);
     // 44px tap-target floor via CSS class, not set_size_request — see the note
     // in window/ui.rs; `window.compact-manual` can lower it for deliberate
