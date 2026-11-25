@@ -6,7 +6,7 @@
 #
 
 Name:           rustconn
-Version:        0.26.0
+Version:        0.26.4
 Release:        0
 # rpmlint caps Summary at 79 characters (summary-too-long, badness 200); the
 # protocol list belongs in %%description, which has room for all of it. Kept in
@@ -396,6 +396,30 @@ done
 %{_datadir}/icons/hicolor/*/apps/io.github.zbndev.RustConnRu.*
 
 %changelog
+* Wed Nov 25 2026 Anton Isaiev <totoshko88@gmail.com> - 0.26.4-0
+- Version bump to 0.26.4
+- Added: Remmina SSH tunnels import as a linked Jump Host (#449, #450); eleven SecureCRT-inspired script examples (TDR, guarded erase, command capture, BGP peers, OUI lookup, guarded write scripts) with the caption and oui verbs; rustconn-cli report with 17 further report kinds
+- Fixed: VNC honours the connection's Jump Host, embedded and external (#450), and no longer connects directly when the jump host cannot be read; editing a cluster no longer leaves the list empty (#451); scripts that use log no longer abort the app; Skip Duplicates keeps imported profiles linked to the existing bastion
+- Changed: rustconn-cli report runs ssh non-interactively and names failed hosts
+- Dependencies: clap 4.6.9 -> 4.6.10, constant_time_eq 0.6.1 -> 0.6.2, crc32fast 1.5.5 -> 1.5.6, h2 0.4.20 -> 0.4.21, toml 1.2.2 -> 1.2.3, zerocopy 0.8.64 -> 0.8.65, zlib-rs 0.6.8 -> 0.6.9, zstd 0.14.4 -> 0.14.5, zstd-safe 8.3.0 -> 8.4.0, zstd-sys 2.1.3 -> 2.2.0
+* Tue Nov 24 2026 Anton Isaiev <totoshko88@gmail.com> - 0.26.3-0
+- Version bump to 0.26.3
+- Fixed: sidebar status no longer stuck on "connecting" for a missing client, a refused VNC login, or Mosh, Serial and Kubernetes sessions; embedded RDP asks for the password when a Windows host requires NLA; auto-reconnect stops on a session that keeps closing and on a refused WinRM sign-in; "Open Settings" from the password-store dialog opens Secrets; client version probes no longer hang for their full timeout
+- Fixed (macOS): Keychain passwords for connections without a domain read back; a missing KeePassXC entry with translated keepassxc-cli messages no longer reported as an unreadable database; rustconn-cli secret status reports the Keychain
+- Documentation: macOS protocol client tools; WinRM local administrator refusal (LocalAccountTokenFilterPolicy)
+- Dependencies: hyper 1.12.0 -> 1.13.0
+* Mon Nov 23 2026 Anton Isaiev <totoshko88@gmail.com> - 0.26.2-0
+- Version bump to 0.26.2
+- Added: Proton Pass secret backend (#444) with the Proton Pass CLI in Flatpak Components and an in-app sign-in dialog; rustconn-cli secret --backend proton-pass
+- Fixed: Proton Pass hardening and review fixes (flag-like names refused, sign-in links limited to proton.me, pass-cli errors reported, 90 s operation cap); SPICE socket connections no longer ask for a host; wizard Next follows the typed host; flaky terminal search test
+- Dependencies: yuv 0.8.20 -> 0.8.21, zip 9.8.1 -> 9.8.2
+* Mon Nov 23 2026 Anton Isaiev <totoshko88@gmail.com> - 0.26.1-0
+- Version bump to 0.26.1
+- Added: drag tabs between windows or out into a new one (PR #443); drag a whole split out into its own window; drop a tab onto an empty split pane; quick terminal theme picker; template editor printer redirection and session toolbar; SPICE socket path in the wizard
+- Fixed: non-modal terminal search bar (#442); an edited user name wins over the vault and the credential cache; Save & Connect keeps the typed password; jump-host connects wait for the startup keyring; Esc while dragging a tab no longer opens a window
+- Changed: the window no longer waits for the keyring, ssh-agent or example scripts at start; system tray switch on its row; monitoring hints name SSH; unused rustconn-core API removed
+- Dependencies: ashpd 0.14.2 -> 0.14.3, hashbrown 0.17.1 -> 0.17.2
+
 * Sat Nov 21 2026 Anton Isaiev <totoshko88@gmail.com> - 0.26.0-0
 - Version bump to 0.26.0
 - Added: Duplicate via Wizard in the tab menu (#437); built-in script recording (#373); read-only session sharing over HTTP and WebTransport, with a shared-tab marker and Stop Sharing; read-only TFTP server; remote file editor

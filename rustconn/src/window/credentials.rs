@@ -85,7 +85,7 @@ impl MainWindow {
         let busy_guard = acquire_busy_guard();
 
         // Get connection info and cached credentials (fast, non-blocking)
-        let (protocol_type, cached_credentials) = {
+        let (protocol_type, cached_credentials, wait_startup) = {
             let Ok(state_ref) = state.try_borrow() else {
                 tracing::warn!("Could not borrow state for credential resolution");
                 drop(busy_guard);
@@ -109,21 +109,27 @@ impl MainWindow {
                 )
             });
 
-            (protocol_type, cached)
+            // A jump host's password is looked up on the GTK thread at launch,
+            // so the startup keyring reads must be done by then.
+            let wait_startup = state_ref.connect_waits_for_startup_keyring(conn);
+
+            (protocol_type, cached, wait_startup)
         };
 
         // SFTP via mc uses SSH key in agent — skip vault credential
         // resolution entirely to avoid ~12s of sequential Bitwarden
         // CLI calls that mc never uses.
         if protocol_type == rustconn_core::models::ProtocolType::Sftp {
-            drop(busy_guard);
-            Self::handle_sftp_connect(
-                &state,
-                &notebook,
-                Some(&sidebar),
-                Some(&split_view),
-                connection_id,
-            );
+            crate::state::run_after_startup_keyring(&state.clone(), wait_startup, move || {
+                drop(busy_guard);
+                Self::handle_sftp_connect(
+                    &state,
+                    &notebook,
+                    Some(&sidebar),
+                    Some(&split_view),
+                    connection_id,
+                );
+            });
             return;
         }
 
@@ -229,41 +235,48 @@ impl MainWindow {
         };
 
         if !needs_vault_resolution {
-            drop(busy_guard);
-            Self::handle_resolved_credentials(
-                state,
-                notebook,
-                split_view,
-                sidebar,
-                monitoring,
-                connection_id,
-                protocol_type,
-                None,
-                None,
-                activity,
-                observer.clone(),
-            );
+            let observer = observer.clone();
+            crate::state::run_after_startup_keyring(&state.clone(), wait_startup, move || {
+                drop(busy_guard);
+                Self::handle_resolved_credentials(
+                    state,
+                    notebook,
+                    split_view,
+                    sidebar,
+                    monitoring,
+                    connection_id,
+                    protocol_type,
+                    None,
+                    None,
+                    activity,
+                    observer,
+                );
+            });
             return;
         }
 
         // If we have cached credentials, use them immediately (no async needed)
         if let Some((username, password, domain)) = cached_credentials {
-            Self::handle_resolved_credentials(
-                state,
-                notebook,
-                split_view,
-                sidebar,
-                monitoring,
-                connection_id,
-                protocol_type,
-                Some(rustconn_core::Credentials::with_password(
-                    &username,
-                    password.as_str(),
-                )),
-                Some((username, password, domain)),
-                activity,
-                observer.clone(),
-            );
+            let observer = observer.clone();
+            crate::state::run_after_startup_keyring(&state.clone(), wait_startup, move || {
+                let _busy_guard = busy_guard;
+                Self::handle_resolved_credentials(
+                    state,
+                    notebook,
+                    split_view,
+                    sidebar,
+                    monitoring,
+                    connection_id,
+                    protocol_type,
+                    Some(rustconn_core::Credentials::with_password(
+                        &username,
+                        password.as_str(),
+                    )),
+                    Some((username, password, domain)),
+                    activity,
+                    observer,
+                );
+            });
             return;
         }
 
@@ -380,6 +393,10 @@ impl MainWindow {
                                 }
                                 rustconn_core::config::SecretBackendType::Pass => {
                                     names.push("Pass".to_string());
+                                    types.push(preferred);
+                                }
+                                rustconn_core::config::SecretBackendType::ProtonPass => {
+                                    names.push("Proton Pass".to_string());
                                     types.push(preferred);
                                 }
                                 rustconn_core::config::SecretBackendType::MacOsKeychain => {
@@ -537,13 +554,19 @@ impl MainWindow {
                                             tracing::info!(
                                                 "User chose to open settings to configure secret backend"
                                             );
+                                            // No session starts, so nothing else
+                                            // clears the row's "connecting" icon.
+                                            sidebar_be.update_connection_status(
+                                                &connection_id.to_string(),
+                                                "",
+                                            );
                                             if let Some(root) = notebook_be.widget().root()
                                                 && let Some(win) =
                                                     root.downcast_ref::<gtk4::Window>()
                                             {
                                                 gtk4::prelude::WidgetExt::activate_action(
                                                     win,
-                                                    "win.settings",
+                                                    "win.settings-secrets",
                                                     None,
                                                 )
                                                 .ok();

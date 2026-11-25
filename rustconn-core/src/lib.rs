@@ -77,6 +77,8 @@ pub mod mc_ssh;
 pub mod models;
 pub mod monitoring;
 pub mod network_scan;
+pub mod oui;
+mod oui_data;
 pub mod password_generator;
 pub mod performance;
 pub mod proc;
@@ -101,6 +103,7 @@ pub mod ssh_agent;
 pub mod ssh_askpass;
 pub mod ssh_key_setup;
 pub mod ssh_tunnel;
+pub mod startup_gate;
 pub mod sync;
 pub mod template;
 pub mod terminal_themes;
@@ -290,10 +293,7 @@ pub use secret::{
     PassBackend, PendingCredentialResolution, SecretBackend, SecretManager, VerifiedCredentials,
     parse_keepassxc_version, resolve_with_callback, spawn_credential_resolution,
 };
-pub use session::{
-    LogConfig, LogContext, LogError, LogResult, Session, SessionLogger, SessionManager,
-    SessionState, SessionType,
-};
+pub use session::{LogConfig, LogContext, LogError, LogResult, SessionLogger, SessionType};
 // Session placement (tab / split / detached window) decisions
 pub use session_placement::{DetachContext, DetachVerdict, detach_verdict, may_place_in_split};
 pub use sftp::{

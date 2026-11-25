@@ -1,6 +1,6 @@
 # RustConn CLI Reference
 
-**Version 0.26.0** | Command-line interface for RustConn connection management
+**Version 0.26.4** | Command-line interface for RustConn connection management
 
 The `rustconn-cli` binary provides headless connection management from the terminal. It shares the same configuration files as the GUI (`~/.config/rustconn/`), so changes made in either tool are immediately visible to the other. The default build is the minimal headless path; desktop/client-launch and secret-management commands are enabled with optional features.
 
@@ -909,7 +909,7 @@ rustconn-cli var delete "my_var"
 Available only when `rustconn-cli` is built with `--features secret-management`
 or `--features full`.
 
-Manage credentials stored in secret backends (system keyring, KeePass, Bitwarden, 1Password, Passbolt, Pass).
+Manage credentials stored in secret backends (system keyring, KeePass, Bitwarden, 1Password, Passbolt, Pass, Proton Pass).
 
 | Subcommand | Description |
 |------------|-------------|
@@ -925,6 +925,7 @@ rustconn-cli secret get "My Server" --backend keepass
 rustconn-cli secret set "My Server" --user admin --backend keyring          # Interactive password prompt
 echo "s3cret" | rustconn-cli secret set "My Server" --user admin --password-stdin
 rustconn-cli secret delete "My Server"
+rustconn-cli secret get "My Server" --backend proton-pass                   # needs a prior `pass-cli login`
 rustconn-cli secret verify-keepass --database ~/vault.kdbx
 rustconn-cli secret verify-keepass --database ~/vault.kdbx --yubikey 2       # YubiKey Challenge-Response slot (or 2:serial)
 ```
@@ -972,12 +973,13 @@ Backend aliases:
 
 | Backend | Aliases |
 |---------|---------|
-| System keyring (libsecret) | `keyring`, `libsecret` |
+| System keyring (libsecret on Linux, Keychain on macOS) | `keyring`, `libsecret` |
 | KeePass KDBX | `keepass`, `kdbx`, `keepassxc` |
 | Bitwarden | `bitwarden`, `bw` |
 | 1Password | `1password`, `onepassword`, `op` |
 | Passbolt | `passbolt` |
 | Pass (passwordstore.org) | `pass` |
+| Proton Pass | `proton-pass`, `protonpass`, `pass-cli` |
 | Encrypted file (machine-bound) | `encrypted-file`, `file` |
 | Portable encrypted file | `portable`, `portable-file` |
 
@@ -1254,6 +1256,44 @@ rustconn-cli monitor reset --all                     # Same, for every connectio
 rustconn-cli monitor metrics "Server"                # Show current config
 rustconn-cli monitor metrics "Server" --format json  # JSON output
 ```
+
+---
+
+## Device Reports
+
+`rustconn-cli report <kind> [CONNECTION…] [--tag TAG] [--group GROUP] [--format table|json|csv]`
+runs one read-only `show` command on every selected SSH connection, parses
+each host's output into rows and prints all hosts as one document. The first
+column is always `connection`. Available kinds:
+
+| Kind | Command | Rows |
+|------|---------|------|
+| `inventory` | `show version` | version, model, serial, uptime |
+| `cdp` | `show cdp neighbors detail` | device id, local/remote port, platform, IP |
+| `arp` / `merged-arp` | `show ip arp` | protocol, address, age, hardware address, type, interface |
+| `mac` / `macs-by-vlan` | `show mac address-table` | VLAN, MAC, type, ports |
+| `vlan` | `show vlan` | VLAN, name, status, ports |
+| `interface-stats` | `show interfaces` | interface, status, input/output rate, input errors, CRC, output errors |
+| `next-hop` | `show ip route` | next hop, route count, protocols |
+| `eigrp-topology` / `eigrp-summary` | `show ip eigrp topology` | network/successor/FD, or successor/network count |
+| `switchport` | `show interface status` | port, name, status, VLAN |
+| `document-device` | `show version` | same fields as `inventory` |
+| `aireos-ap-detail`, `aireos-ap-summary` | `show ap summary` | AP name, slots, model, MAC, location |
+| `aireos-auth-list` | `show auth-list` | setting, value (dotted AireOS key/value output) |
+| `aireos-interface-detail` | `show interface summary` | interface, port, VLAN, IP, type |
+| `aireos-mobility-group` | `show mobility summary` | member MAC, IP, group, multicast IP, status |
+| `aireos-wlan-detail` | `show wlan summary` | WLAN id, profile, SSID, status, interface |
+| `cisco-bgp` | `show ip bgp summary` | neighbor, remote AS, uptime, state/prefix count |
+| `huawei-bgp` | `display bgp peer` | peer, remote AS, uptime, state |
+| `juniper-bgp` | `show bgp summary` | peer, remote AS, uptime, state/prefix counts |
+
+```bash
+rustconn-cli report inventory --tag core --format csv
+rustconn-cli report cdp SW1 SW2
+rustconn-cli report next-hop --group branch --format json
+```
+
+A host whose command fails is named on stderr (with `--quiet` as a short `failed: <name>` line) and skipped; the remaining rows are still printed and the exit code is non-zero. The command uses the connection's own SSH options plus `-o BatchMode=yes -o ConnectTimeout=10` and runs with stdin closed, so **password and passphrase prompts are never shown**: a password-only host is reported as failed; use key/agent authentication. BatchMode also refuses to ask whether to trust an unknown host key, so a device you have never connected to fails with `Host key verification failed`. Connect to it once with `ssh`, or set `StrictHostKeyChecking=accept-new` in the connection's SSH options, before running a report. ConnectTimeout bounds only the connection, not the command, so do not use a target whose command may hang. A saved host that starts with `-` is refused, and the destination is passed after `--`. Output that does not look like a known table is ignored, never half-parsed. The AireOS collectors assume AireOS `show … summary` tables; they have not been verified against a WLC.
 
 ---
 

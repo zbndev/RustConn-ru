@@ -118,6 +118,27 @@ pub struct PartialConnection {
     pub spice_unix_socket_path: Option<PathBuf>,
 }
 
+/// Whether the Connection Details page may go on. Most protocols need a
+/// host; SPICE with a unix socket path connects through the socket instead.
+fn details_valid(protocol: Option<ProtocolType>, host: &str, socket_text: &str) -> bool {
+    match protocol {
+        Some(
+            ProtocolType::Serial
+            | ProtocolType::Kubernetes
+            | ProtocolType::Web
+            | ProtocolType::ZeroTrust,
+        ) => true,
+        Some(ProtocolType::Spice) if socket_path_from_text(socket_text).is_some() => true,
+        _ => !host.trim().is_empty(),
+    }
+}
+
+/// Turns the wizard's SPICE socket text into a path; blank means none.
+fn socket_path_from_text(text: &str) -> Option<PathBuf> {
+    let trimmed = text.trim();
+    (!trimmed.is_empty()).then(|| PathBuf::from(trimmed))
+}
+
 impl PartialConnection {
     /// Create a `PartialConnection` from an existing `Connection`.
     ///
@@ -610,6 +631,7 @@ impl ConnectionWizard {
         let is_k8s = protocol == Some(ProtocolType::Kubernetes);
         let is_zt = protocol == Some(ProtocolType::ZeroTrust);
         let is_web = protocol == Some(ProtocolType::Web);
+        let is_spice = protocol == Some(ProtocolType::Spice);
         let zt_fields = if is_zt {
             self.connection_page.zt_fields()
         } else {
@@ -697,7 +719,11 @@ impl ConnectionWizard {
             } else {
                 None
             },
-            spice_unix_socket_path: None, // ponytail: wizard doesn't expose socket path yet; user opens Advanced for this
+            spice_unix_socket_path: if is_spice {
+                self.connection_page.spice_socket_path()
+            } else {
+                None
+            },
         }
     }
 
@@ -774,6 +800,10 @@ impl ConnectionWizard {
                     cfg.jump_host_id = Some(jump_id);
                 }
                 cfg.unix_socket_path = partial.spice_unix_socket_path.clone();
+                // A socket connection has no network path to jump through.
+                if cfg.unix_socket_path.is_some() {
+                    cfg.jump_host_id = None;
+                }
                 ProtocolConfig::Spice(cfg)
             }
             ProtocolType::Telnet => {
@@ -897,5 +927,66 @@ impl ConnectionWizard {
     /// Connect completion callback
     pub fn connect_complete<F: Fn(WizardResult) -> Result<(), String> + 'static>(&self, f: F) {
         *self.on_complete.borrow_mut() = Some(Box::new(f));
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use rustconn_core::models::ProtocolConfig;
+
+    #[test]
+    fn spice_socket_replaces_host_requirement() {
+        let spice = Some(ProtocolType::Spice);
+        assert!(details_valid(spice, "", "/run/vm.sock"));
+        assert!(details_valid(spice, "h", "/run/vm.sock"));
+        assert!(details_valid(spice, "h", ""));
+        assert!(!details_valid(spice, "", ""));
+        assert!(!details_valid(spice, "  ", "  "));
+        assert!(!details_valid(Some(ProtocolType::Vnc), "", "/run/vm.sock"));
+    }
+
+    #[test]
+    fn socket_text_blank_is_none() {
+        assert_eq!(socket_path_from_text(""), None);
+        assert_eq!(socket_path_from_text("   "), None);
+    }
+
+    #[test]
+    fn socket_text_is_trimmed() {
+        assert_eq!(
+            socket_path_from_text("  /run/libvirt/qemu/vm.sock \n"),
+            Some(PathBuf::from("/run/libvirt/qemu/vm.sock"))
+        );
+    }
+
+    #[test]
+    fn spice_socket_survives_duplicate_round_trip() {
+        let mut conn = Connection::new_spice("vm".into(), "localhost".into(), 5900);
+        if let ProtocolConfig::Spice(cfg) = &mut conn.protocol_config {
+            cfg.unix_socket_path = Some(PathBuf::from("/run/vm.sock"));
+        }
+        let partial = PartialConnection::from_connection(&conn);
+        assert_eq!(
+            partial.spice_unix_socket_path,
+            Some(PathBuf::from("/run/vm.sock"))
+        );
+        let ProtocolConfig::Spice(cfg) = partial.to_connection().protocol_config else {
+            panic!("expected a SPICE config");
+        };
+        assert_eq!(cfg.unix_socket_path, Some(PathBuf::from("/run/vm.sock")));
+    }
+
+    #[test]
+    fn spice_without_socket_stays_a_network_connection() {
+        let partial = PartialConnection {
+            protocol: Some(ProtocolType::Spice),
+            host: Some("h".into()),
+            ..Default::default()
+        };
+        let ProtocolConfig::Spice(cfg) = partial.to_connection().protocol_config else {
+            panic!("expected a SPICE config");
+        };
+        assert_eq!(cfg.unix_socket_path, None);
     }
 }

@@ -16,6 +16,7 @@ impl MainWindow {
         overlay_split_view: adw::OverlaySplitView,
         session_split_bridges: SessionSplitBridges,
         header_title: adw::WindowTitle,
+        open_secrets_page: bool,
     ) {
         let opened_at = std::time::Instant::now();
         tracing::debug!("settings action activated");
@@ -41,6 +42,9 @@ impl MainWindow {
         dialog.connect_credential_transfer(&state);
         dialog.connect_portable_passphrase_change(&state);
         dialog.connect_monitoring_override_reset(&state);
+        if open_secrets_page {
+            dialog.show_secrets_page();
+        }
         tracing::debug!(
             elapsed_ms = opened_at.elapsed().as_millis() as u64,
             "settings dialog constructed and populated"
@@ -129,7 +133,14 @@ impl MainWindow {
                     let bridges = session_split_bridges.borrow();
                     for bridge in bridges.values() {
                         bridge.set_show_pane_labels(settings.ui.show_split_pane_labels);
-                        bridge.set_hide_hover_controls(settings.ui.hide_split_pane_hover_controls);
+                        // A split shown in a group window keeps its corner controls
+                        // hidden: they act on the main window (see `detach_actions`).
+                        let in_group_window = bridge
+                            .owner_session()
+                            .is_some_and(|owner| notebook.is_detached(owner));
+                        bridge.set_hide_hover_controls(
+                            in_group_window || settings.ui.hide_split_pane_hover_controls,
+                        );
                     }
                 }
 
@@ -305,6 +316,7 @@ impl MainWindow {
                                 | rustconn_core::config::SecretBackendType::OnePassword
                                 | rustconn_core::config::SecretBackendType::Passbolt
                                 | rustconn_core::config::SecretBackendType::Pass
+                                | rustconn_core::config::SecretBackendType::ProtonPass
                                 | rustconn_core::config::SecretBackendType::EncryptedFile
                                 | rustconn_core::config::SecretBackendType::PortableEncryptedFile => true,
                                 rustconn_core::config::SecretBackendType::KeePassXc

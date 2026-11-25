@@ -115,6 +115,57 @@
     <control>touch</control>
   </supports>
   <releases>
+    <release version="0.26.4" date="2026-11-25">
+      <url>https://github.com/totoshko88/RustConn/releases/tag/v0.26.4</url>
+      <description>
+        <p>Version 0.26.4 - jump hosts for VNC and Remmina, script examples, device reports:</p>
+        <ul>
+          <li>VNC connections, embedded and external, now go through their Jump Host.</li>
+          <li>Remmina SSH tunnels are imported as a linked Jump Host.</li>
+          <li>Editing a cluster no longer leaves the cluster list empty.</li>
+          <li>Eleven new script examples and the rustconn-cli report command with 25 report kinds.</li>
+          <li>Dependencies updated (clap, h2, toml, zstd and others).</li>
+        </ul>
+      </description>
+    </release>
+    <release version="0.26.3" date="2026-11-24">
+      <url>https://github.com/totoshko88/RustConn/releases/tag/v0.26.3</url>
+      <description>
+        <p>Version 0.26.3 - connection status and macOS fixes:</p>
+        <ul>
+          <li>The sidebar no longer stays on the connecting icon for a missing client, a refused VNC login, or Mosh, Serial and Kubernetes sessions.</li>
+          <li>Embedded RDP asks for the password when a Windows host requires Network Level Authentication.</li>
+          <li>Automatic reconnection stops on a session that keeps closing and on a refused WinRM sign-in.</li>
+          <li>On macOS, Keychain and KeePassXC passwords are read correctly.</li>
+        </ul>
+      </description>
+    </release>
+    <release version="0.26.2" date="2026-11-23">
+      <url>https://github.com/totoshko88/RustConn/releases/tag/v0.26.2</url>
+      <description>
+        <p>Version 0.26.2 - Proton Pass secret backend:</p>
+        <ul>
+          <li>Proton Pass is a new secret backend in Settings &gt; Secrets, also available from the CLI.</li>
+          <li>The Proton Pass CLI can be downloaded in Flatpak Components, with an in-app sign-in dialog.</li>
+          <li>A SPICE connection with a unix socket path no longer asks for a host.</li>
+        </ul>
+      </description>
+    </release>
+    <release version="0.26.1" date="2026-11-23">
+      <url>https://github.com/totoshko88/RustConn/releases/tag/v0.26.1</url>
+      <description>
+        <p>Version 0.26.1 - moving tabs and splits between windows, non-modal terminal search and faster start:</p>
+        <ul>
+          <li>Drag tabs between windows or out into a new one, and drag a whole split out into its own window.</li>
+          <li>A tab can be dropped onto an empty split pane.</li>
+          <li>A quick terminal theme picker in the tab menu and the command palette.</li>
+          <li>Terminal search is a bar at the top of the terminal and no longer blocks the session.</li>
+          <li>An edited user name now takes effect, and Save &amp; Connect no longer asks for the password just typed.</li>
+          <li>The window starts without waiting for the keyring, ssh-agent or example scripts.</li>
+          <li>The template editor gains printer redirection and session toolbar switches, and the wizard a SPICE socket path.</li>
+        </ul>
+      </description>
+    </release>
     <release version="0.26.0" date="2026-11-21">
       <url>https://github.com/totoshko88/RustConn/releases/tag/v0.26.0</url>
       <description>

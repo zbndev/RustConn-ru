@@ -127,7 +127,7 @@ pub struct SettingsDialog {
     color_scheme_box: GtkBox,
     language_dropdown: adw::ComboRow,
     remember_geometry: adw::SwitchRow,
-    enable_tray_icon: adw::SwitchRow,
+    enable_tray_icon: adw::ExpanderRow,
     minimize_to_tray: adw::SwitchRow,
     // Session restore settings
     session_restore_enabled: adw::SwitchRow,
@@ -1518,6 +1518,10 @@ impl SettingsDialog {
         let pass_store_dir_entry_clone = self.secrets_widgets.pass_store_dir_entry.clone();
         let pass_read_only_row_clone = self.secrets_widgets.pass_read_only_row.clone();
         let pass_root_search_row_clone = self.secrets_widgets.pass_root_search_row.clone();
+        let proton_pass_read_only_row_clone =
+            self.secrets_widgets.proton_pass_read_only_row.clone();
+        let proton_pass_root_search_row_clone =
+            self.secrets_widgets.proton_pass_root_search_row.clone();
         // Portable encrypted file — collect-only widgets.
         let portable_path_entry_clone = self.secrets_widgets.portable_path_entry.clone();
         let portable_passphrase_entry_clone =
@@ -1709,6 +1713,10 @@ impl SettingsDialog {
                 pass_status_label: Label::new(None), // dummy, не використовується при збиранні
                 pass_read_only_row: pass_read_only_row_clone.clone(),
                 pass_root_search_row: pass_root_search_row_clone.clone(),
+                proton_pass_group: adw::PreferencesGroup::new(), // dummy
+                proton_pass_status_label: Label::new(None),      // dummy
+                proton_pass_read_only_row: proton_pass_read_only_row_clone.clone(),
+                proton_pass_root_search_row: proton_pass_root_search_row_clone.clone(),
                 encrypted_file_group: adw::PreferencesGroup::new(), // dummy
                 portable_group: adw::PreferencesGroup::new(), // dummy
                 portable_path_entry: portable_path_entry_clone.clone(),
@@ -1965,6 +1973,14 @@ impl SettingsDialog {
     }
 
     /// Returns a reference to the dialog for toast notifications
+    /// Opens the dialog on the Secrets page instead of the first one.
+    ///
+    /// For the "Open Settings" choice of a dialog that says the password store
+    /// could not be read, whose body tells the user to look under Secrets.
+    pub fn show_secrets_page(&self) {
+        self.dialog.set_visible_page(&self.secrets_widgets.page);
+    }
+
     pub fn dialog(&self) -> &adw::PreferencesDialog {
         &self.dialog
     }

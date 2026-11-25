@@ -18,7 +18,7 @@ AppDir:
     id: io.github.zbndev.RustConnRu
     name: RustConnRu
     icon: io.github.zbndev.RustConnRu
-    version: 0.26.0
+    version: 0.26.4
     exec: usr/bin/rustconn
     exec_args: $@
     author: Anton Isaiev
