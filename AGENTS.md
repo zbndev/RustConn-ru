@@ -119,6 +119,14 @@ list grows`.
 Do not be lazy about input validation at trust boundaries, error handling that
 prevents data loss, credential handling, accessibility, or tests.
 
+## Upstream sync (fork)
+
+Start with the local helper in [the fork sync procedure](docs/CI_BUILD_FLOW.md#ручное-принятие-обновления-upstream).
+Use `plan` to triage, `prepare` for deterministic merge resolutions, and `catalogs`
+after reviewing the upstream changes and resolving source conflicts. Work from the
+remaining conflicts and missing/fuzzy messages; do not delegate routine catalog
+merges or branding substitutions. Keep the review of incoming code before execution.
+
 ## Commits and releases
 
 Conventional commits: `type(scope): description`, imperative, lowercase, no
